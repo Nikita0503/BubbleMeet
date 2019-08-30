@@ -1,6 +1,7 @@
 package com.rockstar.bubblemeetapplication.auth;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.singup.DialogSignUpFragment;
 
 
-public class AuthActivity extends AppCompatActivity {
+public class AuthActivity extends AppCompatActivity implements BaseContract.BaseView {
 
     TextView mTextViewDontHaveAccount;
     TextView mTextViewForgotPassword;
@@ -32,6 +35,11 @@ public class AuthActivity extends AppCompatActivity {
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mButtonLogin = (Button) findViewById(R.id.buttonLogin);
         mImageViewLogo = (ImageView) findViewById(R.id.imageViewLogo);
+        initViews();
+    }
+
+    @Override
+    public void initViews() {
         Animation animationLogo = AnimationUtils.loadAnimation(this, R.anim.logo_trans);
         mImageViewLogo.startAnimation(animationLogo);
         Animation animationOtherViews = AnimationUtils.loadAnimation(AuthActivity.this, R.anim.alpha_auth_views);
@@ -40,6 +48,12 @@ public class AuthActivity extends AppCompatActivity {
         mEditTextEmail.startAnimation(animationOtherViews);
         mEditTextPassword.startAnimation(animationOtherViews);
         mButtonLogin.startAnimation(animationOtherViews);
-
+        mTextViewDontHaveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogSignUpFragment dialogSignUpFragment = new DialogSignUpFragment();
+                dialogSignUpFragment.show(getSupportFragmentManager(), "123");
+            }
+        });
     }
 }

@@ -5,4 +5,5 @@
     <string name="dontHaveAccount">Don\'t have an account? \nClick here to register</string>
     <string name="login">login</string>
     <string name="forgotPassword">Forgot your password?</string>
+    <string name="next">Next</string>
 </resources>
