@@ -4,28 +4,10 @@
     >
     <translate
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:fromXDelta="0"
-        android:toXDelta="150"
-        android:fromYDelta="2000"
-        android:toYDelta="-200"
+        android:fromYDelta="-500"
         android:duration="400"
         android:fillAfter="true">
     </translate>
-    <scale
-        android:duration="300"
-        android:fromXScale="1.1"
-        android:fromYScale="1.1"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:startOffset="400"
-        android:toXScale="1.0"
-        android:toYScale="1.0" />
-    <translate
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:toXDelta="-150"
-        android:toYDelta="200"
-        android:duration="800"
-        android:fillAfter="true">
-    </translate>
+
 
 </set>
