@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BubbleMeetApplication</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="dontHaveAccount">Don\'t have an account? \nClick here to register</string>
+    <string name="login">login</string>
+    <string name="forgotPassword">Forgot your password?</string>
+</resources>
