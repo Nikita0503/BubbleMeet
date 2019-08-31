@@ -1,5 +1,6 @@
 package com.rockstar.bubblemeetapplication.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
 import com.rockstar.bubblemeetapplication.singup.DialogSignUpFragment;
 
 
@@ -53,6 +55,13 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
             public void onClick(View view) {
                 DialogSignUpFragment dialogSignUpFragment = new DialogSignUpFragment();
                 dialogSignUpFragment.show(getSupportFragmentManager(), "123");
+            }
+        });
+        mButtonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AuthActivity.this, FiltersActivity.class);
+                startActivity(intent);
             }
         });
     }
