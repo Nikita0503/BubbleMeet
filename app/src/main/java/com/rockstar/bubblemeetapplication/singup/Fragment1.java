@@ -21,7 +21,7 @@ public class Fragment1 extends Fragment implements BaseContract.BaseView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
+        initViews();
     }
 
     @Override

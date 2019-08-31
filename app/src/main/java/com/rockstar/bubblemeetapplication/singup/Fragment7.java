@@ -16,30 +16,33 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment5 extends Fragment implements BaseContract.BaseView {
+public class Fragment7 extends Fragment implements BaseContract.BaseView {
 
-    EditText mEditTextIsSmoking;
+    EditText mEditTextIsCooking;
+    EditText mEditTextCity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment5, null);
+        return inflater.inflate(R.layout.fragment7, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mEditTextIsSmoking = (EditText) view.findViewById(R.id.editTextIsSmoking);
+        mEditTextIsCooking = (EditText) view.findViewById(R.id.editTextIsCooking);
+        mEditTextCity = (EditText) view.findViewById(R.id.editTextCity);
         initViews();
     }
 
     @Override
     public void initViews() {
-        mEditTextIsSmoking.setOnClickListener(new View.OnClickListener() {
+        mEditTextIsCooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
             }
         });
+
     }
 
     public void showDialog() {
@@ -52,14 +55,13 @@ public class Fragment5 extends Fragment implements BaseContract.BaseView {
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 int itemPosition = position;
                 String itemValue = (String) listView
                         .getItemAtPosition(position);
-                mEditTextIsSmoking.setText(itemValue);
+                mEditTextIsCooking.setText(itemValue);
                 dialog.dismiss();
 
             }

@@ -16,33 +16,41 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment5 extends Fragment implements BaseContract.BaseView {
+public class Fragment6 extends Fragment implements BaseContract.BaseView {
 
-    EditText mEditTextIsSmoking;
+    EditText mEditTextIsMarried;
+    EditText mEditTextHaveChildren;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment5, null);
+        return inflater.inflate(R.layout.fragment6, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mEditTextIsSmoking = (EditText) view.findViewById(R.id.editTextIsSmoking);
+        mEditTextIsMarried = (EditText) view.findViewById(R.id.editTextIsMarried);
+        mEditTextHaveChildren = (EditText) view.findViewById(R.id.editTextHaveChildren);
         initViews();
     }
 
     @Override
     public void initViews() {
-        mEditTextIsSmoking.setOnClickListener(new View.OnClickListener() {
+        mEditTextIsMarried.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                showDialog(1);
+            }
+        });
+        mEditTextHaveChildren.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(2);
             }
         });
     }
 
-    public void showDialog() {
+    public void showDialog(final int question) {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.list);
         final ListView listView = (ListView) dialog.findViewById(R.id.list);
@@ -52,14 +60,18 @@ public class Fragment5 extends Fragment implements BaseContract.BaseView {
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 int itemPosition = position;
                 String itemValue = (String) listView
                         .getItemAtPosition(position);
-                mEditTextIsSmoking.setText(itemValue);
+                if(question == 1) {
+                    mEditTextIsMarried.setText(itemValue);
+                }
+                else{
+                    mEditTextHaveChildren.setText(itemValue);
+                }
                 dialog.dismiss();
 
             }

@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -39,6 +42,38 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
     public void initViews() {
         mSignUpFragmentAdapter = new SignUpFragmentPagerAdapter(getChildFragmentManager());
         mViewPagerSignUp.setAdapter(mSignUpFragmentAdapter);
+        mViewPagerSignUp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //Do nothing
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 3 || position == 9){
+                    mButtonNext.setText(getString(R.string.letsBubble));
+                    mButtonNext.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dismiss();
+                        }
+                    });
+                }else{
+                    mButtonNext.setText(getString(R.string.next));
+                    mButtonNext.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showNextPage();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //Do nothing
+            }
+        });
         mTabLayoutSignUp.setupWithViewPager(mViewPagerSignUp);
         mImageViewClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +81,17 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
                 dismiss();
             }
         });
+        mButtonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNextPage();
+            }
+        });
+    }
+
+    public void showNextPage(){
+        int currentItem = mViewPagerSignUp.getCurrentItem();
+        mViewPagerSignUp.setCurrentItem(currentItem+1);
     }
 
     public void onDismiss(DialogInterface dialog) {

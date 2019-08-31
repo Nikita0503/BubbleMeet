@@ -16,50 +16,50 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment5 extends Fragment implements BaseContract.BaseView {
+public class Fragment8 extends Fragment implements BaseContract.BaseView {
 
-    EditText mEditTextIsSmoking;
+    EditText mEditTextLookingFor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment5, null);
+        return inflater.inflate(R.layout.fragment8, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mEditTextIsSmoking = (EditText) view.findViewById(R.id.editTextIsSmoking);
+        mEditTextLookingFor = (EditText) view.findViewById(R.id.editTextLookingFor);
         initViews();
     }
 
     @Override
     public void initViews() {
-        mEditTextIsSmoking.setOnClickListener(new View.OnClickListener() {
+        mEditTextLookingFor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
             }
         });
+
     }
 
     public void showDialog() {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.list);
         final ListView listView = (ListView) dialog.findViewById(R.id.list);
-        String[] values = getResources().getStringArray(R.array.yesNo);
+        String[] values = getResources().getStringArray(R.array.lookingForChoice);
         dialog.show();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 int itemPosition = position;
                 String itemValue = (String) listView
                         .getItemAtPosition(position);
-                mEditTextIsSmoking.setText(itemValue);
+                mEditTextLookingFor.setText(itemValue);
                 dialog.dismiss();
 
             }
