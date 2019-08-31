@@ -8,6 +8,11 @@
     <string name="next">Next</string>
     <string name="addPhoto">Add\nphoto</string>
     <string name="enterYourNamePlease">Enter your name, please</string>
+
+    <string name="gender">Gender</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="lgbt">LGBT</string>
     <string-array name="gender">
         <item>Man</item>
         <item>Woman</item>
@@ -25,6 +30,7 @@
     <string name="smoking">Smoking?</string>
     <string name="married">Married?</string>
     <string name="children">Children?</string>
+
     <string name="congratulation">Congratulation!</string>
     <string name="yourProfileWasCreated">Your profile was created.</string>
     <string name="couldYouAdd">Could you add all \ndescription about you?</string>
@@ -41,4 +47,52 @@
     <string name="hobbies">Hobbies?</string>
     <string name="thanks">Thank\'s</string>
     <string name="youHaveSuccessfullyRegistered">You have successfully \nregistered</string>
+
+    <string name="age">Age</string>
+    <string name="age17_25">17\-25</string>
+    <string name="age26_30">26\-30</string>
+    <string name="age31_35">31\-35</string>
+    <string name="age36_40">36\-40</string>
+    <string name="age41_45">41\-45</string>
+    <string name="age46_50">46\-50</string>
+    <string name="age51_more">51\-more</string>
+
+    <string name="location">Location</string>
+    <string name="km_1">1 km</string>
+    <string name="km_5">5 km</string>
+    <string name="km_10">10 km</string>
+    <string name="km_50">50 km</string>
+    <string name="km_allArea">all area</string>
+
+    <string name="eye_color">Eye color</string>
+    <string name="amber">Amber</string>
+    <string name="blue">Blue</string>
+    <string name="brown">Brown</string>
+    <string name="gray">Gray</string>
+    <string name="green">Green</string>
+    <string name="hazel">Hazel</string>
+    <string name="red_and_violet">Red an violet</string>
+    <string name="spectrum_of_eye_color">Spectrum of eye color</string>
+
+    <string name="height">Height</string>
+    <string name="m120">120</string>
+    <string name="m150">150</string>
+    <string name="m180">180</string>
+    <string name="m210">210</string>
+    <string name="noMatter">No matter</string>
+    <string name="smoking2">Smoking</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="married2">Married</string>
+    <string name="children2">Children</string>
+    <string name="lookingFor2">Looking for</string>
+
+    <string name="longTerm">Long term</string>
+    <string name="dating">Dating</string>
+    <string name="forPlay">For play</string>
+    <string name="justFriendship">Just friendship</string>
+
+    <string name="loveToCook">Love to cook</string>
 </resources>

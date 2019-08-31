@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.rockstar.bubblemeetapplication.auth.AuthActivity"></activity>
+        <activity android:name="com.rockstar.bubblemeetapplication.filters.FiltersActivity"></activity>
         <activity android:name="com.rockstar.bubblemeetapplication.loading.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
