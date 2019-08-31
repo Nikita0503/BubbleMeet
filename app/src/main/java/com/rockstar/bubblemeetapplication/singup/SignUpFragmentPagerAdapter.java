@@ -19,11 +19,11 @@ public class SignUpFragmentPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new Fragment2();
             case 2:
-                return new Fragment1();
+                return new Fragment3();
             case 3:
-                return new Fragment1();
+                return new Fragment4();
             case 4:
-                return new Fragment1();
+                return new Fragment5();
             case 5:
                 return new Fragment1();
             case 6:

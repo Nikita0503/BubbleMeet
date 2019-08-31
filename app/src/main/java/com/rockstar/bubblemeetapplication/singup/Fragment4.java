@@ -16,25 +16,25 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment2 extends Fragment implements BaseContract.BaseView {
+public class Fragment4 extends Fragment implements BaseContract.BaseView {
 
-    EditText mEditTextGender;
+    EditText mEditTextIsSmoking;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment2, null);
+        return inflater.inflate(R.layout.fragment4, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mEditTextGender = (EditText) view.findViewById(R.id.editTextIsSmoking);
+        mEditTextIsSmoking = (EditText) view.findViewById(R.id.editTextIsSmoking);
         initViews();
     }
 
     @Override
     public void initViews() {
-        mEditTextGender.setOnClickListener(new View.OnClickListener() {
+        mEditTextIsSmoking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
@@ -46,7 +46,7 @@ public class Fragment2 extends Fragment implements BaseContract.BaseView {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.list);
         final ListView listView = (ListView) dialog.findViewById(R.id.list);
-        String[] values = getResources().getStringArray(R.array.gender);
+        String[] values = getResources().getStringArray(R.array.yesNo);
         dialog.show();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
@@ -59,7 +59,7 @@ public class Fragment2 extends Fragment implements BaseContract.BaseView {
                 int itemPosition = position;
                 String itemValue = (String) listView
                         .getItemAtPosition(position);
-                mEditTextGender.setText(itemValue);
+                mEditTextIsSmoking.setText(itemValue);
                 dialog.dismiss();
 
             }

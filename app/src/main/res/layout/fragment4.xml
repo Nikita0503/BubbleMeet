@@ -6,6 +6,7 @@
     android:layout_height="400dp"
     android:orientation="vertical">
 
+
     <EditText
         android:id="@+id/editTextIsSmoking"
         android:layout_width="250dp"
@@ -19,7 +20,7 @@
         android:ems="10"
         android:focusable="false"
         android:gravity="center"
-        android:hint="@string/your_gender"
+        android:hint="@string/smoking"
         android:inputType="number"
         android:textColor="@android:color/black"
         android:textColorHint="@color/colorGray"
@@ -27,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextHeight" />
 
     <EditText
         android:id="@+id/editTextHeight"
@@ -41,13 +42,13 @@
         android:backgroundTint="@android:color/black"
         android:ems="10"
         android:gravity="center"
-        android:hint="@string/howOld"
+        android:hint="@string/yourHeight"
         android:inputType="number"
         android:textColor="@android:color/black"
         android:textColorHint="@color/colorGray"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextIsSmoking" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

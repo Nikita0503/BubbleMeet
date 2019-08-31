@@ -14,4 +14,15 @@
     </string-array>
     <string name="your_gender">Your gender?</string>
     <string name="howOld">How old are you?</string>
+    <string name="enterEmail">Enter your E-mail</string>
+    <string name="createPassword">Create a  password</string>
+    <string name="confirmPassword">Confirm password</string>
+    <string name="yourHeight">Your height?</string>
+    <string-array name="yesNo">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string name="smoking">Smoking?</string>
+    <string name="married">Married?</string>
+    <string name="children">Children?</string>
 </resources>
