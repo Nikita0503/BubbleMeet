@@ -3,6 +3,84 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
+    android:layout_height="400dp">
+
+    <ImageView
+        android:id="@+id/imageViewMainPhoto"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/circle_for_photo_pink" />
+
+    <TextView
+        android:id="@+id/textViewAddPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/addPhoto"
+        android:textColor="@android:color/white"
+        android:textSize="16dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewMainPhoto"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewMainPhoto"
+        app:layout_constraintStart_toStartOf="@+id/imageViewMainPhoto"
+        app:layout_constraintTop_toTopOf="@+id/imageViewMainPhoto" />
+
+    <ImageView
+        android:id="@+id/imageViewAdditionalPhoto1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewAdditionalPhoto2"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewMainPhoto"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewAdditionalPhoto2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewMainPhoto"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewAdditionalPhoto3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewAdditionalPhoto2"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewMainPhoto"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:textColor="@android:color/black"
+        android:inputType="textPersonName"
+        android:hint="@string/enterYourNamePlease"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:backgroundTint="@android:color/black"
+        android:textColorHint="@color/colorGray"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAdditionalPhoto3"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAdditionalPhoto1"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewAdditionalPhoto2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

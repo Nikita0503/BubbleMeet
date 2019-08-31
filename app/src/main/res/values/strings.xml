@@ -6,4 +6,12 @@
     <string name="login">login</string>
     <string name="forgotPassword">Forgot your password?</string>
     <string name="next">Next</string>
+    <string name="addPhoto">Add\nphoto</string>
+    <string name="enterYourNamePlease">Enter your name, please</string>
+    <string-array name="gender">
+        <item>Man</item>
+        <item>Woman</item>
+    </string-array>
+    <string name="your_gender">Your gender?</string>
+    <string name="howOld">How old are you?</string>
 </resources>
