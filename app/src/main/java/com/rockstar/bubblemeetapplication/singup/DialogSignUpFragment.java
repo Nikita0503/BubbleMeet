@@ -1,6 +1,7 @@
 package com.rockstar.bubblemeetapplication.singup;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.auth.AuthActivity;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 
 public class DialogSignUpFragment extends DialogFragment implements BaseContract.BaseView {
 
@@ -55,7 +58,10 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
                     mButtonNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
                             dismiss();
+                            getActivity().finish();
                         }
                     });
                 }else{

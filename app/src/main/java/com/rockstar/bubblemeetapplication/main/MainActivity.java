@@ -6,16 +6,21 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
+import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
 import com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity;
 
 public class MainActivity extends AppCompatActivity implements BaseContract.BaseView {
 
     ImageView mImageViewFilters;
     ImageView mImageViewProfile;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +47,11 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 startActivity(intent);
             }
         });
+        MatchesFragment fragment = new MatchesFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.root_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
