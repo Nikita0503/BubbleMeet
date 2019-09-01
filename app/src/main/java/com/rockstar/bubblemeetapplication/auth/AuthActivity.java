@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.singup.DialogSignUpFragment;
 
 
@@ -31,17 +32,17 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+        initViews();
+    }
+
+    @Override
+    public void initViews() {
         mTextViewDontHaveAccount = (TextView) findViewById(R.id.textViewDontHaveAccount);
         mTextViewForgotPassword = (TextView) findViewById(R.id.textViewForgotPassword);
         mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mButtonLogin = (Button) findViewById(R.id.buttonLogin);
         mImageViewLogo = (ImageView) findViewById(R.id.imageViewLogo);
-        initViews();
-    }
-
-    @Override
-    public void initViews() {
         Animation animationLogo = AnimationUtils.loadAnimation(this, R.anim.logo_trans);
         mImageViewLogo.startAnimation(animationLogo);
         Animation animationOtherViews = AnimationUtils.loadAnimation(AuthActivity.this, R.anim.alpha_auth_views);
@@ -60,8 +61,9 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AuthActivity.this, FiltersActivity.class);
+                Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
