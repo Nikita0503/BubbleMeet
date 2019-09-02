@@ -96,4 +96,15 @@
 
     <string name="loveToCook">Love to cook</string>
     <string name="edit">Edit</string>
+    
+    <string name="matches">Matches</string>
+    <string name="likes">Likes</string>
+    <string name="watchers">Watchers</string>
+    <string name="Inbox">Inbox</string>
+    <string name="search_people">Search people</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="two_days_ago">2 days ago</string>
+    <string name="later">Later</string>
+    <string name="name">Name</string>
 </resources>

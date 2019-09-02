@@ -2,10 +2,12 @@
 <resources>
     <color name="colorPrimary">#1F0A39</color>
     <color name="colorPrimaryDark">#1F0A39</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#8D8395</color>
     <color name="colorBackground">#1F0A39</color>
     <color name="colorTextHint">#766A85</color>
     <color name="colorPink">#F60059</color>
     <color name="colorGray">#E5E5E7</color>
     <color name="colorHobbies">#796783</color>
+    <color name="colorSearchIcon">#8D8395</color>
+    <color name="colorName">#DCD6DF</color>
 </resources>

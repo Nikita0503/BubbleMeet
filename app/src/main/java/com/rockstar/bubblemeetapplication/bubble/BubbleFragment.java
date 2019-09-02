@@ -1,4 +1,4 @@
-package com.rockstar.bubblemeetapplication.matches;
+package com.rockstar.bubblemeetapplication.bubble;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,18 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.DataAdapter;
 
-public class MatchesFragment extends Fragment implements BaseContract.BaseView {
+public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
-    GridView mGridViewMatches;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(com.rockstar.bubblemeetapplication.R.layout.fragment_grid_view, null);
+        return inflater.inflate(com.rockstar.bubblemeetapplication.R.layout.activity_loading, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mGridViewMatches = (GridView) view.findViewById(com.rockstar.bubblemeetapplication.R.id.gridViewList);
-        mGridViewMatches.setAdapter(new DataAdapter(getContext(), new String[]{"Hello", "Name", "Pudge", "Gaben"}, getFragmentManager()));
+
         initViews();
     }
 

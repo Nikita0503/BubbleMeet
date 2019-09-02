@@ -4,23 +4,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.rockstar.bubblemeetapplication.BaseContract;
+import com.rockstar.bubblemeetapplication.Inbox.InboxFragment;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.bubble.BubbleFragment;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
+import com.rockstar.bubblemeetapplication.likes.LikesFragment;
 import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
 import com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity;
+import com.rockstar.bubblemeetapplication.watchers.WatchersFragment;
 
 public class MainActivity extends AppCompatActivity implements BaseContract.BaseView {
 
+    FragmentManager mFragmentManager;
+
     ImageView mImageViewFilters;
     ImageView mImageViewProfile;
-
-
+    ImageView mImageViewMatches;
+    ImageView mImageViewLikes;
+    ImageView mImageViewBubble;
+    ImageView mImageViewWatchers;
+    ImageView mImageViewInbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +58,83 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 startActivity(intent);
             }
         });
-        MatchesFragment fragment = new MatchesFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.root_fragment, fragment);
+
+        mFragmentManager = getSupportFragmentManager();
+        mImageViewMatches = (ImageView) findViewById(R.id.imageViewMatches);
+        mImageViewMatches.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetMenuIcons();
+                mImageViewMatches.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_profile_icon));
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                MatchesFragment matchesFragment = new MatchesFragment();
+                transaction.replace(R.id.root_fragment, matchesFragment);
+                //transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        mImageViewLikes = (ImageView) findViewById(R.id.imageViewLikes);
+        mImageViewLikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetMenuIcons();
+                mImageViewLikes.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_likes));
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                LikesFragment likesFragment = new LikesFragment();
+                transaction.replace(R.id.root_fragment, likesFragment);
+                //transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        mImageViewBubble = (ImageView) findViewById(R.id.imageViewBubble);
+        mImageViewBubble.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetMenuIcons();
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                BubbleFragment bubbleFragment = new BubbleFragment();
+                transaction.replace(R.id.root_fragment, bubbleFragment);
+                //transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        mImageViewWatchers = (ImageView) findViewById(R.id.imageViewWatchers);
+        mImageViewWatchers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetMenuIcons();
+                mImageViewWatchers.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_views));
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                WatchersFragment fragmentWatchers = new WatchersFragment();
+                transaction.replace(R.id.root_fragment, fragmentWatchers);
+                //transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        mImageViewInbox = (ImageView) findViewById(R.id.imageViewInbox);
+        mImageViewInbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetMenuIcons();
+                mImageViewInbox.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_messages));
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                InboxFragment fragmentInbox = new InboxFragment();
+                transaction.replace(R.id.root_fragment, fragmentInbox);
+                //transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        BubbleFragment bubbleFragment = new BubbleFragment();
+        transaction.replace(R.id.root_fragment, bubbleFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void resetMenuIcons() {
+        mImageViewMatches.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_icon));
+        mImageViewLikes.setImageDrawable(getResources().getDrawable(R.drawable.ic_likes));
+        mImageViewWatchers.setImageDrawable(getResources().getDrawable(R.drawable.ic_views));
+        mImageViewInbox.setImageDrawable(getResources().getDrawable(R.drawable.ic_messages));
     }
 }
