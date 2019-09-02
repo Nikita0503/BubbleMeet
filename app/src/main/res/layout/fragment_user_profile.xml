@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/imageViewLike"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -93,4 +93,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewYearsOldAndCity" />
+
+    <ImageView
+        android:id="@+id/imageViewBoom"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewLike"
+        app:layout_constraintStart_toStartOf="@+id/imageViewLike"
+        app:srcCompat="@drawable/likes_button_boom" />
+
+    <ImageView
+        android:id="@+id/imageViewBoomWhiteCircle"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
