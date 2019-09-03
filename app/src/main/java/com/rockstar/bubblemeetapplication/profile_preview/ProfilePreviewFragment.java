@@ -28,6 +28,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     ImageView mImageViewBoom;
     ImageView mImageViewAvatar;
     ImageView mImageViewBoomWhiteCircle;
+
     ImageView mImageViewPinkDown1;
     ImageView mImageViewPinkDown2;
     ImageView mImageViewPinkLeftDown;
@@ -36,6 +37,16 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     ImageView mImageViewPinkRightUp;
     ImageView mImageViewPinkUp1;
     ImageView mImageViewPinkUp2;
+
+    ImageView mImageViewGrayDown;
+    ImageView mImageViewGrayLeft;
+    ImageView mImageViewGrayRight;
+    ImageView mImageViewGrayUp;
+    ImageView mImageViewGrayDownLeft;
+    ImageView mImageViewGrayDownRight;
+    ImageView mImageViewGrayUpLeft;
+    ImageView mImageViewGrayUpRight;
+
     RecyclerView mRecyclerViewUsers;
 
     public void setName(String name){
@@ -64,6 +75,15 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewPinkRightUp = (ImageView) view.findViewById(R.id.imageViewPinkRightUp);
         mImageViewPinkUp1 = (ImageView) view.findViewById(R.id.imageViewPinkUp1);
         mImageViewPinkUp2 = (ImageView) view.findViewById(R.id.imageViewPinkUp2);
+
+        mImageViewGrayDown = (ImageView) view.findViewById(R.id.imageViewGrayDown);
+        mImageViewGrayLeft = (ImageView) view.findViewById(R.id.imageViewGrayLeft);
+        mImageViewGrayRight = (ImageView) view.findViewById(R.id.imageViewGrayRight);
+        mImageViewGrayUp = (ImageView) view.findViewById(R.id.imageViewGrayUp);
+        mImageViewGrayDownLeft = (ImageView) view.findViewById(R.id.imageViewGrayDownLeft);
+        mImageViewGrayDownRight = (ImageView) view.findViewById(R.id.imageViewGrayDownRight);
+        mImageViewGrayUpLeft = (ImageView) view.findViewById(R.id.imageViewGrayUpLeft);
+        mImageViewGrayUpRight = (ImageView) view.findViewById(R.id.imageViewGrayUpRight);
         initViews();
     }
 
@@ -89,80 +109,11 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 getActivity().onBackPressed();
             }
             public void onSwipeRight() {
-                //Toast.makeText(getContext(), "right", Toast.LENGTH_SHORT).show();
-                Animation animationBoom = AnimationUtils.loadAnimation(getContext(), R.anim.white_circle_boom_scale);
-                animationBoom.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        //Do nothing
-                    }
+                boomAnimation(true);
 
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        mImageViewBoomWhiteCircle.setVisibility(View.GONE);
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        ProfileFragment profileFragment = new ProfileFragment();
-                        profileFragment.setName(mName);
-                        transaction.replace(R.id.root_fragment, profileFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                        //Do nothing
-                    }
-                });
-                mImageViewBoomWhiteCircle.setVisibility(View.VISIBLE);
-                mImageViewBoomWhiteCircle.startAnimation(animationBoom);
             }
             public void onSwipeLeft() {
-                Animation animationPinkDown1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down1);
-                mImageViewPinkDown1.setVisibility(View.VISIBLE);
-                mImageViewPinkDown1.startAnimation(animationPinkDown1);
-                Animation animationPinkDown2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down2);
-                mImageViewPinkDown2.setVisibility(View.VISIBLE);
-                mImageViewPinkDown2.startAnimation(animationPinkDown2);
-                Animation animationPinkLeftDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_down);
-                mImageViewPinkLeftDown.setVisibility(View.VISIBLE);
-                mImageViewPinkLeftDown.startAnimation(animationPinkLeftDown);
-                Animation animationPinkRightDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_down);
-                mImageViewPinkRightDown.setVisibility(View.VISIBLE);
-                mImageViewPinkRightDown.startAnimation(animationPinkRightDown);
-                Animation animationPinkLeftUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_up);
-                mImageViewPinkLeftUp.setVisibility(View.VISIBLE);
-                mImageViewPinkLeftUp.startAnimation(animationPinkLeftUp);
-                Animation animationPinkRightUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_up);
-                mImageViewPinkRightUp.setVisibility(View.VISIBLE);
-                mImageViewPinkRightUp.startAnimation(animationPinkRightUp);
-                Animation animationPinkUp1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up1);
-                mImageViewPinkUp1.setVisibility(View.VISIBLE);
-                mImageViewPinkUp1.startAnimation(animationPinkUp1);
-                Animation animationPinkUp2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up2);
-                mImageViewPinkUp2.setVisibility(View.VISIBLE);
-                mImageViewPinkUp2.startAnimation(animationPinkUp2);
-                Animation animationBoom = AnimationUtils.loadAnimation(getContext(), R.anim.white_circle_boom_scale);
-                animationBoom.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        mImageViewAvatar.setVisibility(View.INVISIBLE);
-                        Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_auth_views);
-                        mImageViewAvatar.startAnimation(animationAlpha);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        mImageViewBoomWhiteCircle.setVisibility(View.GONE);
-                        mImageViewAvatar.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                        //Do nothing
-                    }
-                });
-                mImageViewBoomWhiteCircle.setVisibility(View.VISIBLE);
-                mImageViewBoomWhiteCircle.startAnimation(animationBoom);
+                boomAnimation(false);
             }
             public void onSwipeBottom() {
                 //Toast.makeText(getContext(), "bottom", Toast.LENGTH_SHORT).show();
@@ -172,4 +123,89 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
         });
     }
+
+    private void boomAnimation(final boolean isRight){
+        Animation animationGrayDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_down);
+        mImageViewGrayDown.setVisibility(View.VISIBLE);
+        mImageViewGrayDown.startAnimation(animationGrayDown);
+        Animation animationGrayLeft = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_left);
+        mImageViewGrayLeft.setVisibility(View.VISIBLE);
+        mImageViewGrayLeft.startAnimation(animationGrayLeft);
+        Animation animationGrayRight = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_right);
+        mImageViewGrayRight.setVisibility(View.VISIBLE);
+        mImageViewGrayRight.startAnimation(animationGrayRight);
+        Animation animationGrayUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_up);
+        mImageViewGrayUp.setVisibility(View.VISIBLE);
+        mImageViewGrayUp.startAnimation(animationGrayUp);
+        Animation animationGrayDownLeft = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_down_left);
+        mImageViewGrayDownLeft.setVisibility(View.VISIBLE);
+        mImageViewGrayDownLeft.startAnimation(animationGrayDownLeft);
+        Animation animationGrayDownRight = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_down_right);
+        mImageViewGrayDownRight.setVisibility(View.VISIBLE);
+        mImageViewGrayDownRight.startAnimation(animationGrayDownRight);
+        Animation animationGrayUpLeft = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_up_left);
+        mImageViewGrayUpLeft.setVisibility(View.VISIBLE);
+        mImageViewGrayUpLeft.startAnimation(animationGrayUpLeft);
+        Animation animationGrayUpRight = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_up_right);
+        mImageViewGrayUpRight.setVisibility(View.VISIBLE);
+        mImageViewGrayUpRight.startAnimation(animationGrayUpRight);
+
+        Animation animationPinkDown1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down1);
+        mImageViewPinkDown1.setVisibility(View.VISIBLE);
+        mImageViewPinkDown1.startAnimation(animationPinkDown1);
+        Animation animationPinkDown2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down2);
+        mImageViewPinkDown2.setVisibility(View.VISIBLE);
+        mImageViewPinkDown2.startAnimation(animationPinkDown2);
+        Animation animationPinkLeftDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_down);
+        mImageViewPinkLeftDown.setVisibility(View.VISIBLE);
+        mImageViewPinkLeftDown.startAnimation(animationPinkLeftDown);
+        Animation animationPinkRightDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_down);
+        mImageViewPinkRightDown.setVisibility(View.VISIBLE);
+        mImageViewPinkRightDown.startAnimation(animationPinkRightDown);
+        Animation animationPinkLeftUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_up);
+        mImageViewPinkLeftUp.setVisibility(View.VISIBLE);
+        mImageViewPinkLeftUp.startAnimation(animationPinkLeftUp);
+        Animation animationPinkRightUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_up);
+        mImageViewPinkRightUp.setVisibility(View.VISIBLE);
+        mImageViewPinkRightUp.startAnimation(animationPinkRightUp);
+        Animation animationPinkUp1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up1);
+        mImageViewPinkUp1.setVisibility(View.VISIBLE);
+        mImageViewPinkUp1.startAnimation(animationPinkUp1);
+        Animation animationPinkUp2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up2);
+        mImageViewPinkUp2.setVisibility(View.VISIBLE);
+        mImageViewPinkUp2.startAnimation(animationPinkUp2);
+
+        Animation animationBoom = AnimationUtils.loadAnimation(getContext(), R.anim.white_circle_boom_scale);
+        animationBoom.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mImageViewAvatar.setVisibility(View.INVISIBLE);
+                Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_auth_views);
+                mImageViewAvatar.startAnimation(animationAlpha);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mImageViewBoomWhiteCircle.setVisibility(View.GONE);
+                mImageViewAvatar.setVisibility(View.VISIBLE);
+                if(isRight){
+                    mImageViewBoomWhiteCircle.setVisibility(View.GONE);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    profileFragment.setName(mName);
+                    transaction.replace(R.id.root_fragment, profileFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+        mImageViewBoomWhiteCircle.setVisibility(View.VISIBLE);
+        mImageViewBoomWhiteCircle.startAnimation(animationBoom);
+    }
+
 }

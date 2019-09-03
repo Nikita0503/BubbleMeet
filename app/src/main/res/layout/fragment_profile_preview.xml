@@ -210,4 +210,92 @@
         app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"
         app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
         app:srcCompat="@drawable/circle_for_photo_pink" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayDown"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayUp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayDownLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAvatar"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayDownRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="@+id/imageViewAvatar"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayUpLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
+
+    <ImageView
+        android:id="@+id/imageViewGrayUpRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewAvatar"
+        app:srcCompat="@drawable/circle_for_photo_gray" />
 </androidx.constraintlayout.widget.ConstraintLayout>
