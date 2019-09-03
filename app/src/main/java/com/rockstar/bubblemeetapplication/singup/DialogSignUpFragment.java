@@ -8,18 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
-import com.rockstar.bubblemeetapplication.auth.AuthActivity;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 
 public class DialogSignUpFragment extends DialogFragment implements BaseContract.BaseView {
@@ -35,11 +30,13 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
         View v = inflater.inflate(R.layout.fragment_dialog_sign_up, null);
         mButtonNext = (Button) v.findViewById(R.id.buttonNext);
         mImageViewClose = (ImageView) v.findViewById(R.id.imageViewClose);
-        mViewPagerSignUp = (ViewPager) v.findViewById(R.id.sign_up_viewpager);
+        mViewPagerSignUp = (ViewPager) v.findViewById(R.id.profile_viewpager);
         mTabLayoutSignUp = (TabLayout) v.findViewById(R.id.tab_layout);
         initViews();
         return v;
     }
+
+
 
     @Override
     public void initViews() {

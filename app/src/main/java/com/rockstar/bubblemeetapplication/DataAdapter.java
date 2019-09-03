@@ -4,17 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
-import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
+import com.rockstar.bubblemeetapplication.profile_preview.ProfilePreviewFragment;
 
 
 public class DataAdapter extends BaseAdapter {
@@ -58,7 +55,7 @@ public class DataAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                ProfileFragment profileFragment = new ProfileFragment();
+                ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
                 profileFragment.setName(mNames[position]);
                 transaction.replace(R.id.root_fragment, profileFragment);
                 transaction.addToBackStack(null);

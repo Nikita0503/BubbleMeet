@@ -1,4 +1,4 @@
-package com.rockstar.bubblemeetapplication.profile;
+package com.rockstar.bubblemeetapplication.profile_preview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,12 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdapter.ViewHolder> {
+import com.rockstar.bubblemeetapplication.R;
+
+public class ProfilePreviewCustomAdapter extends RecyclerView.Adapter<ProfilePreviewCustomAdapter.ViewHolder> {
 
     String[] mNames;
+    Context mContext;
 
-    public ProfileCustomAdapter(){
+    public ProfilePreviewCustomAdapter(Context context){
         mNames = new String[]{"Some", "Names", "Contains", "This", "List"};
+        mContext = context;
     }
 
     @NonNull
@@ -30,6 +34,7 @@ public class ProfileCustomAdapter extends RecyclerView.Adapter<ProfileCustomAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textViewName.setText(mNames[position]);
+        holder.imageViewAvatar.setImageDrawable(mContext.getResources().getDrawable(R.drawable.circle_for_photo_gray));
     }
 
     @Override
