@@ -28,6 +28,14 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     ImageView mImageViewBoom;
     ImageView mImageViewAvatar;
     ImageView mImageViewBoomWhiteCircle;
+    ImageView mImageViewPinkDown1;
+    ImageView mImageViewPinkDown2;
+    ImageView mImageViewPinkLeftDown;
+    ImageView mImageViewPinkRightDown;
+    ImageView mImageViewPinkLeftUp;
+    ImageView mImageViewPinkRightUp;
+    ImageView mImageViewPinkUp1;
+    ImageView mImageViewPinkUp2;
     RecyclerView mRecyclerViewUsers;
 
     public void setName(String name){
@@ -48,6 +56,14 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewBoom = (ImageView) view.findViewById(R.id.imageViewBoom);
         mImageViewAvatar = (ImageView) view.findViewById(R.id.imageViewAvatar);
         mImageViewBoomWhiteCircle = (ImageView) view.findViewById(R.id.imageViewBoomWhiteCircle);
+        mImageViewPinkDown1 = (ImageView) view.findViewById(R.id.imageViewPinkDown1);
+        mImageViewPinkDown2 = (ImageView) view.findViewById(R.id.imageViewPinkDown2);
+        mImageViewPinkLeftDown = (ImageView) view.findViewById(R.id.imageViewPinkLeftDown);
+        mImageViewPinkRightDown = (ImageView) view.findViewById(R.id.imageViewPinkRightDown);
+        mImageViewPinkLeftUp = (ImageView) view.findViewById(R.id.imageViewPinkLeftUp);
+        mImageViewPinkRightUp = (ImageView) view.findViewById(R.id.imageViewPinkRightUp);
+        mImageViewPinkUp1 = (ImageView) view.findViewById(R.id.imageViewPinkUp1);
+        mImageViewPinkUp2 = (ImageView) view.findViewById(R.id.imageViewPinkUp2);
         initViews();
     }
 
@@ -101,17 +117,43 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 mImageViewBoomWhiteCircle.startAnimation(animationBoom);
             }
             public void onSwipeLeft() {
-                //Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
+                Animation animationPinkDown1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down1);
+                mImageViewPinkDown1.setVisibility(View.VISIBLE);
+                mImageViewPinkDown1.startAnimation(animationPinkDown1);
+                Animation animationPinkDown2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down2);
+                mImageViewPinkDown2.setVisibility(View.VISIBLE);
+                mImageViewPinkDown2.startAnimation(animationPinkDown2);
+                Animation animationPinkLeftDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_down);
+                mImageViewPinkLeftDown.setVisibility(View.VISIBLE);
+                mImageViewPinkLeftDown.startAnimation(animationPinkLeftDown);
+                Animation animationPinkRightDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_down);
+                mImageViewPinkRightDown.setVisibility(View.VISIBLE);
+                mImageViewPinkRightDown.startAnimation(animationPinkRightDown);
+                Animation animationPinkLeftUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_up);
+                mImageViewPinkLeftUp.setVisibility(View.VISIBLE);
+                mImageViewPinkLeftUp.startAnimation(animationPinkLeftUp);
+                Animation animationPinkRightUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_up);
+                mImageViewPinkRightUp.setVisibility(View.VISIBLE);
+                mImageViewPinkRightUp.startAnimation(animationPinkRightUp);
+                Animation animationPinkUp1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up1);
+                mImageViewPinkUp1.setVisibility(View.VISIBLE);
+                mImageViewPinkUp1.startAnimation(animationPinkUp1);
+                Animation animationPinkUp2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up2);
+                mImageViewPinkUp2.setVisibility(View.VISIBLE);
+                mImageViewPinkUp2.startAnimation(animationPinkUp2);
                 Animation animationBoom = AnimationUtils.loadAnimation(getContext(), R.anim.white_circle_boom_scale);
                 animationBoom.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-                        //Do nothing
+                        mImageViewAvatar.setVisibility(View.INVISIBLE);
+                        Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_auth_views);
+                        mImageViewAvatar.startAnimation(animationAlpha);
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         mImageViewBoomWhiteCircle.setVisibility(View.GONE);
+                        mImageViewAvatar.setVisibility(View.VISIBLE);
                     }
 
                     @Override

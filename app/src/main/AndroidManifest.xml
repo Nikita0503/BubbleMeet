@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity"></activity>
-        <activity android:name="com.rockstar.bubblemeetapplication.main.MainActivity"></activity>
-        <activity android:name="com.rockstar.bubblemeetapplication.auth.AuthActivity"></activity>
-        <activity android:name="com.rockstar.bubblemeetapplication.filters.FiltersActivity"></activity>
-        <activity android:name="com.rockstar.bubblemeetapplication.loading.LoadingActivity">
+        <activity android:screenOrientation="portrait" android:name="com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity"></activity>
+        <activity android:screenOrientation="portrait"  android:name="com.rockstar.bubblemeetapplication.main.MainActivity"></activity>
+        <activity android:screenOrientation="portrait"  android:name="com.rockstar.bubblemeetapplication.auth.AuthActivity"></activity>
+        <activity android:screenOrientation="portrait"  android:name="com.rockstar.bubblemeetapplication.filters.FiltersActivity"></activity>
+        <activity android:screenOrientation="portrait"  android:name="com.rockstar.bubblemeetapplication.loading.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
