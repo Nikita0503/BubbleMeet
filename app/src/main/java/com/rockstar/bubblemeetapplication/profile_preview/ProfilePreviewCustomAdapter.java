@@ -27,13 +27,12 @@ public class ProfilePreviewCustomAdapter extends RecyclerView.Adapter<ProfilePre
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(com.rockstar.bubblemeetapplication.R.layout.cell_grid, parent, false);
+        View view = inflater.inflate(R.layout.cell_only_avatar, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textViewName.setText(mNames[position]);
         holder.imageViewAvatar.setImageDrawable(mContext.getResources().getDrawable(R.drawable.circle_for_photo_gray));
     }
 
@@ -43,12 +42,10 @@ public class ProfilePreviewCustomAdapter extends RecyclerView.Adapter<ProfilePre
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textViewName;
         ImageView imageViewAvatar;
 
         public ViewHolder(View itemView){
             super(itemView);
-            textViewName = (TextView) itemView.findViewById(com.rockstar.bubblemeetapplication.R.id.textViewName);
             imageViewAvatar = (ImageView) itemView.findViewById(com.rockstar.bubblemeetapplication.R.id.imageViewAvatar);
         }
     }
