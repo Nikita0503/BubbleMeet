@@ -22,5 +22,5 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_up_pages_button" />
+        app:srcCompat="@drawable/bubble_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

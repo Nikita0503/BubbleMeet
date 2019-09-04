@@ -10,8 +10,8 @@
     <string name="enterYourNamePlease">Enter your name, please</string>
 
     <string name="gender">Gender</string>
-    <string name="man">Man</string>
-    <string name="woman">Woman</string>
+    <string name="man">MAN</string>
+    <string name="woman">WOMAN</string>
     <string name="lgbt">LGBT</string>
     <string-array name="gender">
         <item>Man</item>
