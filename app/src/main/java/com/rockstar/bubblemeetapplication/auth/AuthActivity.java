@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.SingUpActivity;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.singup.DialogSignUpFragment;
@@ -54,8 +55,8 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
         mTextViewDontHaveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogSignUpFragment dialogSignUpFragment = new DialogSignUpFragment();
-                dialogSignUpFragment.show(getSupportFragmentManager(), "123");
+                Intent intent = new Intent(AuthActivity.this, SingUpActivity.class);
+                startActivity(intent);
             }
         });
         mButtonLogin.setOnClickListener(new View.OnClickListener() {

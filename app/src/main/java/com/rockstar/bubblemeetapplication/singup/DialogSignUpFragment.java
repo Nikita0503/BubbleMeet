@@ -36,7 +36,15 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
         return v;
     }
 
+    @Override
+    public void onResume() {
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
 
+        params.height = 1400;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+        super.onResume();
+    }
 
     @Override
     public void initViews() {
@@ -99,6 +107,7 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
 
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
+        getActivity().finish();
     }
 
     public void onCancel(DialogInterface dialog) {
