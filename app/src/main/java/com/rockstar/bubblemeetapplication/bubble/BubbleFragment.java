@@ -32,19 +32,20 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     int[] mYPrevious;
     int mDefaultBubbleWidth;
     int mDefaultBubbleHeight;
-    int mPixelsToSide100percent;
+    int mPixelsToSide100percentX;
+    int mPixelsToSide100percentY;
 
     ImageView imageView;
-    ImageView imageView2;
-    ImageView imageView3;
-    ImageView imageView4;
-    ImageView imageView5;
-    ImageView imageView6;
-    ImageView imageView7;
-    ImageView imageView8;
-    ImageView imageView9;
-    ImageView imageView10;
-    ImageView imageView11;
+    //ImageView imageView2;
+    //ImageView imageView3;
+    //ImageView imageView4;
+    //ImageView imageView5;
+    //ImageView imageView6;
+    //ImageView imageView7;
+    //ImageView imageView8;
+    //ImageView imageView9;
+    //ImageView imageView10;
+    //ImageView imageView11;
 
     AbsoluteLayout layout;
 
@@ -53,27 +54,28 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mXPrevious = new int[11];
-        mYPrevious = new int[11];
+
         return inflater.inflate(R.layout.fragment_bubble_grid_view, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         imageView = (ImageView) view.findViewById(R.id.imageView1);
-        imageView2 = (ImageView) view.findViewById(R.id.imageView2);
-        imageView3 = (ImageView) view.findViewById(R.id.imageView3);
-        imageView4 = (ImageView) view.findViewById(R.id.imageView4);
-        imageView5 = (ImageView) view.findViewById(R.id.imageView5);
-        imageView6 = (ImageView) view.findViewById(R.id.imageView6);
-        imageView7 = (ImageView) view.findViewById(R.id.imageView7);
-        imageView8 = (ImageView) view.findViewById(R.id.imageView8);
-        imageView9 = (ImageView) view.findViewById(R.id.imageView9);
-        imageView10 = (ImageView) view.findViewById(R.id.imageView10);
-        imageView11 = (ImageView) view.findViewById(R.id.imageView11);
-        mImageViews = new ImageView[]{imageView, imageView2, imageView3,
+        //imageView2 = (ImageView) view.findViewById(R.id.imageView2);
+        //imageView3 = (ImageView) view.findViewById(R.id.imageView3);
+        //imageView4 = (ImageView) view.findViewById(R.id.imageView4);
+        //imageView5 = (ImageView) view.findViewById(R.id.imageView5);
+        //imageView6 = (ImageView) view.findViewById(R.id.imageView6);
+        //imageView7 = (ImageView) view.findViewById(R.id.imageView7);
+        //imageView8 = (ImageView) view.findViewById(R.id.imageView8);
+        //imageView9 = (ImageView) view.findViewById(R.id.imageView9);
+        //imageView10 = (ImageView) view.findViewById(R.id.imageView10);
+        //imageView11 = (ImageView) view.findViewById(R.id.imageView11);
+        mImageViews = new ImageView[]{imageView/*, imageView2, imageView3,
                 imageView4, imageView5, imageView6, imageView7, imageView8,
-                imageView9, imageView10, imageView11};
+                imageView9, imageView10, imageView11*/};
+        mXPrevious = new int[mImageViews.length];
+        mYPrevious = new int[mImageViews.length];
         layout = (AbsoluteLayout) view.findViewById(R.id.layout);
         AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) imageView.getLayoutParams();
         mDefaultBubbleWidth = params.width;
@@ -82,10 +84,11 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
         Point size = new Point();
         display.getSize(size);
         mDisplayCenterX = size.x / 2;
-        mDisplayCenterY = size.y / 2;
+        mDisplayCenterY = size.y / 2 - size.y/10;
         mDisplayCenterXWithoutRadius = mDisplayCenterX - mDefaultBubbleWidth / 2;
         mDisplayCenterYWithoutRadius = mDisplayCenterY - mDefaultBubbleHeight / 2;
-        mPixelsToSide100percent = mDisplayCenterX - mDisplayCenterX/4;
+        mPixelsToSide100percentX = mDisplayCenterX - mDisplayCenterX/4;
+        mPixelsToSide100percentY = mDisplayCenterY - mDisplayCenterY/4;
         Log.d("HeightAndWidth", "h = " + mDisplayCenterY+ ", w = " + mDisplayCenterX);
         initViews();
     }
@@ -112,29 +115,26 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                 int differenceY = (int) event.getY() - mYPrevious[i];
                                 params.x = params.x - differenceX;
                                 params.y = params.y - differenceY;
-
-                                //if((params.x + mDefaultBubbleWidth/2) < mDisplayCenterX + mDisplayCenterX/4 && (params.x - mDefaultBubbleWidth / 2) > mDisplayCenterX - mDisplayCenterX/4
-                                //    && params.y + mDefaultBubbleHeight > mDisplayCenterY - mDisplayCenterY/4 && params.y + mDefaultBubbleHeight < mDisplayCenterY + mDisplayCenterY/4) {
-                                //params.height = mDefaultBubbleHeight;
-                                //params.width = mDefaultBubbleWidth;
-                                //}else{
                                 double pixelsToSideFromBubbleX;
+                                double pixelsToSideFromBubbleY;
                                 double toSideFromBubblePercentX;
+                                double toSideFromBubblePercentY;
                                 if (params.x < mDisplayCenterX) {
                                     pixelsToSideFromBubbleX = params.x;
                                 } else {
                                     pixelsToSideFromBubbleX = Math.abs(params.x - mDisplayCenterX * 2);
                                 }
-                                toSideFromBubblePercentX = pixelsToSideFromBubbleX / mPixelsToSide100percent;
-                                params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentX);
-                                params.width = (int) (mDefaultBubbleWidth * toSideFromBubblePercentX);
+                                if (params.y < mDisplayCenterY) {
+                                    pixelsToSideFromBubbleY = params.y;
+                                } else {
+                                    pixelsToSideFromBubbleY = Math.abs(params.y - mDisplayCenterY * 2);
+                                }
+                                toSideFromBubblePercentX = pixelsToSideFromBubbleX / mPixelsToSide100percentX;
+                                toSideFromBubblePercentY = pixelsToSideFromBubbleY / mPixelsToSide100percentY;
+                                params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentY);
+                                //params.width = (int) (mDefaultBubbleWidth * toSideFromBubblePercentX);
 
-                                Log.d("ToSide", toSideFromBubblePercentX + "");
-
-
-                                //}
-
-
+                                Log.d("ToSide", pixelsToSideFromBubbleY + "");
                             }
                         }
                         mImageViews[i].setLayoutParams(params);
