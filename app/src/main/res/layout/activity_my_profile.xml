@@ -40,7 +40,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_left_row" />
+        app:srcCompat="@drawable/ic_left_row_2" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -68,7 +68,7 @@
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
@@ -80,8 +80,8 @@
 
             <ImageView
                 android:id="@+id/imageViewAvatar"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView10"
                 app:layout_constraintEnd_toEndOf="@+id/imageView10"
                 app:layout_constraintStart_toStartOf="@+id/imageView10"
@@ -104,7 +104,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 android:text="Years old"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="@+id/textViewName"
@@ -113,11 +113,11 @@
 
             <ImageView
                 android:id="@+id/imageView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@+id/imageView10"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
                 app:srcCompat="@drawable/ic_about_me" />
@@ -139,7 +139,7 @@
                 android:id="@+id/imageViewPhoto2"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView13"
@@ -151,7 +151,7 @@
                 android:layout_height="80dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewPhoto2"
@@ -165,7 +165,7 @@
                 android:layout_height="80dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -177,9 +177,9 @@
                 android:id="@+id/flowLayoutGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
 
                 android:layout_marginEnd="40dp"
                 app:flChildSpacingForLastRow="align"
@@ -193,77 +193,77 @@
                 <Button
                     android:id="@+id/button1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/man" />
 
                 <Button
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/m180" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/blue" />
 
                 <Button
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="Dancing" />
 
                 <Button
                     android:id="@+id/button5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/loveToCook" />
 
                 <Button
                     android:id="@+id/button6"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/man" />
 
                 <Button
                     android:id="@+id/button7"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/green" />
 
                 <Button
                     android:id="@+id/button8"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/enterEmail" />
 
                 <Button
                     android:id="@+id/button9"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/smoking" />
 
                 <Button
                     android:id="@+id/button10"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/married" />
 
                 <Button
                     android:id="@+id/button11"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/gender" />
 

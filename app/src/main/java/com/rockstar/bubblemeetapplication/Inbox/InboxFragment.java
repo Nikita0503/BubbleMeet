@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.DataAdapter;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 
 public class InboxFragment extends Fragment implements BaseContract.BaseView {
 
@@ -27,6 +28,6 @@ public class InboxFragment extends Fragment implements BaseContract.BaseView {
 
     @Override
     public void initViews() {
-
+        ((MainActivity) getActivity()).hideButtonBack();
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.profile_preview.ProfilePreviewFragment;
 
 
@@ -19,11 +20,13 @@ public class DataAdapter extends BaseAdapter {
     String[] mNames;
     Context mContext;
     FragmentManager mFragmentManager;
+    MainActivity mActivity;
 
-    public DataAdapter(Context c, String[] names, FragmentManager fragmentManager) {
+    public DataAdapter(Context c, String[] names, FragmentManager fragmentManager, MainActivity activity) {
         mContext = c;
         mNames = names;
         mFragmentManager = fragmentManager;
+        mActivity = activity;
     }
 
     public int getCount() {

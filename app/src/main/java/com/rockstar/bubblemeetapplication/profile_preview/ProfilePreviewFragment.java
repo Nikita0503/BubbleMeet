@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.OnSwipeTouchListener;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 
 public class ProfilePreviewFragment extends Fragment implements BaseContract.BaseView {
@@ -61,6 +62,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).showButtonBack();
         mRecyclerViewUsers = (RecyclerView) view.findViewById(com.rockstar.bubblemeetapplication.R.id.recyclerViewUsers);
         mTextViewName = (TextView) view.findViewById(R.id.textViewName);
         mImageViewLike = (ImageView) view.findViewById(R.id.imageViewLike);

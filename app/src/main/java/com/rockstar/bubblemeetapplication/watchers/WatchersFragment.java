@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.DataAdapter;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 
 public class WatchersFragment extends Fragment implements BaseContract.BaseView {
 
@@ -25,12 +26,12 @@ public class WatchersFragment extends Fragment implements BaseContract.BaseView 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mGridViewMatches = (GridView) view.findViewById(com.rockstar.bubblemeetapplication.R.id.gridViewList);
-        mGridViewMatches.setAdapter(new DataAdapter(getContext(), new String[]{"Watch"}, getFragmentManager()));
+        mGridViewMatches.setAdapter(new DataAdapter(getContext(), new String[]{"Watch"}, getFragmentManager(), (MainActivity) getActivity()));
         initViews();
     }
 
     @Override
     public void initViews() {
-
+        ((MainActivity) getActivity()).hideButtonBack();
     }
 }

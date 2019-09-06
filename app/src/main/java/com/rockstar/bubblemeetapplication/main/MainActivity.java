@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
 
     FragmentManager mFragmentManager;
 
+    ImageView mImageViewBack;
     ImageView mImageViewFilters;
     ImageView mImageViewProfile;
     ImageView mImageViewMatches;
@@ -42,6 +43,13 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
 
     @Override
     public void initViews() {
+        mImageViewBack = (ImageView) findViewById(R.id.imageViewBack);
+        mImageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().popBackStack();
+            }
+        });
         mImageViewFilters = (ImageView) findViewById(R.id.imageViewFilters);
         mImageViewFilters.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         mImageViewMatches.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mImageViewFilters.setVisibility(View.GONE);
                 resetMenuIcons();
                 mImageViewMatches.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_profile_icon));
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -77,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         mImageViewLikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mImageViewFilters.setVisibility(View.GONE);
                 resetMenuIcons();
                 mImageViewLikes.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_likes));
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -90,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         mImageViewBubble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mImageViewFilters.setVisibility(View.VISIBLE);
                 resetMenuIcons();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 BubbleFragment bubbleFragment = new BubbleFragment();
@@ -102,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         mImageViewWatchers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mImageViewFilters.setVisibility(View.GONE);
                 resetMenuIcons();
                 mImageViewWatchers.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_views));
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -115,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         mImageViewInbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mImageViewFilters.setVisibility(View.GONE);
                 resetMenuIcons();
                 mImageViewInbox.setImageDrawable(getResources().getDrawable(R.drawable.ic_selected_messages));
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -129,6 +142,15 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         transaction.replace(R.id.root_fragment, bubbleFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void showButtonBack(){
+        mImageViewBack.setVisibility(View.VISIBLE);
+        mImageViewFilters.setVisibility(View.GONE);
+    }
+
+    public void hideButtonBack(){
+        mImageViewBack.setVisibility(View.GONE);
     }
 
     private void resetMenuIcons() {
