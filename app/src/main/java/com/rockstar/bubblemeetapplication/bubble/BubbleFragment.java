@@ -84,12 +84,12 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
         Point size = new Point();
         display.getSize(size);
         mDisplayCenterX = size.x / 2;
-        mDisplayCenterY = size.y / 2 - size.y/10;
+        mDisplayCenterY = size.y / 2 - size.y / 10;
         //mDisplayCenterXWithoutRadius = mDisplayCenterX - mDefaultBubbleWidth / 2;
         //mDisplayCenterYWithoutRadius = mDisplayCenterY - mDefaultBubbleHeight / 2;
-        mPixelsToSide100percentX = mDisplayCenterX - mDisplayCenterX/4;
-        mPixelsToSide100percentY = mDisplayCenterY - mDisplayCenterY/4;
-        Log.d("HeightAndWidth", "h = " + mDisplayCenterY+ ", w = " + mDisplayCenterX);
+        mPixelsToSide100percentX = mDisplayCenterX - mDisplayCenterX / 4;
+        mPixelsToSide100percentY = mDisplayCenterY - mDisplayCenterY / 4;
+        Log.d("HeightAndWidth", "h = " + mDisplayCenterY + ", w = " + mDisplayCenterX);
         initViews();
     }
 
@@ -99,79 +99,116 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                for(int i = 0; i < mImageViews.length; i++){
-                AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        if(mXPrevious[i] > 0 && mXPrevious[i] < (mDisplayCenterX * 2)) {
-                            if (mXPrevious[i] != 0 && mYPrevious[i] != 0) {
-                                //Log.d("LOG", "xPrevious = " + mXPrevious);
-                                //Log.d("LOG", "x = " + event.getX());
-                                //Log.d("LOG", "yPrevious = " + mYPrevious);
-                                //Log.d("LOG", "y = " + event.getY());
+                for (int i = 0; i < mImageViews.length; i++) {
+                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            if (mXPrevious[i] > 0 && mXPrevious[i] < (mDisplayCenterX * 2)) {
+                                int width = 0;
+                                int height = 0;
+                                if (mXPrevious[i] != 0 && mYPrevious[i] != 0) {
+                                    //Log.d("LOG", "xPrevious = " + mXPrevious);
+                                    //Log.d("LOG", "x = " + event.getX());
+                                    //Log.d("LOG", "yPrevious = " + mYPrevious);
+                                    //Log.d("LOG", "y = " + event.getY());
 
-                                int differenceX = (int) event.getX() - mXPrevious[i];
-                                int differenceY = (int) event.getY() - mYPrevious[i];
-                                params.x = params.x + differenceX;
-                                params.y = params.y + differenceY;
-                                double pixelsToSideFromBubbleX;
-                                double toSideFromBubblePercentX;
-                                if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 2){
-                                    pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 2;
-                                }else{
-                                    pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
-                                }
-                                //Log.d("ToSide", pixelsToSideFromBubbleX + " pixels to side");
+                                    int differenceX = (int) event.getX() - mXPrevious[i];
+                                    int differenceY = (int) event.getY() - mYPrevious[i];
+                                    params.x = params.x + differenceX;
+                                    params.y = params.y + differenceY;
 
-                                if(pixelsToSideFromBubbleX > mDisplayCenterX / 2){
-                                    params.height = mDefaultBubbleHeight;
-                                }else {
+
+                                    //double pixelsToSideFromBubbleX = 0;
+                                    //double toSideFromBubblePercentX = 0;
+                                    //if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 2){
+                                    //    pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 2;
+                                    //}else{
+                                    //    pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
+                                    //}
+                                    //if(pixelsToSideFromBubbleX > mDisplayCenterX / 2){
+                                    //    params.height = mDefaultBubbleWidth;
+                                    //}else {
+                                    //    toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
+                                    //    if (toSideFromBubblePercentX > 0) {
+                                    //        //params.height = (int) (mDefaultBubbleWidth * toSideFromBubblePercentX);
+                                    //    }
+                                    //}
+
+                                    //double pixelsToSideFromBubbleY = 0;
+                                    //double toSideFromBubblePercentY = 0;
+                                    //if(params.y < mDisplayCenterY - 2 * (mDefaultBubbleHeight / 3)){
+                                    //    pixelsToSideFromBubbleY = params.y;
+                                    //}else{
+                                    //    pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
+                                    //}
+                                    //if(pixelsToSideFromBubbleY > mDisplayCenterY / 2){
+                                    //    params.height = mDefaultBubbleHeight;
+                                    //}else {
+                                    //    toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
+                                    //    if (toSideFromBubblePercentY > 0) {
+                                    //        //params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentY);
+
+                                    //    }
+                                    //}
+
+
+
+                                    double pixelsToSideFromBubbleX = 0;
+                                    double toSideFromBubblePercentX = 0;
+                                    double pixelsToSideFromBubbleY = 0;
+                                    double toSideFromBubblePercentY = 0;
+                                    if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 2){
+                                        pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 2;
+                                    }else{
+                                        pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
+                                    }
+                                    if(params.y < mDisplayCenterY - 2 * (mDefaultBubbleHeight / 3)){
+                                        pixelsToSideFromBubbleY = params.y;
+                                    }else{
+                                        pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
+                                    }
                                     toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
-                                    if (toSideFromBubblePercentX > 0) {
-                                        params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentX);
-                                        Log.d("percent", toSideFromBubblePercentX + "%");
+                                    toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
+                                    //if(toSideFromBubblePercentX > 0 && toSideFromBubblePercentX < 1 && toSideFromBubblePercentY > 0 && toSideFromBubblePercentY < 1){
+                                        //Log.d("123", "x = " + toSideFromBubblePercentX + " y = " + toSideFromBubblePercentY);
+                                    //}
+                                    Log.d("123","y = " + toSideFromBubblePercentY + " x = " + toSideFromBubblePercentX);
+                                    if(toSideFromBubblePercentX > toSideFromBubblePercentY){
+                                        Log.d("123","y = " + toSideFromBubblePercentY);
+                                        if(toSideFromBubblePercentY < 1){
+                                            params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleHeight);
+                                        }else{
+                                            if(toSideFromBubblePercentY < 0){
+                                                params.height = 0;
+                                            }else {
+                                                params.height = mDefaultBubbleHeight;
+                                            }
+                                        }
+                                    }else {
+                                        Log.d("123", "x = " + toSideFromBubblePercentX);
+                                        if(toSideFromBubblePercentX < 1){
+                                            params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleHeight);
+                                        }else{
+                                            if(toSideFromBubblePercentX < 0){
+                                                params.height = 0;
+                                            }else {
+                                                params.height = mDefaultBubbleHeight;
+                                            }
+                                        }
                                     }
                                 }
-
-                                //int differenceX = (int) event.getX() - mXPrevious[i];
-                                //int differenceY = (int) event.getY() - mYPrevious[i];
-                                //params.x = params.x + differenceX;
-                                //params.y = params.y + differenceY;
-                                //double pixelsToSideFromBubbleX;
-                                //double pixelsToSideFromBubbleY;
-                                //double toSideFromBubblePercentX;
-                                //double toSideFromBubblePercentY;
-                                //if (params.x < mDisplayCenterX) {
-                                //    pixelsToSideFromBubbleX = params.x;
-                                //} else {
-                                //    pixelsToSideFromBubbleX = Math.abs(params.x - mDisplayCenterX * 2);
-                                //}
-                                //if (params.y < mDisplayCenterY) {
-                                //    pixelsToSideFromBubbleY = params.y - mDefaultBubbleWidth;
-                                //} else {
-                                //    pixelsToSideFromBubbleY = Math.abs(params.y - mDisplayCenterY * 2);
-                                //}
-                                //toSideFromBubblePercentX = pixelsToSideFromBubbleX / mPixelsToSide100percentX;
-                                //toSideFromBubblePercentY = pixelsToSideFromBubbleY / mPixelsToSide100percentY;
-                                //if(params.x > 0 && params.x < mDisplayCenterX * 2 && params.y > 0 && params.y < mDisplayCenterY * 2) {
-                                //    params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentY);
-                                //    params.width = (int) (mDefaultBubbleWidth * toSideFromBubblePercentX);
-                                //}
-                                //Log.d("ToSide", pixelsToSideFromBubbleX + "");
-
                             }
-                        }
-                        mImageViews[i].setLayoutParams(params);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                        break;
-                }
-                mXPrevious[i] = (int) event.getX();
-                mYPrevious[i] = (int) event.getY();
+                            mImageViews[i].setLayoutParams(params);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            break;
+                        case MotionEvent.ACTION_CANCEL:
+                            break;
+                    }
+                    mXPrevious[i] = (int) event.getX();
+                    mYPrevious[i] = (int) event.getY();
                 }
                 return true;
 
