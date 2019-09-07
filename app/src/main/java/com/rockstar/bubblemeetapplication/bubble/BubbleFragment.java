@@ -159,8 +159,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     double toSideFromBubblePercentX = 0;
                                     double pixelsToSideFromBubbleY = 0;
                                     double toSideFromBubblePercentY = 0;
-                                    if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 2){
-                                        pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 2;
+                                    if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 3){
+                                        pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 3;
                                     }else{
                                         pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
                                     }
