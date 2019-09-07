@@ -61,19 +61,19 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         imageView = (ImageView) view.findViewById(R.id.imageView1);
-        //imageView2 = (ImageView) view.findViewById(R.id.imageView2);
-        //imageView3 = (ImageView) view.findViewById(R.id.imageView3);
-        //imageView4 = (ImageView) view.findViewById(R.id.imageView4);
-        //imageView5 = (ImageView) view.findViewById(R.id.imageView5);
-        //imageView6 = (ImageView) view.findViewById(R.id.imageView6);
-        //imageView7 = (ImageView) view.findViewById(R.id.imageView7);
-        //imageView8 = (ImageView) view.findViewById(R.id.imageView8);
-        //imageView9 = (ImageView) view.findViewById(R.id.imageView9);
-        //imageView10 = (ImageView) view.findViewById(R.id.imageView10);
-        //imageView11 = (ImageView) view.findViewById(R.id.imageView11);
-        mImageViews = new ImageView[]{imageView/*, imageView2, imageView3,
+        imageView2 = (ImageView) view.findViewById(R.id.imageView2);
+        imageView3 = (ImageView) view.findViewById(R.id.imageView3);
+        imageView4 = (ImageView) view.findViewById(R.id.imageView4);
+        imageView5 = (ImageView) view.findViewById(R.id.imageView5);
+        imageView6 = (ImageView) view.findViewById(R.id.imageView6);
+        imageView7 = (ImageView) view.findViewById(R.id.imageView7);
+        imageView8 = (ImageView) view.findViewById(R.id.imageView8);
+        imageView9 = (ImageView) view.findViewById(R.id.imageView9);
+        imageView10 = (ImageView) view.findViewById(R.id.imageView10);
+        imageView11 = (ImageView) view.findViewById(R.id.imageView11);
+        mImageViews = new ImageView[]{imageView, imageView2, imageView3,
                 imageView4, imageView5, imageView6, imageView7, imageView8,
-                imageView9, imageView10, imageView11*/};
+                imageView9, imageView10, imageView11};
         mXPrevious = new int[mImageViews.length];
         mYPrevious = new int[mImageViews.length];
         layout = (AbsoluteLayout) view.findViewById(R.id.layout);
@@ -124,11 +124,17 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
                                 }
                                 //Log.d("ToSide", pixelsToSideFromBubbleX + " pixels to side");
-                                toSideFromBubblePercentX = pixelsToSideFromBubbleX  / mDisplayCenterX;
-                                if(toSideFromBubblePercentX > 0){
-                                    params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentX);
+
+                                if(pixelsToSideFromBubbleX > mDisplayCenterX / 2){
+                                    params.height = mDefaultBubbleHeight;
+                                }else {
+                                    toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
+                                    if (toSideFromBubblePercentX > 0) {
+                                        params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentX);
+                                        Log.d("percent", toSideFromBubblePercentX + "%");
+                                    }
                                 }
-                                Log.d("percent", toSideFromBubblePercentX + "%");
+
                                 //int differenceX = (int) event.getX() - mXPrevious[i];
                                 //int differenceY = (int) event.getY() - mYPrevious[i];
                                 //params.x = params.x + differenceX;
