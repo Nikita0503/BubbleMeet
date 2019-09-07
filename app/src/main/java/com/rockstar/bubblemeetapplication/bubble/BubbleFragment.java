@@ -36,16 +36,16 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     int mPixelsToSide100percentY;
 
     ImageView imageView;
-    //ImageView imageView2;
-    //ImageView imageView3;
-    //ImageView imageView4;
-    //ImageView imageView5;
-    //ImageView imageView6;
-    //ImageView imageView7;
-    //ImageView imageView8;
-    //ImageView imageView9;
-    //ImageView imageView10;
-    //ImageView imageView11;
+    ImageView imageView2;
+    ImageView imageView3;
+    ImageView imageView4;
+    ImageView imageView5;
+    ImageView imageView6;
+    ImageView imageView7;
+    ImageView imageView8;
+    ImageView imageView9;
+    ImageView imageView10;
+    ImageView imageView11;
 
     AbsoluteLayout layout;
 
@@ -85,8 +85,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
         display.getSize(size);
         mDisplayCenterX = size.x / 2;
         mDisplayCenterY = size.y / 2 - size.y/10;
-        mDisplayCenterXWithoutRadius = mDisplayCenterX - mDefaultBubbleWidth / 2;
-        mDisplayCenterYWithoutRadius = mDisplayCenterY - mDefaultBubbleHeight / 2;
+        //mDisplayCenterXWithoutRadius = mDisplayCenterX - mDefaultBubbleWidth / 2;
+        //mDisplayCenterYWithoutRadius = mDisplayCenterY - mDefaultBubbleHeight / 2;
         mPixelsToSide100percentX = mDisplayCenterX - mDisplayCenterX/4;
         mPixelsToSide100percentY = mDisplayCenterY - mDisplayCenterY/4;
         Log.d("HeightAndWidth", "h = " + mDisplayCenterY+ ", w = " + mDisplayCenterX);
@@ -111,30 +111,50 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                 //Log.d("LOG", "x = " + event.getX());
                                 //Log.d("LOG", "yPrevious = " + mYPrevious);
                                 //Log.d("LOG", "y = " + event.getY());
+
                                 int differenceX = (int) event.getX() - mXPrevious[i];
                                 int differenceY = (int) event.getY() - mYPrevious[i];
-                                params.x = params.x - differenceX;
-                                params.y = params.y - differenceY;
+                                params.x = params.x + differenceX;
+                                params.y = params.y + differenceY;
                                 double pixelsToSideFromBubbleX;
-                                double pixelsToSideFromBubbleY;
                                 double toSideFromBubblePercentX;
-                                double toSideFromBubblePercentY;
-                                if (params.x < mDisplayCenterX) {
-                                    pixelsToSideFromBubbleX = params.x;
-                                } else {
-                                    pixelsToSideFromBubbleX = Math.abs(params.x - mDisplayCenterX * 2);
+                                if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 2){
+                                    pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 2;
+                                }else{
+                                    pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
                                 }
-                                if (params.y < mDisplayCenterY) {
-                                    pixelsToSideFromBubbleY = params.y;
-                                } else {
-                                    pixelsToSideFromBubbleY = Math.abs(params.y - mDisplayCenterY * 2);
+                                //Log.d("ToSide", pixelsToSideFromBubbleX + " pixels to side");
+                                toSideFromBubblePercentX = pixelsToSideFromBubbleX  / mDisplayCenterX;
+                                if(toSideFromBubblePercentX > 0){
+                                    params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentX);
                                 }
-                                toSideFromBubblePercentX = pixelsToSideFromBubbleX / mPixelsToSide100percentX;
-                                toSideFromBubblePercentY = pixelsToSideFromBubbleY / mPixelsToSide100percentY;
-                                params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentY);
-                                //params.width = (int) (mDefaultBubbleWidth * toSideFromBubblePercentX);
+                                Log.d("percent", toSideFromBubblePercentX + "%");
+                                //int differenceX = (int) event.getX() - mXPrevious[i];
+                                //int differenceY = (int) event.getY() - mYPrevious[i];
+                                //params.x = params.x + differenceX;
+                                //params.y = params.y + differenceY;
+                                //double pixelsToSideFromBubbleX;
+                                //double pixelsToSideFromBubbleY;
+                                //double toSideFromBubblePercentX;
+                                //double toSideFromBubblePercentY;
+                                //if (params.x < mDisplayCenterX) {
+                                //    pixelsToSideFromBubbleX = params.x;
+                                //} else {
+                                //    pixelsToSideFromBubbleX = Math.abs(params.x - mDisplayCenterX * 2);
+                                //}
+                                //if (params.y < mDisplayCenterY) {
+                                //    pixelsToSideFromBubbleY = params.y - mDefaultBubbleWidth;
+                                //} else {
+                                //    pixelsToSideFromBubbleY = Math.abs(params.y - mDisplayCenterY * 2);
+                                //}
+                                //toSideFromBubblePercentX = pixelsToSideFromBubbleX / mPixelsToSide100percentX;
+                                //toSideFromBubblePercentY = pixelsToSideFromBubbleY / mPixelsToSide100percentY;
+                                //if(params.x > 0 && params.x < mDisplayCenterX * 2 && params.y > 0 && params.y < mDisplayCenterY * 2) {
+                                //    params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentY);
+                                //    params.width = (int) (mDefaultBubbleWidth * toSideFromBubblePercentX);
+                                //}
+                                //Log.d("ToSide", pixelsToSideFromBubbleX + "");
 
-                                Log.d("ToSide", pixelsToSideFromBubbleY + "");
                             }
                         }
                         mImageViews[i].setLayoutParams(params);
