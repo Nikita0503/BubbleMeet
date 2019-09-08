@@ -26,12 +26,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
     int mDisplayCenterX;
     int mDisplayCenterY;
-    int mDisplayCenterXWithoutRadius;
-    int mDisplayCenterYWithoutRadius;
     int[] mXPrevious;
     int[] mYPrevious;
-    int[] mWidthPrevious;
-    int[] mHeightPrevious;
     int mDefaultBubbleWidth;
     int mDefaultBubbleHeight;
     int mPixelsToSide100percentX;
@@ -217,6 +213,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                                 params.height = 0;
                                             }else {
                                                 params.height = mDefaultBubbleHeight;
+
                                             }
                                         }
                                     }else {
@@ -231,6 +228,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                             }
                                         }
                                     }
+
                                 }
                             }
                             mImageViews[i].setLayoutParams(params);
