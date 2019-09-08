@@ -30,6 +30,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     int mDisplayCenterYWithoutRadius;
     int[] mXPrevious;
     int[] mYPrevious;
+    int[] mWidthPrevious;
+    int[] mHeightPrevious;
     int mDefaultBubbleWidth;
     int mDefaultBubbleHeight;
     int mPixelsToSide100percentX;
@@ -46,6 +48,20 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     ImageView imageView9;
     ImageView imageView10;
     ImageView imageView11;
+    ImageView imageView12;
+    ImageView imageView13;
+    ImageView imageView14;
+    ImageView imageView15;
+    ImageView imageView16;
+    ImageView imageView17;
+    ImageView imageView18;
+    ImageView imageView19;
+    ImageView imageView20;
+    ImageView imageView21;
+    ImageView imageView22;
+    ImageView imageView23;
+    ImageView imageView24;
+
 
     AbsoluteLayout layout;
 
@@ -71,9 +87,26 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
         imageView9 = (ImageView) view.findViewById(R.id.imageView9);
         imageView10 = (ImageView) view.findViewById(R.id.imageView10);
         imageView11 = (ImageView) view.findViewById(R.id.imageView11);
+        imageView12 = (ImageView) view.findViewById(R.id.imageView12);
+        imageView13 = (ImageView) view.findViewById(R.id.imageView13);
+        imageView14 = (ImageView) view.findViewById(R.id.imageView14);
+        imageView15 = (ImageView) view.findViewById(R.id.imageView15);
+        imageView16 = (ImageView) view.findViewById(R.id.imageView16);
+        imageView17 = (ImageView) view.findViewById(R.id.imageView17);
+        imageView18 = (ImageView) view.findViewById(R.id.imageView18);
+        imageView19 = (ImageView) view.findViewById(R.id.imageView19);
+        imageView20 = (ImageView) view.findViewById(R.id.imageView20);
+        imageView21 = (ImageView) view.findViewById(R.id.imageView21);
+        imageView22 = (ImageView) view.findViewById(R.id.imageView22);
+        imageView23 = (ImageView) view.findViewById(R.id.imageView23);
+        imageView24 = (ImageView) view.findViewById(R.id.imageView24);
+
         mImageViews = new ImageView[]{imageView, imageView2, imageView3,
                 imageView4, imageView5, imageView6, imageView7, imageView8,
-                imageView9, imageView10, imageView11};
+                imageView9, imageView10, imageView11, imageView12, imageView13,
+                imageView14, imageView15, imageView16, imageView17, imageView18,
+                imageView19, imageView20, imageView21, imageView22, imageView23,
+                imageView24};
         mXPrevious = new int[mImageViews.length];
         mYPrevious = new int[mImageViews.length];
         layout = (AbsoluteLayout) view.findViewById(R.id.layout);
