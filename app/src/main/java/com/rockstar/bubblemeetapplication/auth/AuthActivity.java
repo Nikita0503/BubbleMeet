@@ -1,6 +1,8 @@
 package com.rockstar.bubblemeetapplication.auth;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,13 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
-import com.rockstar.bubblemeetapplication.SingUpActivity;
-import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
+import com.rockstar.bubblemeetapplication.singup.Fragment1;
+import com.rockstar.bubblemeetapplication.singup.SingUpActivity;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
-import com.rockstar.bubblemeetapplication.singup.DialogSignUpFragment;
 
 
 public class AuthActivity extends AppCompatActivity implements BaseContract.BaseView {

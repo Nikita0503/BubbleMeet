@@ -47,5 +47,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.github.abdularis:CircularImageView:v1.1'
+    implementation 'com.github.abdularis:CircularImageView:v1.2'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 }

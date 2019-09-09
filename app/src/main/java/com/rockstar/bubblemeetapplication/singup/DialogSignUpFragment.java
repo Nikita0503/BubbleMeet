@@ -3,6 +3,7 @@ package com.rockstar.bubblemeetapplication.singup;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,15 @@ import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 
+import java.io.File;
+
 public class DialogSignUpFragment extends DialogFragment implements BaseContract.BaseView {
 
-    Button mButtonNext;
-    ImageView mImageViewClose;
-    SignUpFragmentPagerAdapter mSignUpFragmentAdapter;
-    ViewPager mViewPagerSignUp;
-    TabLayout mTabLayoutSignUp;
+    private Button mButtonNext;
+    private ImageView mImageViewClose;
+    private SignUpFragmentPagerAdapter mSignUpFragmentAdapter;
+    private ViewPager mViewPagerSignUp;
+    private TabLayout mTabLayoutSignUp;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,6 +101,10 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
                 showNextPage();
             }
         });
+    }
+
+    public void addPhoto(int number, File photo){
+        mSignUpFragmentAdapter.addPhoto(number, photo);
     }
 
     public void showNextPage(){

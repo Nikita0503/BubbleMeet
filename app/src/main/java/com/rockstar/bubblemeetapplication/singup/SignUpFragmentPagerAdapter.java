@@ -7,18 +7,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import java.io.File;
+
 
 public class SignUpFragmentPagerAdapter extends FragmentPagerAdapter {
 
+    private Fragment1 mFragment1;
+
     public SignUpFragmentPagerAdapter(FragmentManager supportFragmentManager) {
         super(supportFragmentManager);
+        mFragment1 = new Fragment1();
     }
 
     @Override
     public Fragment getItem(int position) {
                 switch(position) {
             case 0:
-                return new Fragment1();
+                return mFragment1;
             case 1:
                 return new Fragment2();
             case 2:
@@ -42,9 +47,14 @@ public class SignUpFragmentPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
-    // Returns total number of pages
+    public void addPhoto(int number, File photo){
+        mFragment1.setPhoto(number, photo);
+    }
+
     @Override
     public int getCount() {
         return 10;
     }
+
+
 }
