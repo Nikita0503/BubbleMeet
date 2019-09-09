@@ -15,7 +15,14 @@ import com.rockstar.bubblemeetapplication.main.MainActivity;
 
 public class LikesFragment extends Fragment implements BaseContract.BaseView {
 
-    GridView mGridViewMatches;
+    private LikesPresenter mPresenter;
+    private GridView mGridViewMatches;
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        mPresenter = new LikesPresenter(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,10 +35,17 @@ public class LikesFragment extends Fragment implements BaseContract.BaseView {
         mGridViewMatches = (GridView) view.findViewById(com.rockstar.bubblemeetapplication.R.id.gridViewList);
         mGridViewMatches.setAdapter(new DataAdapter(getContext(), new String[]{"Fragment", "Likes", "Names", "Hello", "Vasya", "Dog"}, getFragmentManager(), (MainActivity) getActivity()));
         initViews();
+        mPresenter.onStart();
     }
 
     @Override
     public void initViews() {
         ((MainActivity) getActivity()).hideButtonBack();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mPresenter.onStop();
     }
 }

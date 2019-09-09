@@ -22,18 +22,26 @@ import com.rockstar.bubblemeetapplication.singup.DialogSignUpFragment;
 
 public class AuthActivity extends AppCompatActivity implements BaseContract.BaseView {
 
-    TextView mTextViewDontHaveAccount;
-    TextView mTextViewForgotPassword;
-    EditText mEditTextEmail;
-    EditText mEditTextPassword;
-    Button mButtonLogin;
-    ImageView mImageViewLogo;
+    private AuthPresenter mPresenter;
+    private TextView mTextViewDontHaveAccount;
+    private TextView mTextViewForgotPassword;
+    private EditText mEditTextEmail;
+    private EditText mEditTextPassword;
+    private Button mButtonLogin;
+    private ImageView mImageViewLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         initViews();
+        mPresenter = new AuthPresenter(this);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        mPresenter.onStart();
     }
 
     @Override
@@ -67,5 +75,11 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mPresenter.onStop();
     }
 }
