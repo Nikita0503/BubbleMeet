@@ -12,16 +12,24 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.DataAdapter;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
+import com.rockstar.bubblemeetapplication.model.data.UserData;
+
+import java.util.ArrayList;
 
 public class LikesFragment extends Fragment implements BaseContract.BaseView {
 
+    private DataAdapter mAdapter;
     private LikesPresenter mPresenter;
     private GridView mGridViewMatches;
+
+    public LikesFragment(){
+        mPresenter = new LikesPresenter(this);
+    }
 
     @Override
     public void onStart(){
         super.onStart();
-        mPresenter = new LikesPresenter(this);
+        mPresenter.onStart();
     }
 
     @Override
@@ -33,14 +41,18 @@ public class LikesFragment extends Fragment implements BaseContract.BaseView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mGridViewMatches = (GridView) view.findViewById(com.rockstar.bubblemeetapplication.R.id.gridViewList);
-        mGridViewMatches.setAdapter(new DataAdapter(getContext(), new String[]{"Fragment", "Likes", "Names", "Hello", "Vasya", "Dog"}, getFragmentManager(), (MainActivity) getActivity()));
+        mAdapter = new DataAdapter((MainActivity) getActivity(), getFragmentManager(), new ArrayList<UserData>());
+        mGridViewMatches.setAdapter(mAdapter);
         initViews();
-        mPresenter.onStart();
     }
 
     @Override
     public void initViews() {
         ((MainActivity) getActivity()).hideButtonBack();
+    }
+
+    public void addUsers(ArrayList<UserData> newUsers){
+        mAdapter.addUsers(newUsers);
     }
 
     @Override

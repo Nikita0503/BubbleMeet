@@ -15,10 +15,8 @@ public class ProfilePagerAdapter extends PagerAdapter {
 
     Context context;
     private int[] mImages = new int[] {
-            R.drawable.image4,
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3
+            R.drawable.bmw,
+            R.drawable.pudge
     };
     ProfilePagerAdapter(Context context){
         this.context=context;

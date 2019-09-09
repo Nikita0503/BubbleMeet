@@ -19,6 +19,7 @@ import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.OnSwipeTouchListener;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
+import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 
 public class ProfilePreviewFragment extends Fragment implements BaseContract.BaseView {
@@ -50,8 +51,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
     RecyclerView mRecyclerViewUsers;
 
-    public void setName(String name){
-        mName = name;
+    public void setName(UserData name){
+        mName = name.getName();
     }
 
     @Override

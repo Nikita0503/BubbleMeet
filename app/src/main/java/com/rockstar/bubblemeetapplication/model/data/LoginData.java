@@ -1,6 +1,6 @@
 package com.rockstar.bubblemeetapplication.model.data;
 
-public class UserLoginData {
+public class LoginData {
     private String email;
     private String password;
 }

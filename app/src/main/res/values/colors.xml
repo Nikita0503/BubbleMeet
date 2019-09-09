@@ -10,4 +10,7 @@
     <color name="colorHobbies">#796783</color>
     <color name="colorSearchIcon">#8D8395</color>
     <color name="colorName">#DCD6DF</color>
+    <color name="colorWhite">@android:color/white</color>
+    <color name="colorAroundAvatar">#245670</color>
+    <color name="colorName2">#BCAEC2</color>
 </resources>
