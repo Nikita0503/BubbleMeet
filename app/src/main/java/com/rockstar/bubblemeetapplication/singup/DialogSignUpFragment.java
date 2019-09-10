@@ -42,10 +42,8 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
     @Override
     public void onResume() {
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-
         params.height = 1400;
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
         super.onResume();
     }
 
@@ -93,6 +91,7 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
             @Override
             public void onClick(View view) {
                 dismiss();
+                getActivity().finish();
             }
         });
         mButtonNext.setOnClickListener(new View.OnClickListener() {
@@ -109,15 +108,19 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
 
     public void showNextPage(){
         int currentItem = mViewPagerSignUp.getCurrentItem();
-        mViewPagerSignUp.setCurrentItem(currentItem+1);
+        if(mSignUpFragmentAdapter.isCorrect(mViewPagerSignUp.getCurrentItem())) {
+            mViewPagerSignUp.setCurrentItem(currentItem + 1);
+        }
+
     }
 
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        getActivity().finish();
+
     }
 
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
+        getActivity().finish();
     }
 }

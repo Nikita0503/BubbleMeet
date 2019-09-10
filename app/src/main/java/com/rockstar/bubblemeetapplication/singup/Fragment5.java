@@ -1,8 +1,10 @@
 package com.rockstar.bubblemeetapplication.singup;
 
 import android.app.Dialog;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,13 +13,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment5 extends Fragment implements BaseContract.BaseView {
+public class Fragment5 extends Fragment implements BaseContract.BaseView, SignUpView {
 
+    EditText mEditTextHeight;
     EditText mEditTextIsSmoking;
 
     @Override
@@ -28,6 +32,7 @@ public class Fragment5 extends Fragment implements BaseContract.BaseView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        mEditTextHeight = (EditText) view.findViewById(R.id.editTextHeight);
         mEditTextIsSmoking = (EditText) view.findViewById(R.id.editTextIsSmoking);
         initViews();
     }
@@ -38,6 +43,22 @@ public class Fragment5 extends Fragment implements BaseContract.BaseView {
             @Override
             public void onClick(View view) {
                 showDialog();
+            }
+        });
+        mEditTextHeight.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorBlack));
+                ViewCompat.setBackgroundTintList(mEditTextHeight, colorStateList);
+                return false;
+            }
+        });
+        mEditTextIsSmoking.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorBlack));
+                ViewCompat.setBackgroundTintList(mEditTextIsSmoking, colorStateList);
+                return false;
             }
         });
     }
@@ -65,5 +86,21 @@ public class Fragment5 extends Fragment implements BaseContract.BaseView {
             }
 
         });
+    }
+
+    @Override
+    public boolean isCorrect() {
+        boolean isCorrect = true;
+        if(mEditTextHeight.getText().toString().equals("")){
+            ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorRed));
+            ViewCompat.setBackgroundTintList(mEditTextHeight, colorStateList);
+            isCorrect = false;
+        }
+        if(mEditTextIsSmoking.getText().toString().equals("")){
+            ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorRed));
+            ViewCompat.setBackgroundTintList(mEditTextIsSmoking, colorStateList);
+            isCorrect = false;
+        }
+        return isCorrect;
     }
 }

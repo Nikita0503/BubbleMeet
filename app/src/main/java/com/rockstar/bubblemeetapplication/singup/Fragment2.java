@@ -1,8 +1,10 @@
 package com.rockstar.bubblemeetapplication.singup;
 
 import android.app.Dialog;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,14 +13,16 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment2 extends Fragment implements BaseContract.BaseView {
+public class Fragment2 extends Fragment implements BaseContract.BaseView, SignUpView {
 
     EditText mEditTextGender;
+    EditText mEditTextAge;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +33,7 @@ public class Fragment2 extends Fragment implements BaseContract.BaseView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mEditTextGender = (EditText) view.findViewById(R.id.editTextIsSmoking);
+        mEditTextAge = (EditText) view.findViewById(R.id.editTextHeight);
         initViews();
     }
 
@@ -38,6 +43,22 @@ public class Fragment2 extends Fragment implements BaseContract.BaseView {
             @Override
             public void onClick(View view) {
                 showDialog();
+            }
+        });
+        mEditTextAge.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorBlack));
+                ViewCompat.setBackgroundTintList(mEditTextAge, colorStateList);
+                return false;
+            }
+        });
+        mEditTextGender.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorBlack));
+                ViewCompat.setBackgroundTintList(mEditTextGender, colorStateList);
+                return false;
             }
         });
     }
@@ -65,5 +86,21 @@ public class Fragment2 extends Fragment implements BaseContract.BaseView {
             }
 
         });
+    }
+
+    @Override
+    public boolean isCorrect() {
+        boolean isCorrect = true;
+        if(mEditTextGender.getText().toString().equals("")){
+            ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorRed));
+            ViewCompat.setBackgroundTintList(mEditTextGender, colorStateList);
+            isCorrect = false;
+        }
+        if(mEditTextAge.getText().toString().equals("")){
+            ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorRed));
+            ViewCompat.setBackgroundTintList(mEditTextAge, colorStateList);
+            isCorrect = false;
+        }
+        return isCorrect;
     }
 }

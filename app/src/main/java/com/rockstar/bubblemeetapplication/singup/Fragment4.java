@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment4 extends Fragment implements BaseContract.BaseView {
+public class Fragment4 extends Fragment implements BaseContract.BaseView, SignUpView {
 
     Button mButtonAddMore;
 
@@ -40,4 +40,8 @@ public class Fragment4 extends Fragment implements BaseContract.BaseView {
         });
     }
 
+    @Override
+    public boolean isCorrect() {
+        return true;
+    }
 }

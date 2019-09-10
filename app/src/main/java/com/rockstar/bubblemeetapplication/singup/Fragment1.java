@@ -1,16 +1,20 @@
 package com.rockstar.bubblemeetapplication.singup;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -21,7 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-public class Fragment1 extends Fragment implements BaseContract.BaseView {
+public class Fragment1 extends Fragment implements BaseContract.BaseView, SignUpView {
 
     public static final int GALLERY_MAIN_PHOTO = 0;
     public static final int GALLERY_ADDITIONAL_PHOTO_1 = 1;
@@ -49,6 +53,7 @@ public class Fragment1 extends Fragment implements BaseContract.BaseView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mTextViewAddPhoto = (TextView) view.findViewById(R.id.textViewAddPhoto);
+        mEditTextName = (EditText) view.findViewById(R.id.editTextName);
         mImageViewMainPhoto = (CircleImageView) view.findViewById(R.id.imageViewMainPhoto);
         mImageViewAdditionalPhoto1 = (CircleImageView) view.findViewById(R.id.imageViewAdditionalPhoto1);
         mImageViewAdditionalPhoto2 = (CircleImageView) view.findViewById(R.id.imageViewAdditionalPhoto2);
@@ -58,6 +63,14 @@ public class Fragment1 extends Fragment implements BaseContract.BaseView {
 
     @Override
     public void initViews() {
+        mEditTextName.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorBlack));
+                ViewCompat.setBackgroundTintList(mEditTextName, colorStateList);
+                return false;
+            }
+        });
         mImageViewMainPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,5 +153,20 @@ public class Fragment1 extends Fragment implements BaseContract.BaseView {
                 .with(getContext())
                 .load(file)
                 .into(mImageViewAdditionalPhoto3);
+    }
+
+    @Override
+    public boolean isCorrect() {
+        boolean isCorrect = true;
+        if(mMainPhoto == null && mAdditionalPhoto1 == null && mAdditionalPhoto2 == null && mAdditionalPhoto3 == null){
+            Toast.makeText(getContext(), getString(R.string.select_photo), Toast.LENGTH_SHORT).show();
+            isCorrect = false;
+        }
+        if(mEditTextName.getText().toString().equals("")){
+            ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorRed));
+            ViewCompat.setBackgroundTintList(mEditTextName, colorStateList);
+            isCorrect = false;
+        }
+        return isCorrect;
     }
 }

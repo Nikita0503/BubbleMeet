@@ -107,4 +107,6 @@
     <string name="two_days_ago">2 days ago</string>
     <string name="later">Later</string>
     <string name="name">Name</string>
+
+    <string name="select_photo">Select at least one photo</string>
 </resources>

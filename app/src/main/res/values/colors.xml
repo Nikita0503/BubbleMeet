@@ -13,4 +13,6 @@
     <color name="colorWhite">@android:color/white</color>
     <color name="colorAroundAvatar">#245670</color>
     <color name="colorName2">#BCAEC2</color>
+    <color name="colorRed">#9C0004</color>
+    <color name="colorBlack">@android:color/black</color>
 </resources>

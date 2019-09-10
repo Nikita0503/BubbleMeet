@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 
-public class Fragment10 extends Fragment implements BaseContract.BaseView {
+public class Fragment10 extends Fragment implements BaseContract.BaseView, SignUpView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,5 +27,10 @@ public class Fragment10 extends Fragment implements BaseContract.BaseView {
     @Override
     public void initViews() {
 
+    }
+
+    @Override
+    public boolean isCorrect() {
+        return false;
     }
 }
