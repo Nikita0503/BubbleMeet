@@ -1,6 +1,5 @@
 package com.rockstar.bubblemeetapplication.bubble;
 
-import android.app.ActionBar;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,15 +9,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
-import com.rockstar.bubblemeetapplication.DataAdapter;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 
@@ -75,11 +71,11 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
         imageView = (ImageView) view.findViewById(R.id.imageView1);
         imageView2 = (ImageView) view.findViewById(R.id.imageView2);
         imageView3 = (ImageView) view.findViewById(R.id.imageView3);
-        imageView4 = (ImageView) view.findViewById(R.id.imageView4);
+        imageView4 = (ImageView) view.findViewById(R.id.imageViewBubbles);
         imageView5 = (ImageView) view.findViewById(R.id.imageView5);
         imageView6 = (ImageView) view.findViewById(R.id.imageView6);
         imageView7 = (ImageView) view.findViewById(R.id.imageView7);
-        imageView8 = (ImageView) view.findViewById(R.id.imageView8);
+        imageView8 = (ImageView) view.findViewById(R.id.imageViewMessage);
         imageView9 = (ImageView) view.findViewById(R.id.imageView9);
         imageView10 = (ImageView) view.findViewById(R.id.imageView10);
         imageView11 = (ImageView) view.findViewById(R.id.imageView11);

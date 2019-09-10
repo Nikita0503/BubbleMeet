@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,12 +25,16 @@ import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 
 public class ProfilePreviewFragment extends Fragment implements BaseContract.BaseView {
 
+    public long mStartTime1;
+    public long mElapsedTime1;
     String mName;
     TextView mTextViewName;
+    TextView mTextViewYearsOldAndCity;
     ImageView mImageViewLike;
     ImageView mImageViewBoom;
     ImageView mImageViewAvatar;
     ImageView mImageViewBoomWhiteCircle;
+    ImageView mImageViewMessages;
 
     ImageView mImageViewPinkDown1;
     ImageView mImageViewPinkDown2;
@@ -49,6 +54,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     ImageView mImageViewGrayUpLeft;
     ImageView mImageViewGrayUpRight;
 
+    ImageView mImageViewBubbles;
     RecyclerView mRecyclerViewUsers;
 
     public void setName(UserData name){
@@ -66,6 +72,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         ((MainActivity)getActivity()).showButtonBack();
         mRecyclerViewUsers = (RecyclerView) view.findViewById(com.rockstar.bubblemeetapplication.R.id.recyclerViewUsers);
         mTextViewName = (TextView) view.findViewById(R.id.textViewName);
+        mTextViewYearsOldAndCity = (TextView) view.findViewById(R.id.textViewYearsOldAndCity);
+        mImageViewMessages = (ImageView) view.findViewById(R.id.imageViewMessage);
         mImageViewLike = (ImageView) view.findViewById(R.id.imageViewLike);
         mImageViewBoom = (ImageView) view.findViewById(R.id.imageViewBoom);
         mImageViewAvatar = (ImageView) view.findViewById(R.id.imageViewAvatar);
@@ -87,11 +95,15 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewGrayDownRight = (ImageView) view.findViewById(R.id.imageViewGrayDownRight);
         mImageViewGrayUpLeft = (ImageView) view.findViewById(R.id.imageViewGrayUpLeft);
         mImageViewGrayUpRight = (ImageView) view.findViewById(R.id.imageViewGrayUpRight);
+
+        mImageViewBubbles = (ImageView) view.findViewById(R.id.imageViewBubbles);
         initViews();
     }
 
     @Override
     public void initViews() {
+        mStartTime1 = System.currentTimeMillis();
+        mElapsedTime1 = 0;
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerViewUsers.setLayoutManager(layoutManager);
@@ -106,6 +118,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 mImageViewBoom.startAnimation(animation);
             }
         });
+
+
         mImageViewAvatar.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeTop() {
                 //Toast.makeText(getContext(), "top", Toast.LENGTH_SHORT).show();
@@ -124,7 +138,41 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 mImageViewAvatar.startAnimation(animationSwipeDown);
             }
 
+            public void onClick() {
+                Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+                //boomAnimation(true);
+            }
+
+            public void onDoubleClick() {
+                Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
+                //Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
+                //mImageViewAvatar.startAnimation(animationAlpha);
+            }
         });
+        final Animation animationAlphaBubbles = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
+        animationAlphaBubbles.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Do nothing
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Animation animationAlphaOtherViews = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
+                mTextViewName.setAnimation(animationAlphaOtherViews);
+                mTextViewYearsOldAndCity.setAnimation(animationAlphaOtherViews);
+                mImageViewLike.setAnimation(animationAlphaOtherViews);
+                mImageViewMessages.setAnimation(animationAlphaOtherViews);
+                mImageViewAvatar.setAnimation(animationAlphaOtherViews);
+                mRecyclerViewUsers.setAnimation(animationAlphaOtherViews);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+        mImageViewBubbles.setAnimation(animationAlphaBubbles);
     }
 
     private void boomAnimation(final boolean isRight){
@@ -210,5 +258,6 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewBoomWhiteCircle.setVisibility(View.VISIBLE);
         mImageViewBoomWhiteCircle.startAnimation(animationBoom);
     }
+
 
 }
