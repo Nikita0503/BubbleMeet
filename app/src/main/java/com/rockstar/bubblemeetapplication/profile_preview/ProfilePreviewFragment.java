@@ -1,6 +1,8 @@
 package com.rockstar.bubblemeetapplication.profile_preview;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +25,11 @@ import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 
+import java.util.Calendar;
+
 public class ProfilePreviewFragment extends Fragment implements BaseContract.BaseView {
 
-    public long mStartTime1;
-    public long mElapsedTime1;
+    boolean doubleTap;
     String mName;
     TextView mTextViewName;
     TextView mTextViewYearsOldAndCity;
@@ -102,8 +105,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
     @Override
     public void initViews() {
-        mStartTime1 = System.currentTimeMillis();
-        mElapsedTime1 = 0;
+        doubleTap = false;
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerViewUsers.setLayoutManager(layoutManager);
@@ -139,12 +141,26 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             }
 
             public void onClick() {
-                Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
                 //boomAnimation(true);
+                //mTimeFirstClick = 0;
+                final Handler myHandler = new Handler();
+                myHandler.postDelayed(new Runnable() {
+                    public void run() {
+                        if(!doubleTap) {
+                            Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+                            Log.d("TAG", "1");
+                        }else{
+                            doubleTap = false;
+                        }
+                    }
+                }, 200);
             }
 
             public void onDoubleClick() {
+                doubleTap = true;
                 Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "2");
                 //Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
                 //mImageViewAvatar.startAnimation(animationAlpha);
             }
