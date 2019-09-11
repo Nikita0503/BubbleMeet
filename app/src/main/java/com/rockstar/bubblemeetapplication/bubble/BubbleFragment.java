@@ -30,6 +30,9 @@ import java.util.Calendar;
 
 public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
+    private int[] mXView;
+    private int[] mYView;
+
     private static final int MAX_CLICK_DURATION = 200;
     private long mStartClickTime;
     private int mDisplayCenterX;
@@ -116,6 +119,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
         mXPrevious = new int[mImageViews.length];
         mYPrevious = new int[mImageViews.length];
+        mXView = new int[mImageViews.length];
+        mYView = new int[mImageViews.length];
         mLayout = (AbsoluteLayout) view.findViewById(R.id.layout);
         AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) imageView.getLayoutParams();
         mDefaultBubbleWidth = params.width;
@@ -264,47 +269,130 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
            }
        });
 
-        mImageViews[0].setClickable(false);
-        mImageViews[0].setOnTouchListener(new View.OnTouchListener() {
+        for(int i = 0; i < mImageViews.length; i++){
+            AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
+            mXView[i] = params.x;
+            mYView[i] = params.y;
+        }
+        for(int j = 0; j < mImageViews.length; j++) {
+            mImageViews[j].setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_MOVE:
+                                for (int i = 0; i < mImageViews.length; i++) {
+                                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
+                                    Log.d("TAG1", event.getX() + " " + event.getY());
+                                    int differenceX = (int) event.getX() - mXView[0];
+                                    int differenceY = (int) event.getY() - mYView[0];
 
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[0].getLayoutParams();
-                switch (event.getAction()) {
-                    //case MotionEvent.ACTION_MOVE:
-                    //    Log.d("TAG1", event.getX() + " " + event.getY());
-                    //    if (mXPrevious[0] != 0 && mYPrevious[0] != 0) {
-                    //        int differenceX = (int) event.getX() - (int)view.getX();
-                    //        int differenceY = (int) event.getY() - (int)view.getY();
-                    //        Log.d("TAG2", differenceX + " " + differenceY);
-                    //        params.x+=differenceX;
-                    //        params.y+=differenceY;
-                    //        Log.d("TAG3", view.getX() + " " + view.getY());
-                    //        mImageViews[0].setLayoutParams(params);
-                    //    }
-                    //    mXPrevious[0] = (int) event.getX();
-                    //    mYPrevious[0] = (int) event.getY();
-                    //    break;
-                    case MotionEvent.ACTION_DOWN:
-                        mStartClickTime = Calendar.getInstance().getTimeInMillis();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
-                        Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
-                        if(clickDuration < MAX_CLICK_DURATION) {
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
-                            profileFragment.setName(new UserData(1 , "Name", "City", "ImageURL"));
-                            transaction.replace(R.id.root_fragment, profileFragment);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
+
+
+                                    double pixelsToSideFromBubbleX = 0;
+                                    double toSideFromBubblePercentX = 0;
+                                    double pixelsToSideFromBubbleY = 0;
+                                    double toSideFromBubblePercentY = 0;
+                                    if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 3){
+                                        pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 3;
+                                    }else{
+                                        pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
+                                    }
+                                    if(params.y < mDisplayCenterY - 2 * (mDefaultBubbleHeight / 3)){
+                                        pixelsToSideFromBubbleY = params.y;
+                                    }else{
+                                        pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
+                                    }
+                                    toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
+                                    toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
+                                    Log.d("123","y = " + toSideFromBubblePercentY + " x = " + toSideFromBubblePercentX);
+                                    if(toSideFromBubblePercentX > toSideFromBubblePercentY){
+                                        Log.d("123","y = " + toSideFromBubblePercentY);
+                                        if(toSideFromBubblePercentY < 1){
+                                            params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleHeight);
+                                        }else{
+                                            if(toSideFromBubblePercentY < 0){
+                                                params.height = 0;
+                                            }else {
+                                                params.height = mDefaultBubbleHeight;
+
+                                            }
+                                        }
+                                    }else {
+                                        Log.d("123", "x = " + toSideFromBubblePercentX);
+                                        if(toSideFromBubblePercentX < 1){
+                                            params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleHeight);
+                                        }else{
+                                            if(toSideFromBubblePercentX < 0){
+                                                params.height = 0;
+                                            }else {
+                                                params.height = mDefaultBubbleHeight;
+                                            }
+                                        }
+                                    }
+                                    AbsoluteLayout.LayoutParams params1 = (AbsoluteLayout.LayoutParams) mImageViews[1].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
+                                    Log.d("TAG5", "x = " + params4);
+                                    if(params4.x < 140){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.x--;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    //if(params1.y > 360){
+                                    //    for (int j = 0; j < mImageViews.length; j++) {
+                                    //
+                                    //        AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                    //        params2.y -= differenceY;
+                                    //        mImageViews[j].setLayoutParams(params2);
+                                    //    }
+                                    //}
+                                    //if(params20.y < 980){
+                                    //    for (int j = 0; j < mImageViews.length; j++) {
+                                    //
+                                    //        AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                    //        params2.y -= differenceY;
+                                    //        mImageViews[j].setLayoutParams(params2);
+                                    //    }
+                                    //}
+                                    //if(params14.x < 600){
+                                    //    for (int j = 0; j < mImageViews.length; j++) {
+                                    //        Log.d("TAG", "+");
+                                    //        AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                    //        params2.x -= differenceX;
+                                    //        mImageViews[j].setLayoutParams(params2);
+                                    //    }
+                                    //}
+                                    params.x += differenceX - mDefaultBubbleWidth / 2;
+                                    params.y += differenceY - mDefaultBubbleHeight / 2;
+                                    mImageViews[i].setLayoutParams(params);
+                                }
+                                break;
+                            case MotionEvent.ACTION_DOWN:
+                                mStartClickTime = Calendar.getInstance().getTimeInMillis();
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
+                                Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+                                if (clickDuration < MAX_CLICK_DURATION) {
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                    ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
+                                    profileFragment.setName(new UserData(1, "Name", "City", "ImageURL"));
+                                    transaction.replace(R.id.root_fragment, profileFragment);
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                }
+                                break;
+
                         }
-                        break;
 
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        }
     }
 
     private void setStartPositions(){
