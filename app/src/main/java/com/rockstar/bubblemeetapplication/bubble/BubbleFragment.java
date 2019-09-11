@@ -13,51 +13,63 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
+import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
+import com.rockstar.bubblemeetapplication.profile_preview.ProfilePreviewFragment;
+
+import java.util.Calendar;
 
 public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
-    int mDisplayCenterX;
-    int mDisplayCenterY;
-    int[] mXPrevious;
-    int[] mYPrevious;
-    int mDefaultBubbleWidth;
-    int mDefaultBubbleHeight;
-    int mPixelsToSide100percentX;
-    int mPixelsToSide100percentY;
-
-    ImageView imageView;
-    ImageView imageView2;
-    ImageView imageView3;
-    ImageView imageView4;
-    ImageView imageView5;
-    ImageView imageView6;
-    ImageView imageView7;
-    ImageView imageView8;
-    ImageView imageView9;
-    ImageView imageView10;
-    ImageView imageView11;
-    ImageView imageView12;
-    ImageView imageView13;
-    ImageView imageView14;
-    ImageView imageView15;
-    ImageView imageView16;
-    ImageView imageView17;
-    ImageView imageView18;
-    ImageView imageView19;
-    ImageView imageView20;
-    ImageView imageView21;
-    ImageView imageView22;
-    ImageView imageView23;
-    ImageView imageView24;
+    private boolean mIsBubble;
+    private static final int MAX_CLICK_DURATION = 200;
+    private long mStartClickTime;
+    private int mDisplayCenterX;
+    private int mDisplayCenterY;
+    private int[] mXPrevious;
+    private int[] mYPrevious;
+    private int mDefaultBubbleWidth;
+    private int mDefaultBubbleHeight;
+    private int mPixelsToSide100percentX;
+    private int mPixelsToSide100percentY;
 
 
-    AbsoluteLayout layout;
+    private ImageView imageView;
+    private ImageView imageView2;
+    private ImageView imageView3;
+    private ImageView imageView4;
+    private ImageView imageView5;
+    private ImageView imageView6;
+    private ImageView imageView7;
+    private ImageView imageView8;
+    private ImageView imageView9;
+    private ImageView imageView10;
+    private ImageView imageView11;
+    private ImageView imageView12;
+    private ImageView imageView13;
+    private ImageView imageView14;
+    private ImageView imageView15;
+    private ImageView imageView16;
+    private ImageView imageView17;
+    private ImageView imageView18;
+    private ImageView imageView19;
+    private ImageView imageView20;
+    private ImageView imageView21;
+    private ImageView imageView22;
+    private ImageView imageView23;
+    private ImageView imageView24;
 
-    ImageView[] mImageViews;
+
+    private AbsoluteLayout mLayout;
+
+    private ImageView[] mImageViews;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +80,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         imageView = (ImageView) view.findViewById(R.id.imageView1);
         imageView2 = (ImageView) view.findViewById(R.id.imageView2);
         imageView3 = (ImageView) view.findViewById(R.id.imageView3);
@@ -99,9 +112,10 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                 imageView14, imageView15, imageView16, imageView17, imageView18,
                 imageView19, imageView20, imageView21, imageView22, imageView23,
                 imageView24};
+
         mXPrevious = new int[mImageViews.length];
         mYPrevious = new int[mImageViews.length];
-        layout = (AbsoluteLayout) view.findViewById(R.id.layout);
+        mLayout = (AbsoluteLayout) view.findViewById(R.id.layout);
         AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) imageView.getLayoutParams();
         mDefaultBubbleWidth = params.width;
         mDefaultBubbleHeight = params.height;
@@ -121,10 +135,12 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     @Override
     public void initViews() {
         ((MainActivity) getActivity()).hideButtonBack();
-        layout.setOnTouchListener(new View.OnTouchListener() {
+        mLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
+
                 for (int i = 0; i < mImageViews.length; i++) {
+
                     AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
@@ -134,51 +150,48 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                 int width = 0;
                                 int height = 0;
                                 if (mXPrevious[i] != 0 && mYPrevious[i] != 0) {
-                                    //Log.d("LOG", "xPrevious = " + mXPrevious);
-                                    //Log.d("LOG", "x = " + event.getX());
-                                    //Log.d("LOG", "yPrevious = " + mYPrevious);
-                                    //Log.d("LOG", "y = " + event.getY());
-
                                     int differenceX = (int) event.getX() - mXPrevious[i];
                                     int differenceY = (int) event.getY() - mYPrevious[i];
+
+                                    AbsoluteLayout.LayoutParams params1 = (AbsoluteLayout.LayoutParams) mImageViews[1].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
+                                    Log.d("TAG", params4.x+"");
+                                    if(params4.x > 180){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            Log.d("TAG", "+");
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.x -= differenceX;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    if(params1.y > 360){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            Log.d("TAG", "+");
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.y -= differenceY;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    if(params20.y < 980){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            Log.d("TAG", "+");
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.y -= differenceY;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    if(params14.x < 600){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            Log.d("TAG", "+");
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.x -= differenceX;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
                                     params.x = params.x + differenceX;
                                     params.y = params.y + differenceY;
-
-
-                                    //double pixelsToSideFromBubbleX = 0;
-                                    //double toSideFromBubblePercentX = 0;
-                                    //if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 2){
-                                    //    pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 2;
-                                    //}else{
-                                    //    pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
-                                    //}
-                                    //if(pixelsToSideFromBubbleX > mDisplayCenterX / 2){
-                                    //    params.height = mDefaultBubbleWidth;
-                                    //}else {
-                                    //    toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
-                                    //    if (toSideFromBubblePercentX > 0) {
-                                    //        //params.height = (int) (mDefaultBubbleWidth * toSideFromBubblePercentX);
-                                    //    }
-                                    //}
-
-                                    //double pixelsToSideFromBubbleY = 0;
-                                    //double toSideFromBubblePercentY = 0;
-                                    //if(params.y < mDisplayCenterY - 2 * (mDefaultBubbleHeight / 3)){
-                                    //    pixelsToSideFromBubbleY = params.y;
-                                    //}else{
-                                    //    pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
-                                    //}
-                                    //if(pixelsToSideFromBubbleY > mDisplayCenterY / 2){
-                                    //    params.height = mDefaultBubbleHeight;
-                                    //}else {
-                                    //    toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
-                                    //    if (toSideFromBubblePercentY > 0) {
-                                    //        //params.height = (int) (mDefaultBubbleHeight * toSideFromBubblePercentY);
-
-                                    //    }
-                                    //}
-
-
 
                                     double pixelsToSideFromBubbleX = 0;
                                     double toSideFromBubblePercentX = 0;
@@ -196,9 +209,6 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     }
                                     toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
                                     toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
-                                    //if(toSideFromBubblePercentX > 0 && toSideFromBubblePercentX < 1 && toSideFromBubblePercentY > 0 && toSideFromBubblePercentY < 1){
-                                        //Log.d("123", "x = " + toSideFromBubblePercentX + " y = " + toSideFromBubblePercentY);
-                                    //}
                                     Log.d("123","y = " + toSideFromBubblePercentY + " x = " + toSideFromBubblePercentX);
                                     if(toSideFromBubblePercentX > toSideFromBubblePercentY){
                                         Log.d("123","y = " + toSideFromBubblePercentY);

@@ -148,8 +148,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 myHandler.postDelayed(new Runnable() {
                     public void run() {
                         if(!doubleTap) {
-                            Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
-                            Log.d("TAG", "1");
+                            boomAnimation(true);
                         }else{
                             doubleTap = false;
                         }
@@ -159,10 +158,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
             public void onDoubleClick() {
                 doubleTap = true;
-                Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
-                Log.d("TAG", "2");
-                //Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
-                //mImageViewAvatar.startAnimation(animationAlpha);
+                Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
+                mImageViewAvatar.startAnimation(animationAlpha);
             }
         });
         final Animation animationAlphaBubbles = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
