@@ -15,6 +15,7 @@
         android:layout_height="120dp"
         android:layout_x="0dp"
         android:layout_y="0dp"
+
         app:srcCompat="@drawable/circle_for_photo_white" />
 
     <ImageView
