@@ -1,6 +1,7 @@
 package com.rockstar.bubblemeetapplication.bubble;
 
 import android.graphics.Point;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,11 +24,11 @@ import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 import com.rockstar.bubblemeetapplication.profile_preview.ProfilePreviewFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
-    private boolean mIsBubble;
     private static final int MAX_CLICK_DURATION = 200;
     private long mStartClickTime;
     private int mDisplayCenterX;
@@ -135,12 +137,24 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     @Override
     public void initViews() {
         ((MainActivity) getActivity()).hideButtonBack();
+        //mImageViews[0].setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        //        ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
+        //        profileFragment.setName(new UserData(1 , "Name", "City", "ImageURL"));
+        //        transaction.replace(R.id.root_fragment, profileFragment);
+        //        transaction.addToBackStack(null);
+        //        transaction.commit();
+        //    }
+        //});
+
+
+
         mLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-
                 for (int i = 0; i < mImageViews.length; i++) {
-
                     AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
@@ -157,10 +171,10 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
                                     AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
                                     AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
-                                    Log.d("TAG", params4.x+"");
+
                                     if(params4.x > 180){
                                         for (int j = 0; j < mImageViews.length; j++) {
-                                            Log.d("TAG", "+");
+
                                             AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
                                             params2.x -= differenceX;
                                             mImageViews[j].setLayoutParams(params2);
@@ -168,7 +182,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     }
                                     if(params1.y > 360){
                                         for (int j = 0; j < mImageViews.length; j++) {
-                                            Log.d("TAG", "+");
+
                                             AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
                                             params2.y -= differenceY;
                                             mImageViews[j].setLayoutParams(params2);
@@ -176,7 +190,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     }
                                     if(params20.y < 980){
                                         for (int j = 0; j < mImageViews.length; j++) {
-                                            Log.d("TAG", "+");
+
                                             AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
                                             params2.y -= differenceY;
                                             mImageViews[j].setLayoutParams(params2);
@@ -249,6 +263,38 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                 }
                 return true;
 
+            }
+        });
+
+        mImageViews[0].setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        int differenceX = (int) event.getX() - mXPrevious[0];
+                        int differenceY = (int) event.getY() - mYPrevious[0];
+                        Log.d("TAG", differenceX + " " + differenceY);
+                        mXPrevious[0] = (int) event.getX();
+                        mYPrevious[0] = (int) event.getY();
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        mStartClickTime = Calendar.getInstance().getTimeInMillis();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
+                        Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+                        if(clickDuration < MAX_CLICK_DURATION) {
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
+                            profileFragment.setName(new UserData(1 , "Name", "City", "ImageURL"));
+                            transaction.replace(R.id.root_fragment, profileFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                        break;
+
+                }
+                return true;
             }
         });
     }
