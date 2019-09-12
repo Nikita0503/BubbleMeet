@@ -340,7 +340,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     Log.d("TAG123", "xBubble = " + params4.x);
                                     mXPrevious[4] = params.x;
                                     mYPrevious[4] = params.y;
-                                    //Log.d("TAG123", "yBubble = " + params4.y);
+                                    Log.d("TAG123", "yBubble = " + params4.y);
                                     //Log.d("TAG123", "previousXBubble = " + mXPrevious[4]);
                                     if(params4.x < 140){
                                         params4.x -= 1;
