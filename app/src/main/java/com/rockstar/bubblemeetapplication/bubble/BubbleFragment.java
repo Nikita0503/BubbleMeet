@@ -342,17 +342,17 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     mYPrevious[4] = params.y;
                                     Log.d("TAG123", "yBubble = " + params4.y);
                                     //Log.d("TAG123", "previousXBubble = " + mXPrevious[4]);
+
                                     if(params4.x < 140){
-                                        params4.x -= 1;
-                                        mImageViews[4].setLayoutParams(params4);
+
                                         //Log.d("TAG123", "less");
-                                        //for (int j = 0; j < mImageViews.length; j++) {
+                                        for (int j = 0; j < mImageViews.length; j++) {
 
                                             //AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                            //params2.x = params2.x - mXPrevious[j];
-
+                                            //params2.x -= 10;
                                             //mImageViews[j].setLayoutParams(params2);
-                                        //}
+                                            //mImageViews[j].setLayoutParams(params2);
+                                        }
                                     }else{
                                         //Log.d("TAG123", "bigger");
                                     }
