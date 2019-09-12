@@ -30,6 +30,8 @@ import java.util.Calendar;
 
 public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
+    private int x=0;
+    private int y=0;
     private int[] mXView;
     private int[] mYView;
 
@@ -263,6 +265,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                    }
                    mXPrevious[i] = (int) event.getX();
                    mYPrevious[i] = (int) event.getY();
+                   Log.d("TAG123", "xBubble = " + mXPrevious[4]);
                }
                return true;
 
@@ -333,14 +336,25 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
                                     AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
                                     AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
-                                    Log.d("TAG5", "x = " + params4);
+                                    int dif = params4.x - mXPrevious[4];
+                                    Log.d("TAG123", "xBubble = " + params4.x);
+                                    mXPrevious[4] = params.x;
+                                    mYPrevious[4] = params.y;
+                                    //Log.d("TAG123", "yBubble = " + params4.y);
+                                    //Log.d("TAG123", "previousXBubble = " + mXPrevious[4]);
                                     if(params4.x < 140){
-                                        for (int j = 0; j < mImageViews.length; j++) {
+                                        params4.x -= 1;
+                                        mImageViews[4].setLayoutParams(params4);
+                                        //Log.d("TAG123", "less");
+                                        //for (int j = 0; j < mImageViews.length; j++) {
 
-                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                            params2.x--;
-                                            mImageViews[j].setLayoutParams(params2);
-                                        }
+                                            //AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            //params2.x = params2.x - mXPrevious[j];
+
+                                            //mImageViews[j].setLayoutParams(params2);
+                                        //}
+                                    }else{
+                                        //Log.d("TAG123", "bigger");
                                     }
                                     //if(params1.y > 360){
                                     //    for (int j = 0; j < mImageViews.length; j++) {
@@ -366,17 +380,21 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     //        mImageViews[j].setLayoutParams(params2);
                                     //    }
                                     //}
-                                    params.x += differenceX - mDefaultBubbleWidth / 2;
-                                    params.y += differenceY - mDefaultBubbleHeight / 2;
+                                    params.x += differenceX - x;
+                                    params.y += differenceY - y;
                                     mImageViews[i].setLayoutParams(params);
                                 }
                                 break;
                             case MotionEvent.ACTION_DOWN:
                                 mStartClickTime = Calendar.getInstance().getTimeInMillis();
+                                //Log.d("TAG1234", "xEvent = " + event.getX());
+                                //Log.d("TAG1234", "yEvent = " + event.getY());
+                                x = (int) event.getX();
+                                y = (int) event.getY();
                                 break;
                             case MotionEvent.ACTION_UP:
                                 long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
-                                Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
                                 if (clickDuration < MAX_CLICK_DURATION) {
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
