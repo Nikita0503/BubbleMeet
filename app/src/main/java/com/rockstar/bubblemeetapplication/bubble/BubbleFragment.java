@@ -195,7 +195,6 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                    }
                                    if(params20.y < 980){
                                        for (int j = 0; j < mImageViews.length; j++) {
-
                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
                                            params2.y -= differenceY;
                                            mImageViews[j].setLayoutParams(params2);
@@ -203,7 +202,6 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                    }
                                    if(params14.x < 600){
                                        for (int j = 0; j < mImageViews.length; j++) {
-                                           Log.d("TAG", "+");
                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
                                            params2.x -= differenceX;
                                            mImageViews[j].setLayoutParams(params2);
@@ -228,9 +226,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                    }
                                    toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
                                    toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
-                                   Log.d("123","y = " + toSideFromBubblePercentY + " x = " + toSideFromBubblePercentX);
                                    if(toSideFromBubblePercentX > toSideFromBubblePercentY){
-                                       Log.d("123","y = " + toSideFromBubblePercentY);
                                        if(toSideFromBubblePercentY < 1){
                                            params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleHeight);
                                        }else{
@@ -242,7 +238,6 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                            }
                                        }
                                    }else {
-                                       Log.d("123", "x = " + toSideFromBubblePercentX);
                                        if(toSideFromBubblePercentX < 1){
                                            params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleHeight);
                                        }else{
@@ -284,14 +279,11 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                 public boolean onTouch(View view, MotionEvent event) {
                         switch (event.getAction()) {
                             case MotionEvent.ACTION_MOVE:
+                                Log.d("1", "mXView = " + mXView[4]);
                                 for (int i = 0; i < mImageViews.length; i++) {
                                     AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
-                                    Log.d("TAG1", event.getX() + " " + event.getY());
                                     int differenceX = (int) event.getX() - mXView[0];
                                     int differenceY = (int) event.getY() - mYView[0];
-                                    Log.d("TAG12345", "xBubble = " + differenceX);
-                                    Log.d("TAG12345", "yBubble = " + differenceY);
-
 
                                     double pixelsToSideFromBubbleX = 0;
                                     double toSideFromBubblePercentX = 0;
@@ -310,9 +302,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
 
                                     toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
-                                    Log.d("123","y = " + toSideFromBubblePercentY + " x = " + toSideFromBubblePercentX);
                                     if(toSideFromBubblePercentX > toSideFromBubblePercentY){
-                                        Log.d("123","y = " + toSideFromBubblePercentY);
                                         if(toSideFromBubblePercentY < 1){
                                             params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleHeight);
                                         }else{
@@ -324,7 +314,6 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                             }
                                         }
                                     }else {
-                                        Log.d("123", "x = " + toSideFromBubblePercentX);
                                         if(toSideFromBubblePercentX < 1){
                                             params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleHeight);
                                         }else{
@@ -365,17 +354,13 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     }
                                     if(params14.x < 600){
                                         for (int j = 0; j < mImageViews.length; j++) {
-                                            Log.d("TAG", "+");
                                             AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
                                             paramsDif.x -= (differenceX - x);
                                             mImageViews[j].setLayoutParams(paramsDif);
                                         }
                                     }
-                                    //Log.d("TAG123", "xBubble = " + params4.x);
                                     //mXPrevious[4] = params.x;
                                     //mYPrevious[4] = params.y;
-                                    //Log.d("TAG123", "yBubble = " + params4.y);
-                                    //Log.d("TAG123", "previousXBubble = " + mXPrevious[4]);
 
                                     params.x += differenceX - x;
                                     params.y += differenceY - y;
@@ -384,8 +369,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                 break;
                             case MotionEvent.ACTION_DOWN:
                                 mStartClickTime = Calendar.getInstance().getTimeInMillis();
-                                //Log.d("TAG1234", "xEvent = " + event.getX());
-                                //Log.d("TAG1234", "yEvent = " + event.getY());
+
                                 x = (int) event.getX();
                                 y = (int) event.getY();
                                 break;
@@ -431,9 +415,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
             }
             toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
             toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
-            Log.d("123","y = " + toSideFromBubblePercentY + " x = " + toSideFromBubblePercentX);
             if(toSideFromBubblePercentX > toSideFromBubblePercentY){
-                Log.d("123","y = " + toSideFromBubblePercentY);
                 if(toSideFromBubblePercentY < 1){
                     params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleHeight);
                 }else{
@@ -445,7 +427,6 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                     }
                 }
             }else {
-                Log.d("123", "x = " + toSideFromBubblePercentX);
                 if(toSideFromBubblePercentX < 1){
                     params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleHeight);
                 }else{
