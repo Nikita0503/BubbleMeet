@@ -279,7 +279,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                 public boolean onTouch(View view, MotionEvent event) {
                         switch (event.getAction()) {
                             case MotionEvent.ACTION_MOVE:
-                                Log.d("1", "mXView = " + mXView[4]);
+                                //Log.d("1", "mXView = " + mXView[4]);
                                 for (int i = 0; i < mImageViews.length; i++) {
                                     AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
                                     int differenceX = (int) event.getX() - mXView[0];
