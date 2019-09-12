@@ -35,7 +35,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
     private int[] mXView;
     private int[] mYView;
 
-    private static final int MAX_CLICK_DURATION = 200;
+    private static final int MAX_CLICK_DURATION = 100;
     private long mStartClickTime;
     private int mDisplayCenterX;
     private int mDisplayCenterY;
@@ -265,7 +265,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                    }
                    mXPrevious[i] = (int) event.getX();
                    mYPrevious[i] = (int) event.getY();
-                   Log.d("TAG123", "xBubble = " + mXPrevious[4]);
+                   AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
+
                }
                return true;
 
@@ -288,7 +289,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     Log.d("TAG1", event.getX() + " " + event.getY());
                                     int differenceX = (int) event.getX() - mXView[0];
                                     int differenceY = (int) event.getY() - mYView[0];
-
+                                    Log.d("TAG12345", "xBubble = " + differenceX);
+                                    Log.d("TAG12345", "yBubble = " + differenceY);
 
 
                                     double pixelsToSideFromBubbleX = 0;
@@ -306,6 +308,7 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                         pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
                                     }
                                     toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
+
                                     toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
                                     Log.d("123","y = " + toSideFromBubblePercentY + " x = " + toSideFromBubblePercentX);
                                     if(toSideFromBubblePercentX > toSideFromBubblePercentY){
@@ -336,50 +339,44 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                     AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
                                     AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
                                     AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
-                                    int dif = params4.x - mXPrevious[4];
-                                    Log.d("TAG123", "xBubble = " + params4.x);
-                                    mXPrevious[4] = params.x;
-                                    mYPrevious[4] = params.y;
-                                    Log.d("TAG123", "yBubble = " + params4.y);
-                                    //Log.d("TAG123", "previousXBubble = " + mXPrevious[4]);
+                                    if(params4.x > 180){
+                                        for(int j = 0; j < mImageViews.length; j++) {
+                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            int digit = differenceX - x;
+                                            paramsDif.x -= digit;
 
-                                    if(params4.x < 140){
-
-                                        //Log.d("TAG123", "less");
+                                            mImageViews[j].setLayoutParams(paramsDif);
+                                        }
+                                    }
+                                    if(params1.y > 360){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            paramsDif.y -= (differenceY - y);
+                                            mImageViews[j].setLayoutParams(paramsDif);
+                                        }
+                                    }
+                                    if(params20.y < 980){
                                         for (int j = 0; j < mImageViews.length; j++) {
 
-                                            //AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                            //params2.x -= 10;
-                                            //mImageViews[j].setLayoutParams(params2);
-                                            //mImageViews[j].setLayoutParams(params2);
+                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            paramsDif.y -= (differenceY - y);
+                                            mImageViews[j].setLayoutParams(paramsDif);
                                         }
-                                    }else{
-                                        //Log.d("TAG123", "bigger");
                                     }
-                                    //if(params1.y > 360){
-                                    //    for (int j = 0; j < mImageViews.length; j++) {
-                                    //
-                                    //        AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                    //        params2.y -= differenceY;
-                                    //        mImageViews[j].setLayoutParams(params2);
-                                    //    }
-                                    //}
-                                    //if(params20.y < 980){
-                                    //    for (int j = 0; j < mImageViews.length; j++) {
-                                    //
-                                    //        AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                    //        params2.y -= differenceY;
-                                    //        mImageViews[j].setLayoutParams(params2);
-                                    //    }
-                                    //}
-                                    //if(params14.x < 600){
-                                    //    for (int j = 0; j < mImageViews.length; j++) {
-                                    //        Log.d("TAG", "+");
-                                    //        AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                    //        params2.x -= differenceX;
-                                    //        mImageViews[j].setLayoutParams(params2);
-                                    //    }
-                                    //}
+                                    if(params14.x < 600){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            Log.d("TAG", "+");
+                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            paramsDif.x -= (differenceX - x);
+                                            mImageViews[j].setLayoutParams(paramsDif);
+                                        }
+                                    }
+                                    //Log.d("TAG123", "xBubble = " + params4.x);
+                                    //mXPrevious[4] = params.x;
+                                    //mYPrevious[4] = params.y;
+                                    //Log.d("TAG123", "yBubble = " + params4.y);
+                                    //Log.d("TAG123", "previousXBubble = " + mXPrevious[4]);
+
                                     params.x += differenceX - x;
                                     params.y += differenceY - y;
                                     mImageViews[i].setLayoutParams(params);
