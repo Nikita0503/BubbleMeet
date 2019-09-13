@@ -32,6 +32,8 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
 
     private int x=0;
     private int y=0;
+    private int x1 = 0;
+    private int y1 = 0;
     private int[] mXView;
     private int[] mYView;
 
@@ -157,133 +159,58 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
         setStartPositions();
 
         mLayout.setOnTouchListener(new View.OnTouchListener() {
-           @Override
-           public boolean onTouch(View view, MotionEvent event) {
-               for (int i = 0; i < mImageViews.length; i++) {
-                   AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
-                   switch (event.getAction()) {
-                       case MotionEvent.ACTION_DOWN:
-                           break;
-                       case MotionEvent.ACTION_MOVE:
-                           if (mXPrevious[i] > 0 && mXPrevious[i] < (mDisplayCenterX * 2)) {
-                               int width = 0;
-                               int height = 0;
-                               if (mXPrevious[i] != 0 && mYPrevious[i] != 0) {
-                                   int differenceX = (int) event.getX() - mXPrevious[i];
-                                   int differenceY = (int) event.getY() - mYPrevious[i];
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                for (int i = 0; i < mImageViews.length; i++) {
+                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            if (mXPrevious[i] > 0 && mXPrevious[i] < (mDisplayCenterX * 2)) {
+                                int width = 0;
+                                int height = 0;
+                                if (mXPrevious[i] != 0 && mYPrevious[i] != 0) {
+                                    int differenceX = (int) event.getX() - mXPrevious[i];
+                                    int differenceY = (int) event.getY() - mYPrevious[i];
 
-                                   AbsoluteLayout.LayoutParams params1 = (AbsoluteLayout.LayoutParams) mImageViews[1].getLayoutParams();
-                                   AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
-                                   AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
-                                   AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params1 = (AbsoluteLayout.LayoutParams) mImageViews[1].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
+                                    AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
 
-                                   if(params4.x > 180){
-                                       for (int j = 0; j < mImageViews.length; j++) {
+                                    if(params4.x > 180){
+                                        for (int j = 0; j < mImageViews.length; j++) {
 
-                                           AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                           params2.x -= differenceX;
-                                           mImageViews[j].setLayoutParams(params2);
-                                       }
-                                   }
-                                   if(params1.y > 360){
-                                       for (int j = 0; j < mImageViews.length; j++) {
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.x -= differenceX;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    if(params1.y > 360){
+                                        for (int j = 0; j < mImageViews.length; j++) {
 
-                                           AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                           params2.y -= differenceY;
-                                           mImageViews[j].setLayoutParams(params2);
-                                       }
-                                   }
-                                   if(params20.y < 980){
-                                       for (int j = 0; j < mImageViews.length; j++) {
-                                           AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                           params2.y -= differenceY;
-                                           mImageViews[j].setLayoutParams(params2);
-                                       }
-                                   }
-                                   if(params14.x < 600){
-                                       for (int j = 0; j < mImageViews.length; j++) {
-                                           AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                           params2.x -= differenceX;
-                                           mImageViews[j].setLayoutParams(params2);
-                                       }
-                                   }
-                                   params.x = params.x + differenceX;
-                                   params.y = params.y + differenceY;
-
-                                   double pixelsToSideFromBubbleX = 0;
-                                   double toSideFromBubblePercentX = 0;
-                                   double pixelsToSideFromBubbleY = 0;
-                                   double toSideFromBubblePercentY = 0;
-                                   if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 3){
-                                       pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 3;
-                                   }else{
-                                       pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
-                                   }
-                                   if(params.y < mDisplayCenterY - 2 * (mDefaultBubbleHeight / 3)){
-                                       pixelsToSideFromBubbleY = params.y;
-                                   }else{
-                                       pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
-                                   }
-                                   toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
-                                   toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
-                                   if(toSideFromBubblePercentX > toSideFromBubblePercentY){
-                                       if(toSideFromBubblePercentY < 1){
-                                           params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleHeight);
-                                       }else{
-                                           if(toSideFromBubblePercentY < 0){
-                                               params.height = 0;
-                                           }else {
-                                               params.height = mDefaultBubbleHeight;
-
-                                           }
-                                       }
-                                   }else {
-                                       if(toSideFromBubblePercentX < 1){
-                                           params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleHeight);
-                                       }else{
-                                           if(toSideFromBubblePercentX < 0){
-                                               params.height = 0;
-                                           }else {
-                                               params.height = mDefaultBubbleHeight;
-                                           }
-                                       }
-                                   }
-
-                               }
-                           }
-                           mImageViews[i].setLayoutParams(params);
-                           break;
-                       case MotionEvent.ACTION_UP:
-                           break;
-                       case MotionEvent.ACTION_CANCEL:
-                           break;
-                   }
-                   mXPrevious[i] = (int) event.getX();
-                   mYPrevious[i] = (int) event.getY();
-                   AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
-
-               }
-               return true;
-
-           }
-       });
-
-        for(int i = 0; i < mImageViews.length; i++){
-            AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
-            mXView[i] = params.x;
-            mYView[i] = params.y;
-        }
-        for(int j = 0; j < mImageViews.length; j++) {
-            mImageViews[j].setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_MOVE:
-                                //Log.d("1", "mXView = " + mXView[4]);
-                                for (int i = 0; i < mImageViews.length; i++) {
-                                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
-                                    int differenceX = (int) event.getX() - mXView[0];
-                                    int differenceY = (int) event.getY() - mYView[0];
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.y -= differenceY;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    if(params20.y < 980){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.y -= differenceY;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    if(params14.x < 600){
+                                        for (int j = 0; j < mImageViews.length; j++) {
+                                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                            params2.x -= differenceX;
+                                            mImageViews[j].setLayoutParams(params2);
+                                        }
+                                    }
+                                    params.x = params.x + differenceX;
+                                    params.y = params.y + differenceY;
 
                                     double pixelsToSideFromBubbleX = 0;
                                     double toSideFromBubblePercentX = 0;
@@ -300,7 +227,6 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                         pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
                                     }
                                     toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
-
                                     toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
                                     if(toSideFromBubblePercentX > toSideFromBubblePercentY){
                                         if(toSideFromBubblePercentY < 1){
@@ -324,69 +250,153 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
                                             }
                                         }
                                     }
-                                    AbsoluteLayout.LayoutParams params1 = (AbsoluteLayout.LayoutParams) mImageViews[1].getLayoutParams();
-                                    AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
-                                    AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
-                                    AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
-                                    if(params4.x > 180){
-                                        for(int j = 0; j < mImageViews.length; j++) {
-                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                            int digit = differenceX - x;
-                                            paramsDif.x -= digit;
 
-                                            mImageViews[j].setLayoutParams(paramsDif);
-                                        }
-                                    }
-                                    if(params1.y > 360){
-                                        for (int j = 0; j < mImageViews.length; j++) {
-                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                            paramsDif.y -= (differenceY - y);
-                                            mImageViews[j].setLayoutParams(paramsDif);
-                                        }
-                                    }
-                                    if(params20.y < 980){
-                                        for (int j = 0; j < mImageViews.length; j++) {
-
-                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                            paramsDif.y -= (differenceY - y);
-                                            mImageViews[j].setLayoutParams(paramsDif);
-                                        }
-                                    }
-                                    if(params14.x < 600){
-                                        for (int j = 0; j < mImageViews.length; j++) {
-                                            AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
-                                            paramsDif.x -= (differenceX - x);
-                                            mImageViews[j].setLayoutParams(paramsDif);
-                                        }
-                                    }
-                                    //mXPrevious[4] = params.x;
-                                    //mYPrevious[4] = params.y;
-
-                                    params.x += differenceX - x;
-                                    params.y += differenceY - y;
-                                    mImageViews[i].setLayoutParams(params);
                                 }
-                                break;
-                            case MotionEvent.ACTION_DOWN:
-                                mStartClickTime = Calendar.getInstance().getTimeInMillis();
+                            }
+                            mImageViews[i].setLayoutParams(params);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            break;
+                        case MotionEvent.ACTION_CANCEL:
+                            break;
+                    }
+                    mXPrevious[i] = (int) event.getX();
+                    mYPrevious[i] = (int) event.getY();
+                    AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
 
-                                x = (int) event.getX();
-                                y = (int) event.getY();
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
-                                //Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
-                                if (clickDuration < MAX_CLICK_DURATION) {
-                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
-                                    profileFragment.setName(new UserData(1, "Name", "City", "ImageURL"));
-                                    transaction.replace(R.id.root_fragment, profileFragment);
-                                    transaction.addToBackStack(null);
-                                    transaction.commit();
+                }
+                return true;
+
+            }
+        });
+
+        for(int i = 0; i < mImageViews.length; i++){
+            AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
+            mXView[i] = params.x;
+            mYView[i] = params.y;
+        }
+        for(int j = 0; j < mImageViews.length; j++) {
+            mImageViews[j].setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_MOVE:
+                            Log.d("1", "mXView = " + mXView[4]);
+                            for (int i = 0; i < mImageViews.length; i++) {
+                                AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mImageViews[i].getLayoutParams();
+
+                                int differenceX = (int) event.getX() - mXView[0];
+                                int differenceY = (int) event.getY() - mYView[0];
+
+                                AbsoluteLayout.LayoutParams params1 = (AbsoluteLayout.LayoutParams) mImageViews[1].getLayoutParams();
+                                AbsoluteLayout.LayoutParams params4 = (AbsoluteLayout.LayoutParams) mImageViews[4].getLayoutParams();
+                                AbsoluteLayout.LayoutParams params20 = (AbsoluteLayout.LayoutParams) mImageViews[20].getLayoutParams();
+                                AbsoluteLayout.LayoutParams params14 = (AbsoluteLayout.LayoutParams) mImageViews[13].getLayoutParams();
+
+                                if(params4.x > 180){
+                                    for(int j = 0; j < mImageViews.length; j++) {
+                                        AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                        paramsDif.x -= (differenceX - x);
+                                        mImageViews[j].setLayoutParams(paramsDif);
+                                    }
                                 }
-                                break;
+                                Log.d("TAG2", "x = " + x);
+                                Log.d("TAG2", "y = " + y);
+                                if(params1.y > 360){
+                                    for (int j = 0; j < mImageViews.length; j++) {
+                                        AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                        paramsDif.y -= (differenceY - y);
+                                        mImageViews[j].setLayoutParams(paramsDif);
+                                    }
+                                }
+                                if(params20.y < 980){
+                                    for (int j = 0; j < mImageViews.length; j++) {
 
-                        }
+                                        AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                        paramsDif.y -= (differenceY - y);
+                                        mImageViews[j].setLayoutParams(paramsDif);
+                                    }
+                                }
+                                if(params14.x < 600){
+                                    for (int j = 0; j < mImageViews.length; j++) {
+                                        AbsoluteLayout.LayoutParams paramsDif = (AbsoluteLayout.LayoutParams) mImageViews[j].getLayoutParams();
+                                        paramsDif.x -= (differenceX - x);
+                                        mImageViews[j].setLayoutParams(paramsDif);
+                                    }
+                                }
+                                //mXPrevious[4] = params.x;
+                                //mYPrevious[4] = params.y;
+
+                                params.x += differenceX - x;
+                                params.y += differenceY - y;
+                                double pixelsToSideFromBubbleX = 0;
+                                double toSideFromBubblePercentX = 0;
+                                double pixelsToSideFromBubbleY = 0;
+                                double toSideFromBubblePercentY = 0;
+                                if(params.x < mDisplayCenterX - mDefaultBubbleWidth / 3){
+                                    pixelsToSideFromBubbleX = params.x + mDefaultBubbleWidth / 3;
+                                }else{
+                                    pixelsToSideFromBubbleX = mDisplayCenterX * 2 - params.x - mDefaultBubbleWidth / 2;
+                                }
+                                if(params.y < mDisplayCenterY - 2 * (mDefaultBubbleHeight / 3)){
+                                    pixelsToSideFromBubbleY = params.y;
+                                }else{
+                                    pixelsToSideFromBubbleY = mDisplayCenterY * 2 - params.y - mDefaultBubbleHeight / 3;
+                                }
+                                toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
+
+                                toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
+                                if(toSideFromBubblePercentX > toSideFromBubblePercentY){
+                                    if(toSideFromBubblePercentY < 1){
+                                        params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleHeight);
+                                    }else{
+                                        if(toSideFromBubblePercentY < 0){
+                                            params.height = 0;
+                                        }else {
+                                            params.height = mDefaultBubbleHeight;
+
+                                        }
+                                    }
+                                }else {
+                                    if(toSideFromBubblePercentX < 1){
+                                        params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleHeight);
+                                    }else{
+                                        if(toSideFromBubblePercentX < 0){
+                                            params.height = 0;
+                                        }else {
+                                            params.height = mDefaultBubbleHeight;
+                                        }
+                                    }
+                                }
+
+                                mImageViews[i].setLayoutParams(params);
+                                mXPrevious[i] = (int) event.getX();
+                                mYPrevious[i] = (int) event.getY();
+                            }
+
+
+                            break;
+                        case MotionEvent.ACTION_DOWN:
+                            mStartClickTime = Calendar.getInstance().getTimeInMillis();
+                            x1 = (int) event.getX();
+                            y1 = (int) event.getY();
+                            x = (int) event.getX();
+                            y = (int) event.getY();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
+                            //Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+                            if (clickDuration < MAX_CLICK_DURATION) {
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
+                                profileFragment.setName(new UserData(1, "Name", "City", "ImageURL"));
+                                transaction.replace(R.id.root_fragment, profileFragment);
+                                transaction.addToBackStack(null);
+                                transaction.commit();
+                            }
+                            break;
+
+                    }
 
                     return true;
                 }
