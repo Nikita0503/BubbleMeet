@@ -15,11 +15,14 @@ import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.Inbox.InboxFragment;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.bubble.BubbleFragment;
+import com.rockstar.bubblemeetapplication.bubble.BubbleFragment2;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
 import com.rockstar.bubblemeetapplication.likes.LikesFragment;
 import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
 import com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity;
 import com.rockstar.bubblemeetapplication.watchers.WatchersFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements BaseContract.BaseView {
 
@@ -103,8 +106,17 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 mImageViewFilters.setVisibility(View.VISIBLE);
                 resetMenuIcons();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                BubbleFragment bubbleFragment = new BubbleFragment();
+                //BubbleFragment bubbleFragment = new BubbleFragment();
+                //transaction.replace(R.id.root_fragment, bubbleFragment);
+
+                BubbleFragment2 bubbleFragment = new BubbleFragment2();
+                String[] users = new String[49];
+                for(int i = 0; i < 49; i++){
+                    users[i] = i+"";
+                }
+                bubbleFragment.setUsers(users);
                 transaction.replace(R.id.root_fragment, bubbleFragment);
+
                 //transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -138,7 +150,12 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
             }
         });
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        BubbleFragment bubbleFragment = new BubbleFragment();
+        BubbleFragment2 bubbleFragment = new BubbleFragment2();
+        String[] users = new String[49];
+        for(int i = 0; i < 49; i++){
+            users[i] = i+"";
+        }
+        bubbleFragment.setUsers(users);
         transaction.replace(R.id.root_fragment, bubbleFragment);
         transaction.addToBackStack(null);
         transaction.commit();
