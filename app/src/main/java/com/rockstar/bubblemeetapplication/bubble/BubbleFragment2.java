@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -32,7 +34,10 @@ import retrofit2.http.PATCH;
 public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
 
-    Handler mHandler = new Handler();
+    public boolean left;
+    public boolean top;
+    public boolean right;
+    public boolean bottom;
 
     private static final int MAX_CLICK_DURATION = 100;
     private int mDifferenceX;
@@ -74,6 +79,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+
         mDefaultBubbleDiameter = 360;
         mDisplayCenterX = size.x / 2;
         mDisplayCenterY = size.y / 2 - size.y / 10;
@@ -84,10 +90,10 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
         for(int i = 0; i < mRows; i++){
             for(int j = 0; j < mRows; j++){
-                CircleImageView imageViewBubble = new CircleImageView(getContext());
-                imageViewBubble.setStrokeWidth(10);
-                imageViewBubble.setStrokeColor(getResources().getColor(R.color.colorAroundAvatar));
-                imageViewBubble.setImageDrawable(getResources().getDrawable(R.drawable.pudge));
+                ImageView imageViewBubble = new ImageView(getContext());
+                //imageViewBubble.setStrokeWidth(10);
+                //imageViewBubble.setStrokeColor(getResources().getColor(R.color.colorAroundAvatar));
+                imageViewBubble.setImageDrawable(getResources().getDrawable(R.drawable.circle_for_photo_gray));
 
                 AbsoluteLayout.LayoutParams params
                         = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*450,  i*450);
@@ -98,7 +104,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 mLayout.addView(imageViewBubble);
             }
         }
-
         Log.d("bubbles", mUsers.length+"");
         mLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -107,13 +112,19 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            mStartClickTime = Calendar.getInstance().getTimeInMillis();
+                            mStartX = (int) event.getX();
+                            mStartY = (int) event.getY();
                             break;
                         case MotionEvent.ACTION_MOVE:
                             update(i, paramsBubble, event);
                             break;
                         case MotionEvent.ACTION_UP:
-
-                            break;
+                            long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
+                            if (clickDuration < MAX_CLICK_DURATION) {
+                                isBubble(event);
+                            }
+                            return false;
                         case MotionEvent.ACTION_CANCEL:
 
                             break;
@@ -125,41 +136,27 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 return true;
             }
         });
+    }
 
 
 
+    private void isBubble(MotionEvent event){
         for(int i = 0; i < mLayout.getChildCount(); i++){
-            mLayout.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_MOVE:
-                            update(event);
-                            break;
-                        case MotionEvent.ACTION_DOWN:
-                            mStartClickTime = Calendar.getInstance().getTimeInMillis();
-                            mStartX = (int) event.getX();
-                            mStartY = (int) event.getY();
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
-                            if (clickDuration < MAX_CLICK_DURATION) {
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
-                                profileFragment.setName(new UserData(1, "Name", "City", "ImageURL"));
-                                transaction.replace(R.id.root_fragment, profileFragment);
-                                transaction.addToBackStack(null);
-                                transaction.commit();
-                            }
-                            break;
-                    }
-
-                    return true;
-                }
-            });
+            AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
+            if(event.getX() > paramsBubble.x
+                    && event.getY() > paramsBubble.y
+                    && event.getX() < (paramsBubble.x + paramsBubble.height)
+                    && event.getY() < (paramsBubble.y + paramsBubble.height)){
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
+                profileFragment.setName(new UserData(1, i+"", "City", "ImageURL"));
+                transaction.replace(R.id.root_fragment, profileFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            }
+            //Toast.makeText(getContext(), "layout", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     private void update(int i, AbsoluteLayout.LayoutParams paramsBubble, MotionEvent event){
@@ -176,11 +173,14 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 //BORDERING
                 AbsoluteLayout.LayoutParams paramsLeftTopBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
                 if (paramsLeftTopBorderBubble.x > mDefaultBubbleDiameter / 2) {
+                    if(i==0) Log.d("TAG1", "yes");
                     for (int j = 0; j < mLayout.getChildCount(); j++) {
                         AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
                         params.x -= mDifferenceX;
                         mLayout.getChildAt(j).setLayoutParams(params);
                     }
+                }else{
+                    if(i==0) Log.d("TAG1", "no");
                 }
                 if(paramsLeftTopBorderBubble.y > mDefaultBubbleDiameter){
                     for (int j = 0; j < mLayout.getChildCount(); j++) {
@@ -222,12 +222,11 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 }else{
                     pixelsToSideFromBubbleY = mDisplayCenterY * 2 - paramsBubble.y - mDefaultBubbleDiameter / 3;
                 }
-                if(i == 6) {
+
                     //Log.d("xToSide", pixelsToSideFromBubbleX + "");
                     //Log.d("yToSide", pixelsToSideFromBubbleY + "");
-                    Log.d("x", paramsBubble.x+ "");
-                    Log.d("y", paramsBubble.y + "");
-                }
+
+
                 if(pixelsToSideFromBubbleX > 0 && pixelsToSideFromBubbleY > 0) {
                     toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
                     toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
@@ -236,8 +235,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     toSideFromBubblePercentY = 0;
                 }
                 if(i == 6) {
-                    Log.d("scaleX", pixelsToSideFromBubbleX + "");
-                    Log.d("scaleY", pixelsToSideFromBubbleY + "");
+                    //Log.d("scaleX", pixelsToSideFromBubbleX + "");
+                    //Log.d("scaleY", pixelsToSideFromBubbleY + "");
                 }
                 if(toSideFromBubblePercentX > toSideFromBubblePercentY){
                     if(toSideFromBubblePercentY < 1){
@@ -266,112 +265,5 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         mLayout.getChildAt(i).setLayoutParams(paramsBubble);
     }
 
-    private void update(MotionEvent event){
-        for(int j = 0; j <  mLayout.getChildCount(); j++) {
-            AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
-            int differenceX = mStartX - (int) event.getX();
-            int differenceY = mStartY - (int) event.getY();
-            //MOVING
-            paramsBubble.x -= differenceX;
-            paramsBubble.y -= differenceY;
-            //MOVING
-            Log.d("differenceX", differenceX + "");
-            Log.d("differenceY", differenceY + "");
-            //BORDERING
 
-            AbsoluteLayout.LayoutParams paramsLeftTopBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
-            if (paramsLeftTopBorderBubble.x > mDefaultBubbleDiameter / 2) {
-                for (int z = 0; z < mLayout.getChildCount(); z++) {
-                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(z).getLayoutParams();
-                    params.x += differenceX;
-                    mLayout.getChildAt(z).setLayoutParams(params);
-                }
-
-            }
-            if(paramsLeftTopBorderBubble.y > mDefaultBubbleDiameter){
-                for (int z = 0; z < mLayout.getChildCount(); z++) {
-                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(z).getLayoutParams();
-                    params.y += differenceY;
-                    mLayout.getChildAt(z).setLayoutParams(params);
-                }
-            }
-            AbsoluteLayout.LayoutParams paramsRightBottomBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(mLayout.getChildCount()-1).getLayoutParams();
-            if(paramsRightBottomBorderBubble.x < (mDisplayCenterX - (mDefaultBubbleDiameter / 2))){
-                for (int z = 0; z < mLayout.getChildCount(); z++) {
-                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(z).getLayoutParams();
-                    params.x += differenceX;
-                    mLayout.getChildAt(z).setLayoutParams(params);
-                }
-            }
-            if(paramsRightBottomBorderBubble.y < mDisplayCenterY){
-                for (int z = 0; z < mLayout.getChildCount(); z++) {
-                    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(z).getLayoutParams();
-                    params.y += differenceY;
-                    mLayout.getChildAt(z).setLayoutParams(params);
-                }
-            }
-            //BORDERING
-
-            //SCALE
-            double pixelsToSideFromBubbleX = 0;
-            double toSideFromBubblePercentX = 0;
-            double pixelsToSideFromBubbleY = 0;
-            double toSideFromBubblePercentY = 0;
-            if(paramsBubble.x < mDisplayCenterX - mDefaultBubbleDiameter / 3){
-                pixelsToSideFromBubbleX = paramsBubble.x + mDefaultBubbleDiameter / 3;
-            }else{
-                pixelsToSideFromBubbleX = mDisplayCenterX * 2 - paramsBubble.x - mDefaultBubbleDiameter / 2;
-            }
-            if(paramsBubble.y < mDisplayCenterY - 2 * (mDefaultBubbleDiameter / 3)){
-                pixelsToSideFromBubbleY = paramsBubble.y;
-            }else{
-                pixelsToSideFromBubbleY = mDisplayCenterY * 2 - paramsBubble.y - mDefaultBubbleDiameter / 3;
-            }
-            if(j == 6) {
-                //Log.d("xToSide", pixelsToSideFromBubbleX + "");
-                //Log.d("yToSide", pixelsToSideFromBubbleY + "");
-                Log.d("x", paramsBubble.x+ "");
-                Log.d("y", paramsBubble.y + "");
-            }
-            if(pixelsToSideFromBubbleX > 0 && pixelsToSideFromBubbleY > 0) {
-                toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX - mDisplayCenterX / 2);
-                toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
-            }else{
-                toSideFromBubblePercentX = 0;
-                toSideFromBubblePercentY = 0;
-            }
-            if(j == 6) {
-                Log.d("scaleX", pixelsToSideFromBubbleX + "");
-                Log.d("scaleY", pixelsToSideFromBubbleY + "");
-            }
-            if(toSideFromBubblePercentX > toSideFromBubblePercentY){
-                if(toSideFromBubblePercentY < 1){
-                    paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleDiameter);
-                }else{
-                    if(toSideFromBubblePercentY < 0){
-                        paramsBubble.height = 0;
-                    }else {
-                        paramsBubble.height = mDefaultBubbleDiameter;
-                    }
-                }
-            }else {
-                if(toSideFromBubblePercentX < 1){
-                    paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleDiameter);
-                }else{
-                    if(toSideFromBubblePercentX < 0){
-                        paramsBubble.height = 0;
-                    }else {
-                        paramsBubble.height = mDefaultBubbleDiameter;
-                    }
-                }
-            }
-            //SCALE
-
-            mLayout.getChildAt(j).setLayoutParams(paramsBubble);
-
-
-            mXPrevious[j] = paramsBubble.x;
-            mYPrevious[j] = paramsBubble.y;
-        }
-    }
 }
