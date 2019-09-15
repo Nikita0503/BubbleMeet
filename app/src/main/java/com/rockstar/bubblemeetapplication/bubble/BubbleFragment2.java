@@ -18,10 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
+import com.rockstar.bubblemeetapplication.CircleTransform;
 import com.rockstar.bubblemeetapplication.R;
 import com.github.abdularis.civ.CircleImageView;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.profile_preview.ProfilePreviewFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -83,12 +85,15 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         for(int i = 0; i < mRows; i++){
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
-                imageViewBubble.setImageDrawable(getResources().getDrawable(R.drawable.circle_for_photo_gray));
+                //imageViewBubble.setImageDrawable(getResources().getDrawable(R.drawable.circle_for_photo_gray));
 
                 AbsoluteLayout.LayoutParams params
                         = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*450,  i*450);
                 if(i % 2 != 0) {
+                    Picasso.with(getContext()).load("https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg").transform(new CircleTransform()).into(imageViewBubble);
                     params.x += 225;
+                }else{
+                    Picasso.with(getContext()).load(R.drawable.pudge).transform(new CircleTransform()).into(imageViewBubble);
                 }
                 imageViewBubble.setLayoutParams(params);
                 mLayout.addView(imageViewBubble);
