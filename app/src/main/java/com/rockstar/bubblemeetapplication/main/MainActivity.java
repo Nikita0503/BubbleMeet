@@ -15,7 +15,7 @@ import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.Inbox.InboxFragment;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.bubble.BubbleFragment;
-import com.rockstar.bubblemeetapplication.bubble.BubbleFragment2;
+import com.rockstar.bubblemeetapplication.bubble.*;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
 import com.rockstar.bubblemeetapplication.likes.LikesFragment;
 import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
