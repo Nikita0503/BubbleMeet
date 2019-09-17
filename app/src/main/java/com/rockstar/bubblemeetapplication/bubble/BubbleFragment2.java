@@ -38,7 +38,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private boolean isMoving;
     private boolean isTop;
     private boolean isRight;
-    private static final int MAX_CLICK_DURATION = 100;
+    private static final int MAX_CLICK_DURATION = 75;
     private int mDifferenceX;
     private int mDifferenceY;
     private int mDisplayCenterX;
@@ -50,6 +50,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
     private String[] mUsers;
+    ArrayList<Integer> mWayDifferencesX;
+    ArrayList<Integer> mWayDifferencesY;
     private AbsoluteLayout mLayout;
 
     public void setUsers(String[] users){
@@ -114,6 +116,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             mStartClickTime = Calendar.getInstance().getTimeInMillis();
+                            //mWayDifferencesX = new ArrayList<Integer>();
+                            //mWayDifferencesY = new ArrayList<Integer>();
                             break;
                         case MotionEvent.ACTION_MOVE:
                             update(i, paramsBubble, event);
@@ -122,18 +126,42 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             long clickDuration = Calendar.getInstance().getTimeInMillis() - mStartClickTime;
                             if (clickDuration < MAX_CLICK_DURATION) {
                                 isBubble(event);
-                            }else{
+                            }
                             isMoving = true;
                             mDifferenceX /= 2;
                             mDifferenceY /= 2;
+                            //mDifferenceX = getAverage(mWayDifferencesX);
+                            //mDifferenceY = getAverage(mWayDifferencesY);
                             if(mDifferenceX > 50){
                                 mDifferenceX = 50;
+                            }else{
+                                if(mDifferenceX >= 0 && mDifferenceX < 15){
+                                    mDifferenceX = 15;
+                                }
                             }
                             if(mDifferenceY > 50){
                                 mDifferenceY = 50;
+                            }else{
+                                if(mDifferenceY >= 0 && mDifferenceY < 15){
+                                    mDifferenceY = 15;
+                                }
+                            }
+                            if(mDifferenceX < -50){
+                                mDifferenceX = -50;
+                            }else{
+                                if(mDifferenceX > -15 && mDifferenceX <= 0){
+                                    mDifferenceX = -15;
+                                }
+                            }
+                            if(mDifferenceY < - 50){
+                                mDifferenceY = -50;
+                            }else{
+                                if(mDifferenceY > -15 && mDifferenceY <= 0){
+                                    mDifferenceY = -15;
+                                }
                             }
                             inertia();
-                            }
+
                             return true;
                         case MotionEvent.ACTION_CANCEL:
 
@@ -148,7 +176,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             }
         });
     }
-
 
 
     private void isBubble(MotionEvent event){
@@ -187,10 +214,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     isTop = false;
                 }
 
-                if(i == 6) {
+                //if(i == 0) {
+                    //mWayDifferencesX.add(mDifferenceX);
+                    //mWayDifferencesY.add(mDifferenceY);
                     //Log.d("differenceX", mDifferenceX + "");
                     //Log.d("differenceY", mDifferenceY + "");
-                }
+                //}
                 //BORDERING
                 AbsoluteLayout.LayoutParams paramsLeftTopBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
                 if (paramsLeftTopBorderBubble.x > mDefaultBubbleDiameter / 2) {
@@ -446,10 +475,13 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             isMoving = false;
                         }
                     }
-                    myHandler.postDelayed(this, 20);
+                    myHandler.postDelayed(this, 10);
+                }else{
+                    //mWayDifferencesX.clear();
+                    //mWayDifferencesY.clear();
                 }
             }
-        }, 0);
+        }, 15);
     }
 
 }
