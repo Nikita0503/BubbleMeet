@@ -35,7 +35,6 @@ import retrofit2.http.PATCH;
 
 public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
-    private boolean isConnected;
     private boolean isConnectBottom;
     private boolean isConnectRight;
     private boolean isXMoving;
@@ -44,6 +43,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private boolean isTop;
     private boolean isRight;
     private static final int MAX_CLICK_DURATION = 75;
+    private static final int MAX_MOVEMENT_DIFFERENCE = 20;
     private int mDifferenceX;
     private int mDifferenceY;
     private int mDisplayCenterX;
@@ -51,6 +51,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int mDefaultBubbleDiameter;
     private int mRows;
     private long mStartClickTime;
+    private long mPreviousMoveTime;
     private int[] mXPrevious;
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
@@ -119,10 +120,10 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             mStartClickTime = Calendar.getInstance().getTimeInMillis();
-                            //mWayDifferencesX = new ArrayList<Integer>();
-                            //mWayDifferencesY = new ArrayList<Integer>();
+                            mPreviousMoveTime = Calendar.getInstance().getTimeInMillis();
                             break;
                         case MotionEvent.ACTION_MOVE:
+                            mPreviousMoveTime = Calendar.getInstance().getTimeInMillis();
                             update(i, paramsBubble, event);
                             break;
                         case MotionEvent.ACTION_UP:
@@ -130,41 +131,45 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             if (clickDuration < MAX_CLICK_DURATION) {
                                 isBubble(event);
                             }
-                            isMoving = true;
-                            mDifferenceX /= 2;
-                            mDifferenceY /= 2;
-                            //mDifferenceX = getAverage(mWayDifferencesX);
-                            //mDifferenceY = getAverage(mWayDifferencesY);
-                            if(mDifferenceX > 50){
-                                mDifferenceX = 50;
-                            }else{
-                                if(mDifferenceX >= 0 && mDifferenceX < 15){
-                                    mDifferenceX = 15;
+                            long movementDifference = Calendar.getInstance().getTimeInMillis() - mPreviousMoveTime;
+                            if(movementDifference < MAX_MOVEMENT_DIFFERENCE) {
+                                isMoving = true;
+                                mDifferenceX /= 2;
+                                mDifferenceY /= 2;
+                                //mDifferenceX = getAverage(mWayDifferencesX);
+                                //mDifferenceY = getAverage(mWayDifferencesY);
+                                if(Math.abs(mDifferenceX) > 2 && Math.abs(mDifferenceY) > 2) {
+                                    if (mDifferenceX > 50) {
+                                        mDifferenceX = 50;
+                                    } else {
+                                        if (mDifferenceX >= 0 && mDifferenceX < 15) {
+                                            mDifferenceX = 15;
+                                        }
+                                    }
+                                    if (mDifferenceY > 50) {
+                                        mDifferenceY = 50;
+                                    } else {
+                                        if (mDifferenceY >= 0 && mDifferenceY < 15) {
+                                            mDifferenceY = 15;
+                                        }
+                                    }
+                                    if (mDifferenceX < -50) {
+                                        mDifferenceX = -50;
+                                    } else {
+                                        if (mDifferenceX > -15 && mDifferenceX <= 0) {
+                                            mDifferenceX = -15;
+                                        }
+                                    }
+                                    if (mDifferenceY < -50) {
+                                        mDifferenceY = -50;
+                                    } else {
+                                        if (mDifferenceY > -15 && mDifferenceY <= 0) {
+                                            mDifferenceY = -15;
+                                        }
+                                    }
+                                    inertia();
                                 }
                             }
-                            if(mDifferenceY > 50){
-                                mDifferenceY = 50;
-                            }else{
-                                if(mDifferenceY >= 0 && mDifferenceY < 15){
-                                    mDifferenceY = 15;
-                                }
-                            }
-                            if(mDifferenceX < -50){
-                                mDifferenceX = -50;
-                            }else{
-                                if(mDifferenceX > -15 && mDifferenceX <= 0){
-                                    mDifferenceX = -15;
-                                }
-                            }
-                            if(mDifferenceY < - 50){
-                                mDifferenceY = -50;
-                            }else{
-                                if(mDifferenceY > -15 && mDifferenceY <= 0){
-                                    mDifferenceY = -15;
-                                }
-                            }
-                            inertia();
-
                             return true;
                         case MotionEvent.ACTION_CANCEL:
 
