@@ -35,6 +35,11 @@ import retrofit2.http.PATCH;
 
 public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
+    private boolean isConnected;
+    private boolean isConnectBottom;
+    private boolean isConnectRight;
+    private boolean isXMoving;
+    private boolean isYMoving;
     private boolean isMoving;
     private boolean isTop;
     private boolean isRight;
@@ -50,8 +55,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
     private String[] mUsers;
-    ArrayList<Integer> mWayDifferencesX;
-    ArrayList<Integer> mWayDifferencesY;
     private AbsoluteLayout mLayout;
 
     public void setUsers(String[] users){
@@ -205,57 +208,100 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 mDifferenceY = (int) event.getY() - mYPrevious[i];
                 if(mDifferenceX < 0){
                     isRight = true;
+                    isXMoving = true;
                 }else{
                     isRight = false;
+                    isXMoving = true;
                 }
                 if(mDifferenceY > 0){
                     isTop = true;
+                    isYMoving = true;
                 }else{
                     isTop = false;
+                    isYMoving = true;
                 }
 
-                //if(i == 0) {
+                if(i == 0) {
                     //mWayDifferencesX.add(mDifferenceX);
                     //mWayDifferencesY.add(mDifferenceY);
-                    //Log.d("differenceX", mDifferenceX + "");
-                    //Log.d("differenceY", mDifferenceY + "");
-                //}
+                    Log.d("differenceX", mDifferenceX + "");
+                    Log.d("differenceY", mDifferenceY + "");
+                }
                 //BORDERING
                 AbsoluteLayout.LayoutParams paramsLeftTopBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
                 if (paramsLeftTopBorderBubble.x > mDefaultBubbleDiameter / 2) {
                     for (int j = 0; j < mLayout.getChildCount(); j++) {
                         AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
-                        params.x -= 51;
+                        params.x -= mDifferenceX;
                         mLayout.getChildAt(j).setLayoutParams(params);
                     }
                 }
                 if(paramsLeftTopBorderBubble.y > mDefaultBubbleDiameter){
                     for (int j = 0; j < mLayout.getChildCount(); j++) {
                         AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
-                        params.y -= 51;
+                        params.y -= mDifferenceY;
                         mLayout.getChildAt(j).setLayoutParams(params);
                     }
                 }
                 AbsoluteLayout.LayoutParams paramsRightBottomBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(mLayout.getChildCount()-1).getLayoutParams();
                 if(paramsRightBottomBorderBubble.x < (mDisplayCenterX - (mDefaultBubbleDiameter / 2))){
-                    for (int j = 0; j < mLayout.getChildCount(); j++) {
-                        AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
-                        params.x += 51;
-                        mLayout.getChildAt(j).setLayoutParams(params);
-                    }
+                    //for (int j = 0; j < mLayout.getChildCount(); j++) {
+                    //    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
+                    //    params.x += mDifferenceX;
+                    //    mLayout.getChildAt(j).setLayoutParams(params);
+                    //}
+                    isConnectRight = true;
+                }else{
+                    isConnectRight = false;
                 }
                 if(paramsRightBottomBorderBubble.y < mDisplayCenterY){
-                    for (int j = 0; j < mLayout.getChildCount(); j++) {
-                        AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
-                        params.y += 51;
-                        mLayout.getChildAt(j).setLayoutParams(params);
-                    }
+                    //for (int j = 0; j < mLayout.getChildCount(); j++) {
+                    //    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
+                    //    params.y += mDifferenceY;
+                    //    mLayout.getChildAt(j).setLayoutParams(params);
+                    //}
+                    isConnectBottom = true;
+                }else {
+                    isConnectBottom = false;
                 }
                 ////BORDERING
 
                 //MOVING
-                paramsBubble.x += mDifferenceX;
-                paramsBubble.y += mDifferenceY;
+
+                if(!isConnectBottom && !isConnectRight){
+                    paramsBubble.x += mDifferenceX;
+                    paramsBubble.y += mDifferenceY;
+                }else{
+
+                        if (isTop) {
+                            paramsBubble.y += mDifferenceY;
+                        }
+                        if (!isRight) {
+                            paramsBubble.x += mDifferenceX;
+                        }
+
+                }
+
+                //if(!isConnectBottom) {
+                //    paramsBubble.x += mDifferenceX;
+                //    paramsBubble.y += mDifferenceY;
+                //}else{
+                //    if(isTop){
+                //        paramsBubble.x += mDifferenceX;
+                //        paramsBubble.y += mDifferenceY;
+                //    }
+                //}
+                //
+                //if(!isConnectRight) {
+                //    paramsBubble.x += mDifferenceX;
+                //    paramsBubble.y += mDifferenceY;
+                //}else{
+                //    if(!isRight){
+                //        paramsBubble.x += mDifferenceX;
+                //        paramsBubble.y += mDifferenceY;
+                //    }
+                //}
+
                 //MOVING
 
                 //SCALING
@@ -340,7 +386,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 //mDifferenceX *= -1;
                 //mDifferenceX /= 4;
                 //isRight = true;
-                mDifferenceY = 0;
+
             }
             if(paramsLeftTopBorderBubble.y > mDefaultBubbleDiameter){
                 for (int j = 0; j < mLayout.getChildCount(); j++) {
@@ -348,7 +394,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     params.y -= mDifferenceY;
                     mLayout.getChildAt(j).setLayoutParams(params);
                 }
-                mDifferenceX = 0;
+
                 //mDifferenceY *= -1;
                 //mDifferenceY /= 4;
                 //isTop = false;
@@ -363,7 +409,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 //mDifferenceX *= -1;
                 //mDifferenceX /= 4;
                 //isRight = false;
-                mDifferenceY = 0;
+
             }
             if(paramsRightBottomBorderBubble.y < mDisplayCenterY){
                 for (int j = 0; j < mLayout.getChildCount(); j++) {
@@ -371,7 +417,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     params.y -= mDifferenceY;
                     mLayout.getChildAt(j).setLayoutParams(params);
                 }
-                mDifferenceX = 0;
+
                 //mDifferenceY *= -1;
                 //mDifferenceY /= 4;
                 //isTop = true;
@@ -440,6 +486,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         final Handler myHandler = new Handler();
         myHandler.postDelayed(new Runnable() {
             public void run() {
+                if(!isXMoving && !isYMoving){
+                    isMoving = false;
+                }
                 if(isMoving) {
                     if (isRight) {
                         if (mDifferenceX < 0) {
@@ -447,7 +496,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             start();
                             //myHandler.postDelayed(this, 20);
                         }else{
-                            isMoving = false;
+                            isXMoving = false;
+                            mDifferenceX = -1;
+                            //isMoving = false;
                         }
                     } else {
                         if (mDifferenceX > 0) {
@@ -455,7 +506,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             start();
                             //myHandler.postDelayed(this, 20);
                         }else{
-                            isMoving = false;
+                            isXMoving = false;
+                            mDifferenceX = 1;
+                            //isMoving = false;
                         }
                     }
                     if(isTop){
@@ -464,7 +517,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             start();
                             //myHandler.postDelayed(this, 20);
                         }else{
-                            isMoving = false;
+                            isYMoving = false;
+                            mDifferenceY = 1;
+                            //isMoving = false;
                         }
                     }else{
                         if(mDifferenceY < 0){
@@ -472,9 +527,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             start();
                             //myHandler.postDelayed(this, 20);
                         }else{
-                            isMoving = false;
+                            isYMoving = false;
+                            mDifferenceY = -1;
+                            //isMoving = false;
                         }
                     }
+
                     myHandler.postDelayed(this, 10);
                 }else{
                     //mWayDifferencesX.clear();
