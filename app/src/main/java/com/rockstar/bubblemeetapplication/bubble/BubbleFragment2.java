@@ -119,6 +119,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            isMoving = false;
                             mStartClickTime = Calendar.getInstance().getTimeInMillis();
                             mPreviousMoveTime = Calendar.getInstance().getTimeInMillis();
                             break;
@@ -167,8 +168,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                                             mDifferenceY = -15;
                                         }
                                     }
-                                    inertia();
+
                                 }
+                                inertia();
                             }
                             return true;
                         case MotionEvent.ACTION_CANCEL:
