@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         });
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         BubbleFragment2 bubbleFragment = new BubbleFragment2();
-        String[] users = new String[49];
-        for(int i = 0; i < 49; i++){
+        String[] users = new String[100];
+        for(int i = 0; i < 100; i++){
             users[i] = i+"";
         }
         bubbleFragment.setUsers(users);

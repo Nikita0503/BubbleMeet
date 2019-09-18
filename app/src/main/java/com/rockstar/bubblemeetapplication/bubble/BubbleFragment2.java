@@ -116,10 +116,11 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         }
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
-            defaultY[i] = paramsBubble.y;
+
             AbsoluteLayout.LayoutParams paramsNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
-            paramsNew.x -= (mRows/2)*400;
-            paramsNew.y -= (mRows/2)*400;
+            paramsNew.x -= (mRows/4)*400;
+            paramsNew.y -= (mRows/4)*400 - 100;
+            defaultY[i] = paramsNew.y;
             mLayout.getChildAt(i).setLayoutParams(paramsNew);
         }
 
@@ -194,6 +195,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     mXPrevious[i] = (int) event.getX();
                     mYPrevious[i] = (int) event.getY();
                     mDiameterPrevious[i] = paramsBubble.height;
+                    defaultY[i] = (int) event.getY();
                 }
                 Log.d("event", event.toString());
                 return true;
@@ -227,7 +229,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             if (mXPrevious[i] != 0 && mYPrevious[i] != 0) {
                 mDifferenceX = (int) event.getX() - mXPrevious[i];
                 mDifferenceY = (int) event.getY() - mYPrevious[i];
-                defaultY[i] = (int) event.getY() - mYPrevious[i];
                 if(mDifferenceX < 0){
                     isRight = true;
                     isXMoving = true;
@@ -355,9 +356,14 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 if(!isConnectBottom && !isConnectRight){
                     paramsBubble.x += mDifferenceX;
                     paramsBubble.y += mDifferenceY;
-                    if(multiply > 0 && multiply < 1) {
-
+                    if(multiply >= 0 && multiply <= 1) {
+                        if(mDiameterPrevious[i] < paramsBubble.height){
+                            paramsBubble.y -= Math.abs(mDiameterPrevious[i]-paramsBubble.height)/2;
+                        }else{
+                            paramsBubble.y += Math.abs(mDiameterPrevious[i]-paramsBubble.height)/2;
+                        }
                     }
+
                 }else{
 
                     if (isTop) {
@@ -453,7 +459,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             //BORDERING
 
 
-
+            double multiply = 0;
             //SCALING
             for(int j = 0; j < mLayout.getChildCount(); j++) {
                 AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
@@ -481,6 +487,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     toSideFromBubblePercentY = 0;
                 }
                 if (toSideFromBubblePercentX > toSideFromBubblePercentY) {
+                    multiply = toSideFromBubblePercentY;
                     if (toSideFromBubblePercentY < 1) {
                         params.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleDiameter);
                     } else {
@@ -492,6 +499,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         }
                     }
                 } else {
+                    multiply = toSideFromBubblePercentX;
                     if (toSideFromBubblePercentX < 1) {
                         params.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleDiameter);
                     } else {
@@ -510,6 +518,13 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             //MOVING
             paramsBubble.x += mDifferenceX;
             paramsBubble.y += mDifferenceY;
+            if(multiply >= 0 && multiply <= 1) {
+                if(mDiameterPrevious[i] < paramsBubble.height){
+                    paramsBubble.y -= Math.abs(mDiameterPrevious[i]-paramsBubble.height)/2;
+                }else{
+                    paramsBubble.y += Math.abs(mDiameterPrevious[i]-paramsBubble.height)/2;
+                }
+            }
             //MOVING
 
             mLayout.getChildAt(i).setLayoutParams(paramsBubble);
