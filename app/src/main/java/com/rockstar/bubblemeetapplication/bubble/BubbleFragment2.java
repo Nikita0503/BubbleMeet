@@ -39,6 +39,8 @@ import retrofit2.http.PATCH;
 
 public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
+    private boolean isConnectTop;
+    private boolean isConnectLeft;
     private boolean isConnectBottom;
     private boolean isConnectRight;
     private boolean isXMoving;
@@ -255,20 +257,27 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     Log.d("differenceY", mDifferenceY + "");
                 }
                 //BORDERING
+
                 AbsoluteLayout.LayoutParams paramsLeftTopBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
                 if (paramsLeftTopBorderBubble.x > mDefaultBubbleDiameter / 2) {
-                    for (int j = 0; j < mLayout.getChildCount(); j++) {
-                        AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
-                        params.x -= mDifferenceX;
-                        mLayout.getChildAt(j).setLayoutParams(params);
-                    }
+                    //for (int j = 0; j < mLayout.getChildCount(); j++) {
+                    //    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
+                    //    params.x -= mDifferenceX;
+                    //    mLayout.getChildAt(j).setLayoutParams(params);
+                    //}
+                    isConnectLeft = true;
+                }else{
+                    isConnectLeft = false;
                 }
                 if(paramsLeftTopBorderBubble.y > mDefaultBubbleDiameter){
-                    for (int j = 0; j < mLayout.getChildCount(); j++) {
-                        AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
-                        params.y -= mDifferenceY;
-                        mLayout.getChildAt(j).setLayoutParams(params);
-                    }
+                    //for (int j = 0; j < mLayout.getChildCount(); j++) {
+                    //    AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(j).getLayoutParams();
+                    //    params.y -= mDifferenceY;
+                    //    mLayout.getChildAt(j).setLayoutParams(params);
+                    //}
+                    isConnectTop = true;
+                }else{
+                    isConnectTop = false;
                 }
                 AbsoluteLayout.LayoutParams paramsRightBottomBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(mLayout.getChildCount()-1).getLayoutParams();
                 if(paramsRightBottomBorderBubble.x < (mDisplayCenterX - (mDefaultBubbleDiameter / 2))){
@@ -357,7 +366,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
                 //MOVING
 
-                if(!isConnectBottom && !isConnectRight){
+                if(!isConnectBottom && !isConnectRight && !isConnectTop && !isConnectLeft){
                     paramsBubble.x += mDifferenceX;
                     paramsBubble.y += mDifferenceY;
                     defaultY[i] += mDifferenceY;
@@ -380,16 +389,30 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
 
                 }else{
-
-                    if (isTop) {
-                        paramsBubble.y += mDifferenceY;
-                        defaultY[i] += mDifferenceY;
-                        defaultYMax[i] += mDifferenceY;
+                    if(isConnectBottom) {
+                        if (isTop) {
+                            paramsBubble.y += mDifferenceY;
+                            defaultY[i] += mDifferenceY;
+                            defaultYMax[i] += mDifferenceY;
+                        }
                     }
-                    if (!isRight) {
-                        paramsBubble.x += mDifferenceX;
+                    if(isConnectRight) {
+                        if (!isRight) {
+                            paramsBubble.x += mDifferenceX;
+                        }
                     }
-
+                    if(isConnectTop) {
+                        if (!isTop){
+                            paramsBubble.y += mDifferenceY;
+                            defaultY[i] += mDifferenceY;
+                            defaultYMax[i] += mDifferenceY;
+                        }
+                    }
+                    if(isConnectLeft) {
+                        if (isRight){
+                            paramsBubble.x += mDifferenceX;
+                        }
+                    }
                 }
 
                 //MOVING
