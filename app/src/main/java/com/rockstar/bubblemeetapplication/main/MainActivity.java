@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 //transaction.replace(R.id.root_fragment, bubbleFragment);
 
                 BubbleFragment2 bubbleFragment = new BubbleFragment2();
-                String[] users = new String[1000];
-                for(int i = 0; i < 1000; i++){
+                String[] users = new String[800];
+                for(int i = 0; i < 800; i++){
                     users[i] = i+"";
                 }
                 bubbleFragment.setUsers(users);
@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         });
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         BubbleFragment2 bubbleFragment = new BubbleFragment2();
-        String[] users = new String[1000];
-        for(int i = 0; i < 1000; i++){
+        String[] users = new String[800];
+        for(int i = 0; i < 800; i++){
             users[i] = i+"";
         }
         bubbleFragment.setUsers(users);
