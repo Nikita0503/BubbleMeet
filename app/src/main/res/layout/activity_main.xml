@@ -15,7 +15,10 @@
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"></FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo">
+
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -181,4 +184,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageViewInbox"
         app:layout_constraintStart_toStartOf="@+id/imageViewInbox" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

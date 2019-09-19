@@ -96,7 +96,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         display.getSize(size);
 
         mDefaultBubbleDiameter = (int) (size.x / 2.8);
-        mDisplayCenterX = size.x / 2;
+        mDisplayCenterX = (size.x / 2);
+        mDisplayCenterX -= mDisplayCenterX/21;
         mDisplayCenterY = size.y / 2 - size.y / 10;
         mRows = (int) Math.sqrt(mUsers.length);
         Log.d("sqrt", "sqrt = " + mRows);
@@ -107,10 +108,10 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
                 AbsoluteLayout.LayoutParams params
-                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.6),  i*(int) (size.x / 2.6));
+                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.4),  i*(int) (size.x / 2.6));
                 if(i % 2 != 0) {
                     Picasso.with(getContext()).load("https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg").transform(new CircleTransform()).into(imageViewBubble);
-                    params.x += (int) (size.x / 2.6) / 2;
+                    params.x += (int) (size.x / 2.4) / 2;
                 }else{
                     Picasso.with(getContext()).load(R.drawable.pudge).transform(new CircleTransform()).into(imageViewBubble);
                 }
@@ -335,6 +336,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         }
                     }
                 }
+
                 if(multiply > 1) multiply = 1;
                 //SCALING
 
