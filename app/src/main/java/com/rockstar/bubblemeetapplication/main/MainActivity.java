@@ -19,6 +19,7 @@ import com.rockstar.bubblemeetapplication.bubble.*;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
 import com.rockstar.bubblemeetapplication.likes.LikesFragment;
 import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
+import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity;
 import com.rockstar.bubblemeetapplication.watchers.WatchersFragment;
 
@@ -110,9 +111,13 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 //transaction.replace(R.id.root_fragment, bubbleFragment);
 
                 BubbleFragment2 bubbleFragment = new BubbleFragment2();
-                String[] users = new String[800];
+                ArrayList<UserData> users = new ArrayList<UserData>();
                 for(int i = 0; i < 800; i++){
-                    users[i] = i+"";
+                    if(i % 2 != 0) {
+                        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
+                    }else {
+                        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
+                    }
                 }
                 bubbleFragment.setUsers(users);
                 transaction.replace(R.id.root_fragment, bubbleFragment);
@@ -151,9 +156,13 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         });
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         BubbleFragment2 bubbleFragment = new BubbleFragment2();
-        String[] users = new String[800];
+        ArrayList<UserData> users = new ArrayList<UserData>();
         for(int i = 0; i < 800; i++){
-            users[i] = i+"";
+            if(i % 2 != 0) {
+                users.add(new UserData(i, "Vault Boy" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
+            }else {
+                users.add(new UserData(i, "Gaben" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
+            }
         }
         bubbleFragment.setUsers(users);
         transaction.replace(R.id.root_fragment, bubbleFragment);

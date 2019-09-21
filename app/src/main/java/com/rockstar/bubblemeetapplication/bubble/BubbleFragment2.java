@@ -39,6 +39,9 @@ import retrofit2.http.PATCH;
 
 public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
+    private static final int MAX_CLICK_DURATION = 75;
+    private static final int MAX_MOVEMENT_DIFFERENCE = 20;
+    private boolean isSlowed;
     private boolean isConnectTop;
     private boolean isConnectLeft;
     private boolean isConnectBottom;
@@ -46,10 +49,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private boolean isXMoving;
     private boolean isYMoving;
     private boolean isMoving;
-    private boolean isTop;
-    private boolean isRight;
-    private static final int MAX_CLICK_DURATION = 75;
-    private static final int MAX_MOVEMENT_DIFFERENCE = 20;
+    private boolean isTopSideMoving;
+    private boolean isRightSideMoving;
     private int mDifferenceX;
     private int mDifferenceY;
     private int mDisplayCenterX;
@@ -58,34 +59,42 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int mRows;
     private long mStartClickTime;
     private long mPreviousMoveTime;
-    private int[] defaultY;
-    private int[] defaultYMax;
+    private int[] mDefaultYMinSize;
+    private int[] mDefaultYMaxSize;
     private int[] mXPrevious;
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
-    private String[] mUsers;
+    //private String[] mUsers;
+    private ArrayList<UserData> mUsers;
     private AbsoluteLayout mLayout;
 
-    public void setUsers(String[] users){
+    public void setUsers(ArrayList<UserData> users){
         mUsers = users;
-        defaultY = new int[mUsers.length];
-        defaultYMax = new int[mUsers.length];
-        mXPrevious = new int[mUsers.length];
-        mYPrevious = new int[mUsers.length];
-        mDiameterPrevious = new int[mUsers.length];
+        mDefaultYMinSize = new int[mUsers.size()];
+        mDefaultYMaxSize = new int[mUsers.size()];
+        mXPrevious = new int[mUsers.size()];
+        mYPrevious = new int[mUsers.size()];
+        mDiameterPrevious = new int[mUsers.size()];
     }
+
+    //public void setUsers(String[] users){
+    //    mUsers = users;
+    //    mDefaultYMinSize = new int[mUsers.length];
+    //    mDefaultYMaxSize = new int[mUsers.length];
+    //    mXPrevious = new int[mUsers.length];
+    //    mYPrevious = new int[mUsers.length];
+    //    mDiameterPrevious = new int[mUsers.length];
+    //}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_bubble_grid_view2, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mLayout = (AbsoluteLayout) view.findViewById(R.id.layout);
-
         initViews();
     }
 
@@ -99,27 +108,25 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         mDisplayCenterX = (size.x / 2);
         mDisplayCenterX -= mDisplayCenterX/21;
         mDisplayCenterY = size.y / 2 - size.y / 10;
-        mRows = (int) Math.sqrt(mUsers.length);
+        mRows = (int) Math.sqrt(mUsers.size());
         Log.d("sqrt", "sqrt = " + mRows);
         Log.d("centerX", "x = " + mDisplayCenterX);
         Log.d("centerY", "y = " + mDisplayCenterY);
-
         for(int i = 0; i < mRows; i++){
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
                 AbsoluteLayout.LayoutParams params
                         = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.4),  i*(int) (size.x / 2.6));
                 if(i % 2 != 0) {
-                    Picasso.with(getContext()).load("https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg").transform(new CircleTransform()).into(imageViewBubble);
                     params.x += (int) (size.x / 2.4) / 2;
-                }else{
-                    Picasso.with(getContext()).load(R.drawable.pudge).transform(new CircleTransform()).into(imageViewBubble);
                 }
                 imageViewBubble.setLayoutParams(params);
                 mLayout.addView(imageViewBubble);
             }
         }
-
+        for(int i = 0; i < mLayout.getChildCount(); i++){
+            Picasso.with(getContext()).load(mUsers.get(i).getPhoto()).transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
+        }
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubbleNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
             paramsBubbleNew.x += mDefaultBubbleDiameter * (-mRows/2);
@@ -128,14 +135,13 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
-            defaultYMax[i] = paramsBubble.y - (mDefaultBubbleDiameter/2);
-            defaultY[i] = paramsBubble.y ;
+            mDefaultYMaxSize[i] = paramsBubble.y - (mDefaultBubbleDiameter/2);
+            mDefaultYMinSize[i] = paramsBubble.y ;
 
         }
 
-
         start();
-        Log.d("bubbles", mUsers.length+"");
+        Log.d("bubbles", mUsers.size()+"");
         mLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, final MotionEvent event) {
@@ -164,29 +170,29 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                                 //mDifferenceX = getAverage(mWayDifferencesX);
                                 //mDifferenceY = getAverage(mWayDifferencesY);
                                 if(Math.abs(mDifferenceX) > 2 && Math.abs(mDifferenceY) > 2) {
-                                    if (mDifferenceX > 50) {
-                                        mDifferenceX = 50;
+                                    if (mDifferenceX > 30) {
+                                        mDifferenceX = 30;
                                     } else {
                                         if (mDifferenceX >= 0 && mDifferenceX < 15) {
                                             mDifferenceX = 15;
                                         }
                                     }
-                                    if (mDifferenceY > 50) {
-                                        mDifferenceY = 50;
+                                    if (mDifferenceY > 30) {
+                                        mDifferenceY = 30;
                                     } else {
                                         if (mDifferenceY >= 0 && mDifferenceY < 15) {
                                             mDifferenceY = 15;
                                         }
                                     }
-                                    if (mDifferenceX < -50) {
-                                        mDifferenceX = -50;
+                                    if (mDifferenceX < -30) {
+                                        mDifferenceX = -30;
                                     } else {
                                         if (mDifferenceX > -15 && mDifferenceX <= 0) {
                                             mDifferenceX = -15;
                                         }
                                     }
-                                    if (mDifferenceY < -50) {
-                                        mDifferenceY = -50;
+                                    if (mDifferenceY < -30) {
+                                        mDifferenceY = -30;
                                     } else {
                                         if (mDifferenceY > -15 && mDifferenceY <= 0) {
                                             mDifferenceY = -15;
@@ -211,7 +217,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         });
     }
 
-
     private void isBubble(MotionEvent event){
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
@@ -223,7 +228,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 Log.d("sizeHeight", paramsBubble.height + "");
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
-                profileFragment.setName(new UserData(1, i+"", "City", "ImageURL"));
+                profileFragment.setName(mUsers.get(i));
                 transaction.replace(R.id.root_fragment, profileFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -238,21 +243,21 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 mDifferenceX = Math.round( event.getX() - mXPrevious[i]);
                 mDifferenceY = Math.round( event.getY() - mYPrevious[i]);
                 if(mDifferenceX < 0){
-                    isRight = true;
+                    isRightSideMoving = true;
                     isXMoving = true;
                 }else{
-                    isRight = false;
+                    isRightSideMoving = false;
                     isXMoving = true;
                 }
                 if(mDifferenceY > 0){
-                    isTop = true;
+                    isTopSideMoving = true;
                     isYMoving = true;
                 }else{
-                    isTop = false;
+                    isTopSideMoving = false;
                     isYMoving = true;
                 }
 
-                if(i == 0) {
+                if(i == 6) {
                     //mWayDifferencesX.add(mDifferenceX);
                     //mWayDifferencesY.add(mDifferenceY);
                     Log.d("differenceX", mDifferenceX + "");
@@ -261,7 +266,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
                 //BORDERING
                 AbsoluteLayout.LayoutParams paramsLeftTopBorderBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
-                if (paramsLeftTopBorderBubble.x > mDefaultBubbleDiameter / 2) {
+                if(paramsLeftTopBorderBubble.x > mDefaultBubbleDiameter / 2) {
                     isConnectLeft = true;
                 }else{
                     isConnectLeft = false;
@@ -283,9 +288,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     isConnectBottom = false;
                 }
                 ////BORDERING
-
-
-
 
                 //SCALING
                 float multiply = 0;
@@ -340,13 +342,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 if(multiply > 1) multiply = 1;
                 //SCALING
 
-
                 //MOVING
                 if(!isConnectBottom && !isConnectRight && !isConnectTop && !isConnectLeft){
                     paramsBubble.x += mDifferenceX;
                     paramsBubble.y += mDifferenceY;
-                    defaultY[i] += mDifferenceY;
-                    defaultYMax[i] += mDifferenceY;
+                    mDefaultYMinSize[i] += mDifferenceY;
+                    mDefaultYMaxSize[i] += mDifferenceY;
                     if(multiply > 0 && multiply < 1) {
                         paramsBubble.y += (mDiameterPrevious[i]-paramsBubble.height)/2;
                         //paramsBubble.y = (int) (defaultYMax[i] + (mDefaultBubbleDiameter * round(multiply, 2) / 2));
@@ -355,42 +356,38 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         }
                     }
                     if (multiply == 0) {
-                        paramsBubble.y = defaultY[i];
+                        paramsBubble.y = mDefaultYMinSize[i];
 
                     }
                     if( multiply == 1){
-                        paramsBubble.y = defaultYMax[i];
+                        paramsBubble.y = mDefaultYMaxSize[i];
                     }
-
-
-
                 }else{
                     if(isConnectBottom) {
-                        if (isTop) {
+                        if (isTopSideMoving) {
                             paramsBubble.y += mDifferenceY;
-                            defaultY[i] += mDifferenceY;
-                            defaultYMax[i] += mDifferenceY;
+                            mDefaultYMinSize[i] += mDifferenceY;
+                            mDefaultYMaxSize[i] += mDifferenceY;
                         }
                     }
                     if(isConnectRight) {
-                        if (!isRight) {
+                        if (!isRightSideMoving) {
                             paramsBubble.x += mDifferenceX;
                         }
                     }
                     if(isConnectTop) {
-                        if (!isTop){
+                        if (!isTopSideMoving){
                             paramsBubble.y += mDifferenceY;
-                            defaultY[i] += mDifferenceY;
-                            defaultYMax[i] += mDifferenceY;
+                            mDefaultYMinSize[i] += mDifferenceY;
+                            mDefaultYMaxSize[i] += mDifferenceY;
                         }
                     }
                     if(isConnectLeft) {
-                        if (isRight){
+                        if (isRightSideMoving){
                             paramsBubble.x += mDifferenceX;
                         }
                     }
                 }
-
                 //MOVING
             }
         }
@@ -431,8 +428,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 isConnectBottom = false;
             }
             //BORDERING
-
-
 
             //SCALING
             float multiply = 0;
@@ -487,13 +482,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             if(multiply > 1) multiply = 1;
             //SCALING
 
-
             //MOVING
             if(!isConnectBottom && !isConnectRight && !isConnectTop && !isConnectLeft){
                 paramsBubble.x += mDifferenceX;
                 paramsBubble.y += mDifferenceY;
-                defaultY[i] += mDifferenceY;
-                defaultYMax[i] += mDifferenceY;
+                mDefaultYMinSize[i] += mDifferenceY;
+                mDefaultYMaxSize[i] += mDifferenceY;
                 if(multiply > 0 && multiply < 1) {
                     paramsBubble.y += (mDiameterPrevious[i]-paramsBubble.height)/2;
                     //paramsBubble.y = (int) (defaultYMax[i] + (mDefaultBubbleDiameter * round(multiply, 2) / 2));
@@ -502,43 +496,38 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     }
                 }
                 if (multiply == 0) {
-                    paramsBubble.y = defaultY[i];
+                    paramsBubble.y = mDefaultYMinSize[i];
 
                 }
                 if( multiply == 1){
-                    paramsBubble.y = defaultYMax[i];
+                    paramsBubble.y = mDefaultYMaxSize[i];
                 }
-
-
-
             }else{
                 if(isConnectBottom) {
-                    if (isTop) {
+                    if (isTopSideMoving) {
                         paramsBubble.y += mDifferenceY;
-                        defaultY[i] += mDifferenceY;
-                        defaultYMax[i] += mDifferenceY;
+                        mDefaultYMinSize[i] += mDifferenceY;
+                        mDefaultYMaxSize[i] += mDifferenceY;
                     }
                 }
                 if(isConnectRight) {
-                    if (!isRight) {
+                    if (!isRightSideMoving) {
                         paramsBubble.x += mDifferenceX;
                     }
                 }
                 if(isConnectTop) {
-                    if (!isTop){
+                    if (!isTopSideMoving){
                         paramsBubble.y += mDifferenceY;
-                        defaultY[i] += mDifferenceY;
-                        defaultYMax[i] += mDifferenceY;
+                        mDefaultYMinSize[i] += mDifferenceY;
+                        mDefaultYMaxSize[i] += mDifferenceY;
                     }
                 }
                 if(isConnectLeft) {
-                    if (isRight){
+                    if (isRightSideMoving){
                         paramsBubble.x += mDifferenceX;
                     }
                 }
             }
-
-
             //MOVING
 
             mLayout.getChildAt(i).setLayoutParams(paramsBubble);
@@ -554,56 +543,76 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     isMoving = false;
                 }
                 if(isMoving) {
-                    if (isRight) {
+                    if (isRightSideMoving) {
                         if (mDifferenceX < 0) {
-                            mDifferenceX += 1;
-                            start();
+                            if(isSlowed) {
+                                mDifferenceX += 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                            //start();
                             //myHandler.postDelayed(this, 20);
                         }else{
                             isXMoving = false;
-                            mDifferenceX = -1;
+                            //mDifferenceX = -1;
                             //isMoving = false;
                         }
                     } else {
                         if (mDifferenceX > 0) {
-                            mDifferenceX -= 1;
-                            start();
+                            if(isSlowed) {
+                                mDifferenceX -= 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                            //start();
                             //myHandler.postDelayed(this, 20);
                         }else{
                             isXMoving = false;
-                            mDifferenceX = 1;
+                            //mDifferenceX = 1;
                             //isMoving = false;
                         }
                     }
-                    if(isTop){
+                    if(isTopSideMoving){
                         if(mDifferenceY > 0){
-                            mDifferenceY -= 1;
-                            start();
+                            if(isSlowed){
+                                mDifferenceY -= 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                            //start();
                             //myHandler.postDelayed(this, 20);
                         }else{
                             isYMoving = false;
-                            mDifferenceY = 1;
+                            //mDifferenceY = 1;
                             //isMoving = false;
                         }
                     }else{
                         if(mDifferenceY < 0){
-                            mDifferenceY += 1;
-                            start();
+                            if(isSlowed){
+                                mDifferenceY += 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                            //start();
                             //myHandler.postDelayed(this, 20);
                         }else{
                             isYMoving = false;
-                            mDifferenceY = -1;
+                            //mDifferenceY = -1;
                             //isMoving = false;
                         }
                     }
-
-                    myHandler.postDelayed(this, 10);
+                    start();
+                    myHandler.postDelayed(this, 5);
                 }else{
                     //mWayDifferencesX.clear();
                     //mWayDifferencesY.clear();
                 }
             }
-        }, 10);
+        }, 5);
     }
 
 }

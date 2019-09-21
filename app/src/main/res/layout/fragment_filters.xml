@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageViewSearch"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageViewBack"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -74,21 +74,21 @@
                 <Button
                     android:id="@+id/buttonMan"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/man" />
 
                 <Button
                     android:id="@+id/buttonWoman"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/woman" />
 
                 <Button
                     android:id="@+id/buttonLGBT"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/lgbt" />
 
@@ -125,49 +125,49 @@
                 <Button
                     android:id="@+id/buttonAge17_25"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/age17_25" />
 
                 <Button
                     android:id="@+id/buttonAge26_30"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/age26_30" />
 
                 <Button
                     android:id="@+id/buttonAge31_35"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/age31_35" />
 
                 <Button
                     android:id="@+id/buttonAge36_40"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/age36_40" />
 
                 <Button
                     android:id="@+id/buttonAge41_45"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/age41_45" />
 
                 <Button
                     android:id="@+id/buttonAge46_50"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/age46_50" />
 
                 <Button
                     android:id="@+id/buttonAge51_more"
                     android:layout_width="120dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/age51_more" />
             </com.nex3z.flowlayout.FlowLayout>
@@ -203,35 +203,35 @@
                 <Button
                     android:id="@+id/button1km"
                     android:layout_width="65dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/km_1" />
 
                 <Button
                     android:id="@+id/button5km"
                     android:layout_width="65dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/km_5" />
 
                 <Button
                     android:id="@+id/button10km"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/km_10" />
 
                 <Button
                     android:id="@+id/button50km"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/km_50" />
 
                 <Button
                     android:id="@+id/buttonAllArea"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/km_allArea" />
 
@@ -269,56 +269,56 @@
                 <Button
                     android:id="@+id/buttonAmber"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/amber" />
 
                 <Button
                     android:id="@+id/buttonBlue"
                     android:layout_width="80dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/blue" />
 
                 <Button
                     android:id="@+id/buttonBrown"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/brown" />
 
                 <Button
                     android:id="@+id/buttonGray"
                     android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/gray" />
 
                 <Button
                     android:id="@+id/buttonGreen"
                     android:layout_width="55dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/green" />
 
                 <Button
                     android:id="@+id/buttonHazel"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/hazel" />
 
                 <Button
                     android:id="@+id/buttonRedAndViolet"
                     android:layout_width="120dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/red_and_violet" />
 
                 <Button
                     android:id="@+id/buttonSpectrumOfEyeColor"
                     android:layout_width="180dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/spectrum_of_eye_color" />
             </com.nex3z.flowlayout.FlowLayout>
@@ -354,35 +354,35 @@
                 <Button
                     android:id="@+id/button120m"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/m120" />
 
                 <Button
                     android:id="@+id/button150m"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/m150" />
 
                 <Button
                     android:id="@+id/button180m"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/m180" />
 
                 <Button
                     android:id="@+id/button210m"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/m210" />
 
                 <Button
                     android:id="@+id/buttonNoMatterHeight"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/noMatter" />
 
@@ -419,21 +419,21 @@
                 <Button
                     android:id="@+id/buttonSmoking"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/yes" />
 
                 <Button
                     android:id="@+id/buttonNoSmoking"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/no" />
 
                 <Button
                     android:id="@+id/buttonNoMatterSmoking"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/noMatter" />
 
@@ -470,21 +470,21 @@
                 <Button
                     android:id="@+id/buttonYesMarried"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/yes" />
 
                 <Button
                     android:id="@+id/buttonNoMarried"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/no" />
 
                 <Button
                     android:id="@+id/buttonNoMatterMarried"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/noMatter" />
 
@@ -522,21 +522,21 @@
                 <Button
                     android:id="@+id/buttonYesChildren"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/yes" />
 
                 <Button
                     android:id="@+id/buttonNoChildren"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/no" />
 
                 <Button
                     android:id="@+id/buttonNoMatterChildren"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/noMatter" />
 
@@ -574,28 +574,28 @@
                 <Button
                     android:id="@+id/buttonLongTerm"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/longTerm" />
 
                 <Button
                     android:id="@+id/buttonDating"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/dating" />
 
                 <Button
                     android:id="@+id/buttonForPlay"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/forPlay" />
 
                 <Button
                     android:id="@+id/buttonJustFriendship"
                     android:layout_width="120dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/justFriendship" />
             </com.nex3z.flowlayout.FlowLayout>
@@ -632,21 +632,21 @@
                 <Button
                     android:id="@+id/buttonYesLoveToCook"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/yes" />
 
                 <Button
                     android:id="@+id/buttonNoLoveToCook"
                     android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/no" />
 
                 <Button
                     android:id="@+id/buttonNoMatterLoveToCook"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/background_button_login"
                     android:text="@string/noMatter" />
 

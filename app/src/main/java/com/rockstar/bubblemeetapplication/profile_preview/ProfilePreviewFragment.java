@@ -18,24 +18,26 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.abdularis.civ.CircleImageView;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.OnSwipeTouchListener;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
 public class ProfilePreviewFragment extends Fragment implements BaseContract.BaseView {
 
     boolean doubleTap;
-    String mName;
+    UserData mUser;
     TextView mTextViewName;
     TextView mTextViewYearsOldAndCity;
     ImageView mImageViewLike;
     ImageView mImageViewBoom;
-    ImageView mImageViewAvatar;
+    CircleImageView mImageViewAvatar;
     ImageView mImageViewBoomWhiteCircle;
     ImageView mImageViewMessages;
 
@@ -60,8 +62,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     ImageView mImageViewBubbles;
     RecyclerView mRecyclerViewUsers;
 
-    public void setName(UserData name){
-        mName = name.getName();
+    public void setName(UserData user){
+        mUser = user;
     }
 
     @Override
@@ -79,7 +81,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewMessages = (ImageView) view.findViewById(R.id.imageViewMessage);
         mImageViewLike = (ImageView) view.findViewById(R.id.imageViewLike);
         mImageViewBoom = (ImageView) view.findViewById(R.id.imageViewBoom);
-        mImageViewAvatar = (ImageView) view.findViewById(R.id.imageViewAvatar);
+        mImageViewAvatar = (CircleImageView) view.findViewById(R.id.imageViewAvatar);
         mImageViewBoomWhiteCircle = (ImageView) view.findViewById(R.id.imageViewBoomWhiteCircle);
         mImageViewPinkDown1 = (ImageView) view.findViewById(R.id.imageViewPinkDown1);
         mImageViewPinkDown2 = (ImageView) view.findViewById(R.id.imageViewPinkDown2);
@@ -110,7 +112,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerViewUsers.setLayoutManager(layoutManager);
         mRecyclerViewUsers.setAdapter(new ProfilePreviewCustomAdapter(getContext()));
-        mTextViewName.setText(mName);
+        mTextViewName.setText(mUser.getName());
         mImageViewLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +123,9 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             }
         });
 
+        Picasso.with(getContext())
+                .load(mUser.getPhoto())
+                .into(mImageViewAvatar);
 
         mImageViewAvatar.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeTop() {
@@ -256,7 +261,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                     mImageViewBoomWhiteCircle.setVisibility(View.GONE);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     ProfileFragment profileFragment = new ProfileFragment();
-                    profileFragment.setName(mName);
+                    profileFragment.setUser(mUser);
                     transaction.replace(R.id.root_fragment, profileFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();

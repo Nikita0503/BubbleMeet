@@ -10,20 +10,29 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.squareup.picasso.Picasso;
 
 public class ProfilePagerAdapter extends PagerAdapter {
 
-    Context context;
-    private int[] mImages = new int[] {
-            R.drawable.bmw,
-            R.drawable.pudge
-    };
-    ProfilePagerAdapter(Context context){
-        this.context=context;
+    private UserData mUser;
+    private Context mContext;
+    private int[] mImages;
+
+    ProfilePagerAdapter(Context context, UserData user){
+        mContext=context;
+        mUser = user;
+        mImages = new int[] {
+                R.drawable.bmw,
+                R.drawable.pudge
+        };
+
     }
+
+
     @Override
     public int getCount() {
-        return mImages.length;
+        return mImages.length+1;
     }
 
     @Override
@@ -33,9 +42,16 @@ public class ProfilePagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView imageView = new ImageView(context);
-
-        imageView.setImageResource(mImages[position]);
+        ImageView imageView;
+        if(position == 0) {
+            imageView = new ImageView(mContext);
+            Picasso.with(mContext)
+                    .load(mUser.getPhoto())
+                    .into(imageView);
+        }else{
+            imageView = new ImageView(mContext);
+            imageView.setImageResource(mImages[position-1]);
+        }
         ((ViewPager) container).addView(imageView, 0);
 
         return imageView;

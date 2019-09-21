@@ -18,16 +18,17 @@ import com.google.android.material.tabs.TabLayout;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.auth.AuthActivity;
+import com.rockstar.bubblemeetapplication.model.data.UserData;
 
 public class ProfileFragment extends Fragment implements BaseContract.BaseView  {
 
-    String mName;
+    UserData mUser;
     TextView mTextViewName;
     ViewPager mViewPagerProfile;
     TabLayout mTabLayoutProfile;
 
-    public void setName(String name){
-        mName = name;
+    public void setUser(UserData user){
+        mUser = user;
     }
 
     @Override
@@ -46,8 +47,8 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
 
     @Override
     public void initViews() {
-        mTextViewName.setText(mName);
-        mViewPagerProfile.setAdapter(new ProfilePagerAdapter(getContext()));
+        mTextViewName.setText(mUser.getName());
+        mViewPagerProfile.setAdapter(new ProfilePagerAdapter(getContext(), mUser));
         mTabLayoutProfile.setupWithViewPager(mViewPagerProfile);
     }
 }

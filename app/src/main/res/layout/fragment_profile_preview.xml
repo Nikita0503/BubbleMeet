@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/profile_background" />
 
-    <ImageView
+    <com.github.abdularis.civ.CircleImageView
         android:id="@+id/imageViewAvatar"
         android:layout_width="250dp"
         android:layout_height="250dp"
