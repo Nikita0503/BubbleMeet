@@ -262,6 +262,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     //mWayDifferencesY.add(mDifferenceY);
                     Log.d("differenceX", mDifferenceX + "");
                     Log.d("differenceY", mDifferenceY + "");
+                    Log.d("differenceY", " ");
                 }
 
                 //BORDERING
@@ -402,6 +403,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             if(i == 6){
                 Log.d("differenceX", mDifferenceX + "");
                 Log.d("differenceY", mDifferenceY + "");
+                Log.d("differenceY", " ");
             }
 
             //BORDERING
@@ -551,12 +553,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             }else{
                                 isSlowed = true;
                             }
-                            //start();
-                            //myHandler.postDelayed(this, 20);
                         }else{
                             isXMoving = false;
-                            //mDifferenceX = -1;
-                            //isMoving = false;
                         }
                     } else {
                         if (mDifferenceX > 0) {
@@ -566,12 +564,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             }else{
                                 isSlowed = true;
                             }
-                            //start();
-                            //myHandler.postDelayed(this, 20);
                         }else{
                             isXMoving = false;
-                            //mDifferenceX = 1;
-                            //isMoving = false;
                         }
                     }
                     if(isTopSideMoving){
@@ -582,12 +576,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             }else{
                                 isSlowed = true;
                             }
-                            //start();
-                            //myHandler.postDelayed(this, 20);
                         }else{
                             isYMoving = false;
-                            //mDifferenceY = 1;
-                            //isMoving = false;
                         }
                     }else{
                         if(mDifferenceY < 0){
@@ -597,12 +587,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             }else{
                                 isSlowed = true;
                             }
-                            //start();
-                            //myHandler.postDelayed(this, 20);
                         }else{
                             isYMoving = false;
-                            //mDifferenceY = -1;
-                            //isMoving = false;
                         }
                     }
                     start();
