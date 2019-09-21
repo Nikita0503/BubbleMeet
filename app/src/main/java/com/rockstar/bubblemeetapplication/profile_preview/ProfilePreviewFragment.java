@@ -25,6 +25,7 @@ import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -36,30 +37,11 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     TextView mTextViewName;
     TextView mTextViewYearsOldAndCity;
     ImageView mImageViewLike;
-    ImageView mImageViewBoom;
-    CircleImageView mImageViewAvatar;
-    ImageView mImageViewBoomWhiteCircle;
     ImageView mImageViewMessages;
-
-    ImageView mImageViewPinkDown1;
-    ImageView mImageViewPinkDown2;
-    ImageView mImageViewPinkLeftDown;
-    ImageView mImageViewPinkRightDown;
-    ImageView mImageViewPinkLeftUp;
-    ImageView mImageViewPinkRightUp;
-    ImageView mImageViewPinkUp1;
-    ImageView mImageViewPinkUp2;
-
-    ImageView mImageViewGrayDown;
-    ImageView mImageViewGrayLeft;
-    ImageView mImageViewGrayRight;
-    ImageView mImageViewGrayUp;
-    ImageView mImageViewGrayDownLeft;
-    ImageView mImageViewGrayDownRight;
-    ImageView mImageViewGrayUpLeft;
-    ImageView mImageViewGrayUpRight;
-
+    ImageView mImageViewBoom;
     ImageView mImageViewBubbles;
+    CircleImageView mImageViewAvatar;
+    ShineButton mShineButton;
     RecyclerView mRecyclerViewUsers;
 
     public void setName(UserData user){
@@ -82,26 +64,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewLike = (ImageView) view.findViewById(R.id.imageViewLike);
         mImageViewBoom = (ImageView) view.findViewById(R.id.imageViewBoom);
         mImageViewAvatar = (CircleImageView) view.findViewById(R.id.imageViewAvatar);
-        mImageViewBoomWhiteCircle = (ImageView) view.findViewById(R.id.imageViewBoomWhiteCircle);
-        mImageViewPinkDown1 = (ImageView) view.findViewById(R.id.imageViewPinkDown1);
-        mImageViewPinkDown2 = (ImageView) view.findViewById(R.id.imageViewPinkDown2);
-        mImageViewPinkLeftDown = (ImageView) view.findViewById(R.id.imageViewPinkLeftDown);
-        mImageViewPinkRightDown = (ImageView) view.findViewById(R.id.imageViewPinkRightDown);
-        mImageViewPinkLeftUp = (ImageView) view.findViewById(R.id.imageViewPinkLeftUp);
-        mImageViewPinkRightUp = (ImageView) view.findViewById(R.id.imageViewPinkRightUp);
-        mImageViewPinkUp1 = (ImageView) view.findViewById(R.id.imageViewPinkUp1);
-        mImageViewPinkUp2 = (ImageView) view.findViewById(R.id.imageViewPinkUp2);
-
-        mImageViewGrayDown = (ImageView) view.findViewById(R.id.imageViewGrayDown);
-        mImageViewGrayLeft = (ImageView) view.findViewById(R.id.imageViewGrayLeft);
-        mImageViewGrayRight = (ImageView) view.findViewById(R.id.imageViewGrayRight);
-        mImageViewGrayUp = (ImageView) view.findViewById(R.id.imageViewGrayUp);
-        mImageViewGrayDownLeft = (ImageView) view.findViewById(R.id.imageViewGrayDownLeft);
-        mImageViewGrayDownRight = (ImageView) view.findViewById(R.id.imageViewGrayDownRight);
-        mImageViewGrayUpLeft = (ImageView) view.findViewById(R.id.imageViewGrayUpLeft);
-        mImageViewGrayUpRight = (ImageView) view.findViewById(R.id.imageViewGrayUpRight);
-
         mImageViewBubbles = (ImageView) view.findViewById(R.id.imageViewBubbles);
+        mShineButton = (ShineButton) view.findViewById(R.id.imageBoom);
         initViews();
     }
 
@@ -146,13 +110,12 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             }
 
             public void onClick() {
-                //Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
                 //boomAnimation(true);
-                //mTimeFirstClick = 0;
                 final Handler myHandler = new Handler();
                 myHandler.postDelayed(new Runnable() {
                     public void run() {
                         if(!doubleTap) {
+                            Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
                             boomAnimation(true);
                         }else{
                             doubleTap = false;
@@ -163,6 +126,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
             public void onDoubleClick() {
                 doubleTap = true;
+                Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
                 Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
                 mImageViewAvatar.startAnimation(animationAlpha);
             }
@@ -193,72 +157,13 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewBubbles.setAnimation(animationAlphaBubbles);
     }
 
-    private void boomAnimation(final boolean isRight){
-        Animation animationGrayDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_down);
-        mImageViewGrayDown.setVisibility(View.VISIBLE);
-        mImageViewGrayDown.startAnimation(animationGrayDown);
-        Animation animationGrayLeft = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_left);
-        mImageViewGrayLeft.setVisibility(View.VISIBLE);
-        mImageViewGrayLeft.startAnimation(animationGrayLeft);
-        Animation animationGrayRight = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_right);
-        mImageViewGrayRight.setVisibility(View.VISIBLE);
-        mImageViewGrayRight.startAnimation(animationGrayRight);
-        Animation animationGrayUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_up);
-        mImageViewGrayUp.setVisibility(View.VISIBLE);
-        mImageViewGrayUp.startAnimation(animationGrayUp);
-        Animation animationGrayDownLeft = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_down_left);
-        mImageViewGrayDownLeft.setVisibility(View.VISIBLE);
-        mImageViewGrayDownLeft.startAnimation(animationGrayDownLeft);
-        Animation animationGrayDownRight = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_down_right);
-        mImageViewGrayDownRight.setVisibility(View.VISIBLE);
-        mImageViewGrayDownRight.startAnimation(animationGrayDownRight);
-        Animation animationGrayUpLeft = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_up_left);
-        mImageViewGrayUpLeft.setVisibility(View.VISIBLE);
-        mImageViewGrayUpLeft.startAnimation(animationGrayUpLeft);
-        Animation animationGrayUpRight = AnimationUtils.loadAnimation(getContext(), R.anim.translate_gray_up_right);
-        mImageViewGrayUpRight.setVisibility(View.VISIBLE);
-        mImageViewGrayUpRight.startAnimation(animationGrayUpRight);
-
-        Animation animationPinkDown1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down1);
-        mImageViewPinkDown1.setVisibility(View.VISIBLE);
-        mImageViewPinkDown1.startAnimation(animationPinkDown1);
-        Animation animationPinkDown2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_down2);
-        mImageViewPinkDown2.setVisibility(View.VISIBLE);
-        mImageViewPinkDown2.startAnimation(animationPinkDown2);
-        Animation animationPinkLeftDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_down);
-        mImageViewPinkLeftDown.setVisibility(View.VISIBLE);
-        mImageViewPinkLeftDown.startAnimation(animationPinkLeftDown);
-        Animation animationPinkRightDown = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_down);
-        mImageViewPinkRightDown.setVisibility(View.VISIBLE);
-        mImageViewPinkRightDown.startAnimation(animationPinkRightDown);
-        Animation animationPinkLeftUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_left_up);
-        mImageViewPinkLeftUp.setVisibility(View.VISIBLE);
-        mImageViewPinkLeftUp.startAnimation(animationPinkLeftUp);
-        Animation animationPinkRightUp = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_right_up);
-        mImageViewPinkRightUp.setVisibility(View.VISIBLE);
-        mImageViewPinkRightUp.startAnimation(animationPinkRightUp);
-        Animation animationPinkUp1 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up1);
-        mImageViewPinkUp1.setVisibility(View.VISIBLE);
-        mImageViewPinkUp1.startAnimation(animationPinkUp1);
-        Animation animationPinkUp2 = AnimationUtils.loadAnimation(getContext(), R.anim.translate_pink_up2);
-        mImageViewPinkUp2.setVisibility(View.VISIBLE);
-        mImageViewPinkUp2.startAnimation(animationPinkUp2);
-
-        Animation animationBoom = AnimationUtils.loadAnimation(getContext(), R.anim.white_circle_boom_scale);
-        animationBoom.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                mImageViewAvatar.setVisibility(View.INVISIBLE);
-                Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_auth_views);
-                mImageViewAvatar.startAnimation(animationAlpha);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mImageViewBoomWhiteCircle.setVisibility(View.GONE);
-                mImageViewAvatar.setVisibility(View.VISIBLE);
-                if(isRight){
-                    mImageViewBoomWhiteCircle.setVisibility(View.GONE);
+    private void boomAnimation(boolean isRight){
+        mShineButton.performClick();
+        if(isRight){
+            final Handler myHandler = new Handler();
+            myHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     ProfileFragment profileFragment = new ProfileFragment();
                     profileFragment.setUser(mUser);
@@ -266,16 +171,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-                //Do nothing
-            }
-        });
-        mImageViewBoomWhiteCircle.setVisibility(View.VISIBLE);
-        mImageViewBoomWhiteCircle.startAnimation(animationBoom);
+            }, 1000);
+        }
     }
-
-
 }
