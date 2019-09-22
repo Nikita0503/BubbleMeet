@@ -115,7 +115,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 myHandler.postDelayed(new Runnable() {
                     public void run() {
                         if(!doubleTap) {
-                            Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
                             boomAnimation(true);
                         }else{
                             doubleTap = false;
@@ -126,7 +126,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
             public void onDoubleClick() {
                 doubleTap = true;
-                Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
                 Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
                 mImageViewAvatar.startAnimation(animationAlpha);
             }
@@ -159,6 +159,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
     private void boomAnimation(boolean isRight){
         mShineButton.performClick();
+        mShineButton.setChecked(false);
         if(isRight){
             final Handler myHandler = new Handler();
             myHandler.postDelayed(new Runnable() {
