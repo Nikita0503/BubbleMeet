@@ -104,7 +104,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         Point size = new Point();
         display.getSize(size);
 
-        mDefaultBubbleDiameter = (int) (size.x / 2.25);
+        mDefaultBubbleDiameter = (int) (size.x / 2.6);
         mDisplayCenterX = (size.x / 2);
         mDisplayCenterX -= mDisplayCenterX/21;
         mDisplayCenterY = size.y / 2 - size.y / 10;
@@ -116,9 +116,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
                 AbsoluteLayout.LayoutParams params
-                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 3),  i*(int) (size.y / 5.5));
+                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 3.2),  i*(int) (size.x / 3.1));
                 if(i % 2 != 0) {
-                    params.x += (int) (size.x / 3) / 2;
+                    params.x += (int) (size.x / 3.2) / 2;
                 }
                 imageViewBubble.setLayoutParams(params);
                 mLayout.addView(imageViewBubble);
@@ -296,7 +296,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 float toSideFromBubblePercentX = 0;
                 float pixelsToSideFromBubbleY = 0;
                 float toSideFromBubblePercentY = 0;
-
                 //if (paramsBubble.x < mDisplayCenterX - mDefaultBubbleDiameter / 3) {
                 //    pixelsToSideFromBubbleX = paramsBubble.x + mDefaultBubbleDiameter / 3;
                 //} else {
@@ -346,31 +345,29 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 } else {
                     pixelsToSideFromBubbleX = mDisplayCenterX * 2 - paramsBubble.x - mDefaultBubbleDiameter/2.5f;
                 }
-                if (paramsBubble.y + mDefaultBubbleDiameter/2 < mDisplayCenterY) {
+                if (paramsBubble.y < mDisplayCenterY - 2 * (mDefaultBubbleDiameter / 3)) {
                     isGoingTop = true;
-                    pixelsToSideFromBubbleY = paramsBubble.y + mDefaultBubbleDiameter/2;
+                    pixelsToSideFromBubbleY = paramsBubble.y;
                 } else {
                     isGoingTop = false;
                     pixelsToSideFromBubbleY = mDisplayCenterY * 2 - paramsBubble.y - mDefaultBubbleDiameter/2;
+                    //pixelsToSideFromBubbleY = mDisplayCenterY * 2 - paramsBubble.y - mDefaultBubbleDiameter / 3;
                 }
                 if (pixelsToSideFromBubbleX > 0 && pixelsToSideFromBubbleY > 0) {
                     toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX);
                     if(isGoingTop) {
-                        toSideFromBubblePercentY = (pixelsToSideFromBubbleY - (mDefaultBubbleDiameter - paramsBubble.height)) / (mDisplayCenterY);
+                        toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
                         if(toSideFromBubblePercentY < 0){
                             toSideFromBubblePercentY = 0;
                         }
                     }else{
                         toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY);
                     }
-                    if(i == 405){
-                        Log.d("toSideY", toSideFromBubblePercentY+"");
-                    }
+
                 } else {
                     toSideFromBubblePercentX = 0;
                     toSideFromBubblePercentY = 0;
                 }
-
                 if (toSideFromBubblePercentX > toSideFromBubblePercentY) {
                     multiply = toSideFromBubblePercentY;
                     if (toSideFromBubblePercentY < 1) {
@@ -397,9 +394,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
                 if(multiply > 1) multiply = 1;
                 //SCALING
-                if(i==6) {
-                    Log.d("multiply", multiply + "");
-                }
+
                 //MOVING
                 if(!isConnectBottom && !isConnectRight && !isConnectTop && !isConnectLeft){
                     paramsBubble.x += mDifferenceX;
@@ -500,31 +495,29 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             } else {
                 pixelsToSideFromBubbleX = mDisplayCenterX * 2 - paramsBubble.x - mDefaultBubbleDiameter/2.5f;
             }
-            if (paramsBubble.y + mDefaultBubbleDiameter/2 < mDisplayCenterY) {
+            if (paramsBubble.y < mDisplayCenterY - 2 * (mDefaultBubbleDiameter / 3)) {
                 isGoingTop = true;
-                pixelsToSideFromBubbleY = paramsBubble.y + mDefaultBubbleDiameter/2;
+                pixelsToSideFromBubbleY = paramsBubble.y;
             } else {
                 isGoingTop = false;
                 pixelsToSideFromBubbleY = mDisplayCenterY * 2 - paramsBubble.y - mDefaultBubbleDiameter/2;
+                //pixelsToSideFromBubbleY = mDisplayCenterY * 2 - paramsBubble.y - mDefaultBubbleDiameter / 3;
             }
             if (pixelsToSideFromBubbleX > 0 && pixelsToSideFromBubbleY > 0) {
                 toSideFromBubblePercentX = pixelsToSideFromBubbleX / (mDisplayCenterX);
                 if(isGoingTop) {
-                    toSideFromBubblePercentY = (pixelsToSideFromBubbleY - (mDefaultBubbleDiameter - paramsBubble.height)) / (mDisplayCenterY);
+                    toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY - mDisplayCenterY / 2);
                     if(toSideFromBubblePercentY < 0){
                         toSideFromBubblePercentY = 0;
                     }
                 }else{
                     toSideFromBubblePercentY = pixelsToSideFromBubbleY / (mDisplayCenterY);
                 }
-                if(i == 405){
-                    Log.d("toSideY", toSideFromBubblePercentY+"");
-                }
+
             } else {
                 toSideFromBubblePercentX = 0;
                 toSideFromBubblePercentY = 0;
             }
-
             if (toSideFromBubblePercentX > toSideFromBubblePercentY) {
                 multiply = toSideFromBubblePercentY;
                 if (toSideFromBubblePercentY < 1) {
