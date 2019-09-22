@@ -116,9 +116,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
                 AbsoluteLayout.LayoutParams params
-                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 3.2),  i*(int) (size.x / 3.1));
+                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.9),  i*(int) (size.x / 3.1));
                 if(i % 2 != 0) {
-                    params.x += (int) (size.x / 3.2) / 2;
+                    params.x += (int) (size.x / 2.9) / 2;
                 }
                 imageViewBubble.setLayoutParams(params);
                 mLayout.addView(imageViewBubble);
