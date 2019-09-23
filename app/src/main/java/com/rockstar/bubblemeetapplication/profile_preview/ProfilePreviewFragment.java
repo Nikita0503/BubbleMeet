@@ -22,12 +22,14 @@ import com.github.abdularis.civ.CircleImageView;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.OnSwipeTouchListener;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.bubble.BubbleFragment2;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ProfilePreviewFragment extends Fragment implements BaseContract.BaseView {
@@ -94,19 +96,57 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewAvatar.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeTop() {
                 //Toast.makeText(getContext(), "top", Toast.LENGTH_SHORT).show();
-                getActivity().onBackPressed();
+                //getActivity().onBackPressed();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                BubbleFragment2 bubbleFragment = new BubbleFragment2();
+                ArrayList<UserData> users = new ArrayList<UserData>();
+                for(int i = 0; i < 800; i++){
+                    if(i % 2 != 0) {
+                        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
+                    }else {
+                        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
+                    }
+                }
+                bubbleFragment.setUsers(users);
+                transaction.replace(R.id.root_fragment, bubbleFragment);
+                //transaction.addToBackStack(null);
+                //transaction.addToBackStack(null);
+                transaction.commit();
             }
             public void onSwipeRight() {
                 boomAnimation(true);
-
             }
+
             public void onSwipeLeft() {
                 boomAnimation(false);
             }
+
             public void onSwipeBottom() {
                 //Toast.makeText(getContext(), "bottom", Toast.LENGTH_SHORT).show();
                 Animation animationSwipeDown = AnimationUtils.loadAnimation(getContext(), R.anim.for_swipe_down);
+
                 mImageViewAvatar.startAnimation(animationSwipeDown);
+                animationSwipeDown.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        mImageViewAvatar.animate()
+                                .translationY(1)
+                                .translationY(-1);
+                        Animation animationAlphaOtherViews = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
+                        mImageViewAvatar.setAnimation(animationAlphaOtherViews);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
             }
 
             public void onClick() {
@@ -127,8 +167,11 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             public void onDoubleClick() {
                 doubleTap = true;
                 //Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
-                Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
-                mImageViewAvatar.startAnimation(animationAlpha);
+                //Animation animationAlpha = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
+                //mImageViewAvatar.startAnimation(animationAlpha);
+                //boomAnimation(false);
+                boomAnimation(false);
+
             }
         });
         final Animation animationAlphaBubbles = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_profile);
@@ -168,6 +211,19 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     ProfileFragment profileFragment = new ProfileFragment();
                     profileFragment.setUser(mUser);
+                    transaction.replace(R.id.root_fragment, profileFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            }, 1000);
+        }else{
+            final Handler myHandler = new Handler();
+            myHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
+                    profileFragment.setName(new UserData(0, "Elon Musk", "Mars", "https://24smi.org/public/media/celebrity/2017/10/10/ATIfxWH4rRO0_ilon-mask.jpg"));
                     transaction.replace(R.id.root_fragment, profileFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
