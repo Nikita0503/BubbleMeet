@@ -116,7 +116,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
                 AbsoluteLayout.LayoutParams params
-                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.9),  i*(int) (size.x / 3.1));
+                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.9),  i*(int) (size.x / 2.6));
                 if(i % 2 != 0) {
                     params.x += (int) (size.x / 2.9) / 2;
                 }
@@ -606,29 +606,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     isMoving = false;
                 }
                 if(isMoving) {
-                    if (isRightSideMoving) {
-                        if (mDifferenceX < 0) {
-                            if(isSlowed) {
-                                mDifferenceX += 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isXMoving = false;
-                        }
-                    } else {
-                        if (mDifferenceX > 0) {
-                            if(isSlowed) {
-                                mDifferenceX -= 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isXMoving = false;
-                        }
-                    }
                     if(isTopSideMoving){
                         if(mDifferenceY > 0){
                             if(isSlowed){
@@ -652,6 +629,32 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             isYMoving = false;
                         }
                     }
+                    if (isRightSideMoving) {
+                        if (mDifferenceX < 0) {
+                            if(isSlowed) {
+                                mDifferenceX += 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                        }else{
+                            isXMoving = false;
+                        }
+                    } else {
+                        if (mDifferenceX > 0) {
+                            if(isSlowed) {
+                                mDifferenceX -= 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                        }else{
+                            isXMoving = false;
+                        }
+                    }
+
+
+
                     start();
                     myHandler.postDelayed(this, 5);
                 }else{
