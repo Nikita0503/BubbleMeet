@@ -71,11 +71,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
     public void setUsers(ArrayList<UserData> users){
         mUsers = users;
-        mDefaultYMinSize = new int[mUsers.size()];
-        mDefaultYMaxSize = new int[mUsers.size()];
-        mXPrevious = new int[mUsers.size()];
-        mYPrevious = new int[mUsers.size()];
-        mDiameterPrevious = new int[mUsers.size()];
+
     }
 
     //public void setUsers(String[] users){
@@ -96,6 +92,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mLayout = (AbsoluteLayout) view.findViewById(R.id.layout);
+        Log.d("ViewCreated", "+");
+        mDefaultYMinSize = new int[mUsers.size()];
+        mDefaultYMaxSize = new int[mUsers.size()];
+        mXPrevious = new int[mUsers.size()];
+        mYPrevious = new int[mUsers.size()];
+        mDiameterPrevious = new int[mUsers.size()];
         initViews();
     }
 
@@ -143,8 +145,10 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             mDefaultYMinSize[i] = paramsBubble.y ;
 
         }
+        for(int i = 0; i < 10; i++) {
+            start();
+        }
 
-        start();
         Log.d("bubbles", mUsers.size()+"");
         mLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -244,8 +248,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private void update(int i, AbsoluteLayout.LayoutParams paramsBubble, MotionEvent event){
         if (mXPrevious[i] > 0 && mXPrevious[i] < (mDisplayCenterX * 2)) {
             if (mXPrevious[i] != 0 && mYPrevious[i] != 0) {
-                mDifferenceX = Math.round( event.getX() - mXPrevious[i]);
-                mDifferenceY = Math.round( event.getY() - mYPrevious[i]);
+                mDifferenceX = Math.round(event.getX() - mXPrevious[i]);
+                mDifferenceY = Math.round(event.getY() - mYPrevious[i]);
                 if(mDifferenceX < 0){
                     isRightSideMoving = true;
                     isXMoving = true;
@@ -629,29 +633,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     isMoving = false;
                 }
                 if(isMoving) {
-                    if(isTopSideMoving){
-                        if(mDifferenceY > 0){
-                            if(isSlowed){
-                                mDifferenceY -= 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isYMoving = false;
-                        }
-                    }else{
-                        if(mDifferenceY < 0){
-                            if(isSlowed){
-                                mDifferenceY += 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isYMoving = false;
-                        }
-                    }
                     if (isRightSideMoving) {
                         if (mDifferenceX < 0) {
                             if(isSlowed) {
@@ -675,9 +656,29 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                             isXMoving = false;
                         }
                     }
-
-
-
+                    if(isTopSideMoving){
+                        if(mDifferenceY > 0){
+                            if(isSlowed){
+                                mDifferenceY -= 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                        }else{
+                            isYMoving = false;
+                        }
+                    }else{
+                        if(mDifferenceY < 0){
+                            if(isSlowed){
+                                mDifferenceY += 1;
+                                isSlowed = false;
+                            }else{
+                                isSlowed = true;
+                            }
+                        }else{
+                            isYMoving = false;
+                        }
+                    }
                     start();
                     myHandler.postDelayed(this, 5);
                 }else{
