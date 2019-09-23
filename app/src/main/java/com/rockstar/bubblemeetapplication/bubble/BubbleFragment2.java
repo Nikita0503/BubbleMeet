@@ -629,55 +629,108 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         final Handler myHandler = new Handler();
         myHandler.postDelayed(new Runnable() {
             public void run() {
-                if(!isXMoving && !isYMoving){
-                    isMoving = false;
-                }
+                //if(!isXMoving && !isYMoving){
+                //    isMoving = false;
+                //}
                 if(isMoving) {
-                    if (isRightSideMoving) {
-                        if (mDifferenceX < 0) {
-                            if(isSlowed) {
-                                mDifferenceX += 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isXMoving = false;
-                        }
-                    } else {
-                        if (mDifferenceX > 0) {
-                            if(isSlowed) {
-                                mDifferenceX -= 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isXMoving = false;
-                        }
+                    //if (isRightSideMoving) {
+                    //    if (mDifferenceX < 0) {
+                    //        if(isSlowed) {
+                    //            mDifferenceX += 1;
+                    //            isSlowed = false;
+                    //        }else{
+                    //            isSlowed = true;
+                    //        }
+                    //    }else{
+                    //        isXMoving = false;
+                    //    }
+                    //} else {
+                    //    if (mDifferenceX > 0) {
+                    //        if(isSlowed) {
+                    //            mDifferenceX -= 1;
+                    //            isSlowed = false;
+                    //        }else{
+                    //            isSlowed = true;
+                    //        }
+                    //    }else{
+                    //        isXMoving = false;
+                    //    }
+                    //}
+                    //if(isTopSideMoving){
+                    //    if(mDifferenceY > 0){
+                    //        if(isSlowed){
+                    //            mDifferenceY -= 1;
+                    //            isSlowed = false;
+                    //        }else{
+                    //            isSlowed = true;
+                    //        }
+                    //    }else{
+                    //        isYMoving = false;
+                    //    }
+                    //}else{
+                    //    if(mDifferenceY < 0){
+                    //        if(isSlowed){
+                    //            mDifferenceY += 1;
+                    //            isSlowed = false;
+                    //        }else{
+                    //            isSlowed = true;
+                    //        }
+                    //    }else{
+                    //        isYMoving = false;
+                    //    }
+                    //}
+
+
+                    //if(mDifferenceX == 0 && mDifferenceY == 0){
+                    //    isMoving = false;
+                    //}
+                    //if(isRightSideMoving && isTopSideMoving){
+                    //    mDifferenceX += 1;
+                    //    mDifferenceY -= 1;
+                    //}
+                    //if(isRightSideMoving && !isTopSideMoving){
+                    //    mDifferenceX += 1;
+                    //    mDifferenceY += 1;
+                    //}
+                    //if(!isRightSideMoving && isTopSideMoving){
+                    //    mDifferenceX -= 1;
+                    //    mDifferenceY -= 1;
+                    //}
+                    //if(!isRightSideMoving && !isTopSideMoving){
+                    //    mDifferenceX -= 1;
+                    //    mDifferenceY += 1;
+                    //}
+
+                    if(mDifferenceX == 0 && mDifferenceY == 0){
+                        isMoving = false;
                     }
-                    if(isTopSideMoving){
-                        if(mDifferenceY > 0){
-                            if(isSlowed){
-                                mDifferenceY -= 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isYMoving = false;
-                        }
-                    }else{
-                        if(mDifferenceY < 0){
-                            if(isSlowed){
-                                mDifferenceY += 1;
-                                isSlowed = false;
-                            }else{
-                                isSlowed = true;
-                            }
-                        }else{
-                            isYMoving = false;
-                        }
+                    if(mDifferenceX < 0 && mDifferenceY > 0){
+                        mDifferenceX++;
+                        mDifferenceY--;
+                    }
+                    if(mDifferenceX < 0 && mDifferenceY < 0){
+                        mDifferenceX++;
+                        mDifferenceY++;
+                    }
+                    if(mDifferenceX > 0 && mDifferenceY > 0){
+                        mDifferenceX--;
+                        mDifferenceY--;
+                    }
+                    if(mDifferenceX > 0 && mDifferenceY < 0){
+                        mDifferenceX--;
+                        mDifferenceY++;
+                    }
+                    if(mDifferenceX > 0 && mDifferenceY == 0){
+                        mDifferenceX--;
+                    }
+                    if(mDifferenceX < 0 && mDifferenceY == 0){
+                        mDifferenceX++;
+                    }
+                    if(mDifferenceY > 0 && mDifferenceX == 0){
+                        mDifferenceY--;
+                    }
+                    if(mDifferenceY < 0 && mDifferenceX == 0){
+                        mDifferenceY++;
                     }
                     start();
                     myHandler.postDelayed(this, 5);
