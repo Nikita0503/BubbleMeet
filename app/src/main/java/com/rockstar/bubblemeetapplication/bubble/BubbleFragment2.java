@@ -705,33 +705,73 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         isMoving = false;
                     }
                     if(mDifferenceX < 0 && mDifferenceY > 0){
-                        mDifferenceX++;
-                        mDifferenceY--;
+                        if(isSlowed) {
+                            mDifferenceX++;
+                            mDifferenceY--;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
                     }
                     if(mDifferenceX < 0 && mDifferenceY < 0){
-                        mDifferenceX++;
-                        mDifferenceY++;
+                        if(isSlowed) {
+                            mDifferenceX++;
+                            mDifferenceY++;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
                     }
                     if(mDifferenceX > 0 && mDifferenceY > 0){
-                        mDifferenceX--;
-                        mDifferenceY--;
+                        if(isSlowed) {
+                            mDifferenceX--;
+                            mDifferenceY--;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
                     }
                     if(mDifferenceX > 0 && mDifferenceY < 0){
-                        mDifferenceX--;
-                        mDifferenceY++;
+                        if(isSlowed) {
+                            mDifferenceX--;
+                            mDifferenceY++;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
                     }
                     if(mDifferenceX > 0 && mDifferenceY == 0){
-                        mDifferenceX--;
+                        if(isSlowed) {
+                            mDifferenceX--;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
                     }
                     if(mDifferenceX < 0 && mDifferenceY == 0){
-                        mDifferenceX++;
+                        if(isSlowed) {
+                            mDifferenceX++;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
                     }
                     if(mDifferenceY > 0 && mDifferenceX == 0){
-                        mDifferenceY--;
+                        if(isSlowed) {
+                            mDifferenceY--;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
                     }
                     if(mDifferenceY < 0 && mDifferenceX == 0){
-                        mDifferenceY++;
-                    }
+                        if(isSlowed) {
+                            mDifferenceY++;
+                            isSlowed = false;
+                        }else{
+                            isSlowed = true;
+                        }
+                     }
                     start();
                     myHandler.postDelayed(this, 5);
                 }else{

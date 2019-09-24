@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
 
                 BubbleFragment2 bubbleFragment = new BubbleFragment2();
                 ArrayList<UserData> users = new ArrayList<UserData>();
-                for(int i = 0; i < 800; i++){
+                for(int i = 0; i < 700; i++){
                     if(i % 2 != 0) {
                         users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
                     }else {
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         BubbleFragment2 bubbleFragment = new BubbleFragment2();
         ArrayList<UserData> users = new ArrayList<UserData>();
-        for(int i = 0; i < 800; i++){
+        for(int i = 0; i < 700; i++){
             if(i % 2 != 0) {
                 users.add(new UserData(i, "Vault Boy" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
             }else {
