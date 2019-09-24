@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.github.abdularis:CircularImageView:v1.2'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.sackcentury:shinebutton:1.0.0'
+
 }

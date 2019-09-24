@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,6 +37,7 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
         initViews();
         mPresenter = new AuthPresenter(this);
     }
@@ -72,9 +74,12 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                //Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                //startActivity(intent);
+                //finish();
+                String email = mEditTextEmail.getText().toString();
+                String password = mEditTextPassword.getText().toString();
+                mPresenter.authorization(email, password);
             }
         });
     }
