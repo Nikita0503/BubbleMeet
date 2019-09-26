@@ -110,7 +110,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        mDefaultBubbleDiameter = (int) (size.x / 2.1);
+        mDefaultBubbleDiameter = (int) (size.x / 2.15);
         mDisplayCenterX = (size.x / 2);
         mDisplayCenterX -= mDisplayCenterX/21;
         mDisplayCenterY = size.y / 2 - size.y / 10;
@@ -122,9 +122,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
                 AbsoluteLayout.LayoutParams params
-                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.9),  i*(int) (size.x / 2.6));
+                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.45),  i*(int) (size.y / 4.9));
                 if(i % 2 != 0) {
-                    params.x += (int) (size.x / 2.9) / 2;
+                    params.x += (int) (size.x / 2.45) / 2;
                 }
                 imageViewBubble.setLayoutParams(params);
                 mLayout.addView(imageViewBubble);
