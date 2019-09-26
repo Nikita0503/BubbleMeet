@@ -122,9 +122,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             for(int j = 0; j < mRows; j++){
                 ImageView imageViewBubble = new ImageView(getContext());
                 AbsoluteLayout.LayoutParams params
-                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.4),  i*(int) (size.y / 5.1));
+                        = new AbsoluteLayout.LayoutParams(mDefaultBubbleDiameter, mDefaultBubbleDiameter, j*(int) (size.x / 2.9),  i*(int) (size.x / 2.6));
                 if(i % 2 != 0) {
-                    params.x += (int) (size.x / 2.4) / 2;
+                    params.x += (int) (size.x / 2.9) / 2;
                 }
                 imageViewBubble.setLayoutParams(params);
                 mLayout.addView(imageViewBubble);
@@ -141,7 +141,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
-            mDefaultYMaxSize[i] = paramsBubble.y - (int)(mDefaultBubbleDiameter * 1.2/2);
+            mDefaultYMaxSize[i] = paramsBubble.y - (mDefaultBubbleDiameter/2);
             mDefaultYMinSize[i] = paramsBubble.y ;
 
         }
@@ -378,12 +378,11 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 if (toSideFromBubblePercentX > toSideFromBubblePercentY) {
                     multiply = toSideFromBubblePercentY;
                     if (toSideFromBubblePercentY < 1) {
-                        if(toSideFromBubblePercentY < 0.5) {
-                            //float percent = toSideFromBubblePercentY * 2;
-                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY * 1.5) * mDefaultBubbleDiameter);
+                        if(toSideFromBubblePercentY > 0.5) {
+                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleDiameter);
                         }else{
-                            //float percent = toSideFromBubblePercentY * 2;
-                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY * 1.5) * mDefaultBubbleDiameter);
+                            float percent = toSideFromBubblePercentY * 2;
+                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY * percent) * mDefaultBubbleDiameter);
                         }
                     } else {
                         if (toSideFromBubblePercentY < 0) {
@@ -395,12 +394,11 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 } else {
                     multiply = toSideFromBubblePercentX;
                     if (toSideFromBubblePercentX < 1) {
-                        if(toSideFromBubblePercentX < 0.5) {
-                            //float percent = toSideFromBubblePercentX * 2;
-                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX * 1.5) * mDefaultBubbleDiameter);
+                        if(toSideFromBubblePercentX > 0.5) {
+                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleDiameter);
                         }else{
-                            //float percent = toSideFromBubblePercentX * 2;
-                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX * 1.5) * mDefaultBubbleDiameter);
+                            float percent = toSideFromBubblePercentX * 2;
+                            paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX * percent) * mDefaultBubbleDiameter);
                         }
                     } else {
                         if (toSideFromBubblePercentX < 0) {
@@ -541,10 +539,10 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 multiply = toSideFromBubblePercentY;
                 if (toSideFromBubblePercentY < 1) {
                     if(toSideFromBubblePercentY > 0.5) {
-                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY * 1.5) * mDefaultBubbleDiameter);
+                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY) * mDefaultBubbleDiameter);
                     }else{
                         float percent = toSideFromBubblePercentY * 2;
-                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY * 1.5) * mDefaultBubbleDiameter);
+                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentY * percent) * mDefaultBubbleDiameter);
                     }
                 } else {
                     if (toSideFromBubblePercentY < 0) {
@@ -557,10 +555,10 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 multiply = toSideFromBubblePercentX;
                 if (toSideFromBubblePercentX < 1) {
                     if(toSideFromBubblePercentX > 0.5) {
-                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX * 1.5) * mDefaultBubbleDiameter);
+                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX) * mDefaultBubbleDiameter);
                     }else{
                         float percent = toSideFromBubblePercentX * 2;
-                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX * 1.5) * mDefaultBubbleDiameter);
+                        paramsBubble.height = (int) (Math.abs(toSideFromBubblePercentX * percent) * mDefaultBubbleDiameter);
                     }
                 } else {
                     if (toSideFromBubblePercentX < 0) {
