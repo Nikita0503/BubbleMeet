@@ -103,4 +103,12 @@ public class Fragment5 extends Fragment implements BaseContract.BaseView, SignUp
         }
         return isCorrect;
     }
+
+    public String getHeight(){
+        return mEditTextHeight.getText().toString();
+    }
+
+    public String getSmoking(){
+        return mEditTextIsSmoking.getText().toString();
+    }
 }

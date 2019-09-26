@@ -124,7 +124,7 @@ public class SignUpUserData {
     }
 
     public void setMarried(String married) {
-        mMarried = mMarried;
+        mMarried = married;
     }
 
     public String getChildren() {

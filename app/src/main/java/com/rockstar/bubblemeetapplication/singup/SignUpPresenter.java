@@ -164,6 +164,48 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
         mDisposable.add(authDisposable);
     }
 
+    public void sendNewUserFull(){
+        Log.d("signUpData", mUserData.getName());
+        Log.d("signUpData", mUserData.getGender());
+        Log.d("signUpData", mUserData.getYearsOld());
+        Log.d("signUpData", mUserData.getEmail());
+        Log.d("signUpData", mUserData.getPassword());
+        Log.d("signUpData", mUserData.getConfirmPassword());
+        Log.d("signUpData", mUserData.getHeight());
+        Log.d("signUpData", mUserData.getSmoking());
+        Log.d("signUpData", mUserData.getMarried());
+        Log.d("signUpData", mUserData.getChildren());
+        Log.d("signUpData", mUserData.getCooking());
+        Log.d("signUpData", mUserData.getCity());
+        Log.d("signUpData", mUserData.getLookingFor());
+        Log.d("signUpData", mUserData.getHobbies());
+
+        Disposable authDisposable = mAPIUtils.singUpFull(mUserData)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
+                    @Override
+                    public void onSuccess(ResponseBody value) {
+                        Log.d("Response", value.toString());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (e instanceof HttpException) {
+                            HttpException exception = (HttpException) e;
+                            ResponseBody responseBody = exception.response().errorBody();
+                            try {
+                                Log.d("Response", responseBody.string());
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+        mDisposable.add(authDisposable);
+    }
+
     @Override
     public void onStop() {
         mDisposable.clear();

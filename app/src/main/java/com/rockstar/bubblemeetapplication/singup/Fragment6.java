@@ -113,4 +113,12 @@ public class Fragment6 extends Fragment implements BaseContract.BaseView, SignUp
         }
         return isCorrect;
     }
+
+    public String getMarried(){
+        return mEditTextIsMarried.getText().toString();
+    }
+
+    public String getChildren(){
+        return mEditTextHaveChildren.getText().toString();
+    }
 }

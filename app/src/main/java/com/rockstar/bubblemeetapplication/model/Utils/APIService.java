@@ -25,4 +25,21 @@ public interface APIService {
                                 @Part("email") RequestBody email,
                                 @Part("password") RequestBody password,
                                 @Part("file") ArrayList<RequestBody> file);
+
+    @Multipart
+    @POST("user")
+    Single<ResponseBody> signUpFull(@Part("name") RequestBody name,
+                                @Part("gender") RequestBody gender,
+                                @Part("age") RequestBody age,
+                                @Part("email") RequestBody email,
+                                @Part("password") RequestBody password,
+                                @Part("file") ArrayList<RequestBody> file,
+                                @Part("height") RequestBody height,
+                                @Part("smoking") RequestBody smoking,
+                                @Part("marred") RequestBody married,
+                                @Part("children") RequestBody children,
+                                @Part("cook") RequestBody cook,
+                                @Part("last") RequestBody city,
+                                @Part("looking") RequestBody looking,
+                                @Part("hobbes") RequestBody hobbes);
 }

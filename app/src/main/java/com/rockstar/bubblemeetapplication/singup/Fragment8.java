@@ -87,4 +87,9 @@ public class Fragment8 extends Fragment implements BaseContract.BaseView, SignUp
         }
         return isCorrect;
     }
+
+    public String getLookingFor(){
+        return mEditTextLookingFor.getText().toString();
+    }
+
 }

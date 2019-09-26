@@ -61,7 +61,7 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(final int position) {
                 if(position == 3 || position == 9){
                     mButtonNext.setText(getString(R.string.letsBubble));
                     mButtonNext.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,12 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
                             //dismiss();
                             //getActivity().finish();
                             SignUpActivity activity = (SignUpActivity) getActivity();
-                            activity.signUpNewUser();
+                            if(position == 3) {
+                                activity.signUpNewUser();
+                            }
+                            if(position == 9){
+                                activity.signUpNewUserFull();
+                            }
                         }
                     });
                 }else{
@@ -127,6 +132,24 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
                     activity.setEmail(((Fragment3)mSignUpFragmentAdapter.getItem(currentItem)).getEmail());
                     activity.setPassword(((Fragment3)mSignUpFragmentAdapter.getItem(currentItem)).getPassword());
                     activity.setConfirmPassword(((Fragment3)mSignUpFragmentAdapter.getItem(currentItem)).getConfirmPassword());
+                    break;
+                case 5:
+                    activity.setHeight(((Fragment5)mSignUpFragmentAdapter.getItem(currentItem)).getHeight());
+                    activity.setSmoking(((Fragment5)mSignUpFragmentAdapter.getItem(currentItem)).getSmoking());
+                    break;
+                case 6:
+                    activity.setMarried(((Fragment6)mSignUpFragmentAdapter.getItem(currentItem)).getMarried());
+                    activity.setChildren(((Fragment6)mSignUpFragmentAdapter.getItem(currentItem)).getChildren());
+                    break;
+                case 7:
+                    activity.setCooking(((Fragment7)mSignUpFragmentAdapter.getItem(currentItem)).getCooking());
+                    activity.setCity(((Fragment7)mSignUpFragmentAdapter.getItem(currentItem)).getCity());
+                    break;
+                case 8:
+                    activity.setLookingFor(((Fragment8)mSignUpFragmentAdapter.getItem(currentItem)).getLookingFor());
+                    break;
+                case 9:
+                    activity.setHobbies(((Fragment9)mSignUpFragmentAdapter.getItem(currentItem)).getHobbies());
                     break;
             }
             mViewPagerSignUp.setCurrentItem(currentItem + 1);

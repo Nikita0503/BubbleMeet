@@ -58,6 +58,55 @@ public class APIUtils {
                 requestPhotos);
     }
 
+    public Single<ResponseBody> singUpFull(SignUpUserData userData){
+        Retrofit retrofit = getClient(BASE_URL);
+        APIService apiService = retrofit.create(APIService.class);
+        RequestBody requestBodyName = RequestBody.create(MediaType.parse("text/plain"), userData.getName());
+        RequestBody requestBodyGender = RequestBody.create(MediaType.parse("text/plain"), userData.getGender());
+        RequestBody requestBodyYearsOld = RequestBody.create(MediaType.parse("text/plain"), userData.getYearsOld());
+        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), userData.getEmail());
+        RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), userData.getPassword());
+        RequestBody requestBodyHeight = RequestBody.create(MediaType.parse("text/plain"), userData.getHeight());
+        RequestBody requestBodySmoking = RequestBody.create(MediaType.parse("text/plain"), userData.getSmoking());
+        RequestBody requestBodyMarried = RequestBody.create(MediaType.parse("text/plain"), userData.getMarried());
+        RequestBody requestBodyChildren = RequestBody.create(MediaType.parse("text/plain"), userData.getChildren());
+        RequestBody requestBodyCooking = RequestBody.create(MediaType.parse("text/plain"), userData.getCooking());
+        RequestBody requestBodyCity = RequestBody.create(MediaType.parse("text/plain"), userData.getCity());
+        RequestBody requestBodyLookingFor = RequestBody.create(MediaType.parse("text/plain"), userData.getLookingFor());
+        RequestBody requestBodyHobbies = RequestBody.create(MediaType.parse("text/plain"), userData.getHobbies());
+        ArrayList<RequestBody> requestPhotos = new ArrayList<RequestBody>();
+        if(userData.getMainPhoto() != null) {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
+            requestPhotos.add(requestFile);
+        }
+        if(userData.getAdditionalPhoto() != null) {
+            RequestBody requestFile1 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto());
+            requestPhotos.add(requestFile1);
+        }
+        if(userData.getAdditionalPhoto2() != null) {
+            RequestBody requestFile2 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto2());
+            requestPhotos.add(requestFile2);
+        }
+        if(userData.getAdditionalPhoto3() != null) {
+            RequestBody requestFile3 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto3());
+            requestPhotos.add(requestFile3);
+        }
+        return apiService.signUpFull(requestBodyName,
+                requestBodyGender,
+                requestBodyYearsOld,
+                requestBodyEmail,
+                requestBodyPassword,
+                requestPhotos,
+                requestBodyHeight,
+                requestBodySmoking,
+                requestBodyMarried,
+                requestBodyChildren,
+                requestBodyCooking,
+                requestBodyCity,
+                requestBodyLookingFor,
+                requestBodyHobbies);
+    }
+
     public static Retrofit getClient(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

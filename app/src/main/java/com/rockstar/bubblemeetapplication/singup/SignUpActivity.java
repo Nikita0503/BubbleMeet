@@ -64,12 +64,48 @@ public class SignUpActivity extends AppCompatActivity implements BaseContract.Ba
         mPresenter.setPassword(password);
     }
 
+    public void setHeight(String height){
+        mPresenter.setHeight(height);
+    }
+
+    public void setSmoking(String smoking){
+        mPresenter.setSmoking(smoking);
+    }
+
+    public void setMarried(String married){
+        mPresenter.setMarried(married);
+    }
+
+    public void setChildren(String children){
+        mPresenter.setChildren(children);
+    }
+
+    public void setCooking(String cooking){
+        mPresenter.setCooking(cooking);
+    }
+
+    public void setCity(String city){
+        mPresenter.setCity(city);
+    }
+
+    public void setLookingFor(String lookingFor){
+        mPresenter.setLookingFor(lookingFor);
+    }
+
+    public void setHobbies(String hobbies){
+        mPresenter.setHobbies(hobbies);
+    }
+
     public void setConfirmPassword(String confirmPassword){
         mPresenter.setConfirmPassword(confirmPassword);
     }
 
     public void signUpNewUser(){
         mPresenter.sendNewUser();
+    }
+
+    public void signUpNewUserFull(){
+        mPresenter.sendNewUserFull();
     }
 
     @Override

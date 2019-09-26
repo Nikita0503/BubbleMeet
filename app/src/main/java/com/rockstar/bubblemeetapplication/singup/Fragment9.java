@@ -53,4 +53,8 @@ public class Fragment9 extends Fragment implements BaseContract.BaseView, SignUp
         }
         return isCorrect;
     }
+
+    public String getHobbies(){
+        return mEditTextHobbies.getText().toString();
+    }
 }

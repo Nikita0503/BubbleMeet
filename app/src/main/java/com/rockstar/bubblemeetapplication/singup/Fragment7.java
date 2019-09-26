@@ -102,4 +102,13 @@ public class Fragment7 extends Fragment implements BaseContract.BaseView, SignUp
         }
         return isCorrect;
     }
+
+    public String getCooking(){
+        return mEditTextIsCooking.getText().toString();
+    }
+
+    public String getCity(){
+        return mEditTextCity.getText().toString();
+    }
+
 }
