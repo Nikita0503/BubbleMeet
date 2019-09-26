@@ -28,6 +28,8 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
     private ViewPager mViewPagerSignUp;
     private TabLayout mTabLayoutSignUp;
 
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dialog_sign_up, null);

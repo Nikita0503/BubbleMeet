@@ -74,12 +74,12 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                //startActivity(intent);
-                //finish();
-                String email = mEditTextEmail.getText().toString();
-                String password = mEditTextPassword.getText().toString();
-                mPresenter.authorization(email, password);
+                Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                //String email = mEditTextEmail.getText().toString();
+                //String password = mEditTextPassword.getText().toString();
+                //mPresenter.authorization(email, password);
             }
         });
     }
