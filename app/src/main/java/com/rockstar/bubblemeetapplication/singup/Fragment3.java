@@ -126,4 +126,9 @@ public class Fragment3 extends Fragment implements BaseContract.BaseView, SignUp
     public String getConfirmPassword(){
         return mEditTextConfirmPassword.getText().toString();
     }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,5 +51,10 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
         mTextViewName.setText(mUser.getName());
         mViewPagerProfile.setAdapter(new ProfilePagerAdapter(getContext(), mUser));
         mTabLayoutProfile.setupWithViewPager(mViewPagerProfile);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

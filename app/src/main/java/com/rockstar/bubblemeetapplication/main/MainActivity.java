@@ -194,4 +194,9 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         mImageViewWatchers.setImageDrawable(getResources().getDrawable(R.drawable.ic_views));
         mImageViewInbox.setImageDrawable(getResources().getDrawable(R.drawable.ic_messages));
     }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }

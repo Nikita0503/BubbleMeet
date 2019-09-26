@@ -231,4 +231,9 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             }, 1000);
         }
     }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }

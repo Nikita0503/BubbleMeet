@@ -105,6 +105,7 @@ public class Fragment1 extends Fragment implements BaseContract.BaseView, SignUp
         });
     }
 
+
     public void setPhoto(int number, File photo){
         switch (number){
             case GALLERY_MAIN_PHOTO:
@@ -172,5 +173,10 @@ public class Fragment1 extends Fragment implements BaseContract.BaseView, SignUp
 
     public String getName(){
         return mEditTextName.getText().toString();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

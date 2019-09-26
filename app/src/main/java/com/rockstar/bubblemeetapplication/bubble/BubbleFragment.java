@@ -369,4 +369,9 @@ public class BubbleFragment extends Fragment implements BaseContract.BaseView {
             mImageViews[i].setLayoutParams(params);
         }
     }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -135,6 +135,11 @@ public class SignUpActivity extends AppCompatActivity implements BaseContract.Ba
     }
 
     @Override
+    public void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.onStop();

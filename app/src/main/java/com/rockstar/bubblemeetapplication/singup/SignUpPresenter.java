@@ -1,10 +1,12 @@
 package com.rockstar.bubblemeetapplication.singup;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
 import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
 
@@ -18,6 +20,8 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
 import com.rockstar.bubblemeetapplication.singup.Fragment1;
+
+import org.json.JSONObject;
 
 public class SignUpPresenter implements BaseContract.BasePresenter {
 
@@ -145,6 +149,9 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody value) {
                         Log.d("Response", value.toString());
+                        Intent intent = new Intent(mActivity, MainActivity.class);
+                        mActivity.startActivity(intent);
+                        mActivity.finish();
                     }
 
                     @Override
@@ -154,7 +161,9 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                             HttpException exception = (HttpException) e;
                             ResponseBody responseBody = exception.response().errorBody();
                             try {
-                                Log.d("Response", responseBody.string());
+                                JSONObject responseError = new JSONObject(responseBody.string());
+                                Log.d("TAG", responseError.toString());
+                                mActivity.showMessage(responseError.getString("message"));
                             } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
@@ -187,6 +196,9 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody value) {
                         Log.d("Response", value.toString());
+                        Intent intent = new Intent(mActivity, MainActivity.class);
+                        mActivity.startActivity(intent);
+                        mActivity.finish();
                     }
 
                     @Override
@@ -196,7 +208,9 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                             HttpException exception = (HttpException) e;
                             ResponseBody responseBody = exception.response().errorBody();
                             try {
-                                Log.d("Response", responseBody.string());
+                                JSONObject responseError = new JSONObject(responseBody.string());
+                                Log.d("TAG", responseError.toString());
+                                mActivity.showMessage(responseError.getString("message"));
                             } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
