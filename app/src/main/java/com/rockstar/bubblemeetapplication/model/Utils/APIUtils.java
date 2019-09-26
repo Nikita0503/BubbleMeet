@@ -107,6 +107,12 @@ public class APIUtils {
                 requestBodyHobbies);
     }
 
+    public Single<ArrayList<SignUpUserData>> getAllUsers(){
+        Retrofit retrofit = getClient(BASE_URL);
+        APIService apiService = retrofit.create(APIService.class);
+        return apiService.getAllUsers();
+    }
+
     public static Retrofit getClient(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

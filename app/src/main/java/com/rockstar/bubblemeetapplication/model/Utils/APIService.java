@@ -1,11 +1,14 @@
 package com.rockstar.bubblemeetapplication.model.Utils;
 
+import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
+
 import java.util.ArrayList;
 
 import io.reactivex.Single;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -42,4 +45,8 @@ public interface APIService {
                                 @Part("last") RequestBody city,
                                 @Part("looking") RequestBody looking,
                                 @Part("hobbes") RequestBody hobbes);
+
+    @GET("allUser")
+    Single<ArrayList<SignUpUserData>> getAllUsers();
+
 }
