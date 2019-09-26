@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -67,9 +68,11 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getActivity(), MainActivity.class);
-                            startActivity(intent);
-                            dismiss();
-                            getActivity().finish();
+                            //startActivity(intent);
+                            //dismiss();
+                            //getActivity().finish();
+                            SignUpActivity activity = (SignUpActivity) getActivity();
+                            activity.signUpNewUser();
                         }
                     });
                 }else{
@@ -111,6 +114,21 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
     public void showNextPage(){
         int currentItem = mViewPagerSignUp.getCurrentItem();
         if(mSignUpFragmentAdapter.isCorrect(mViewPagerSignUp.getCurrentItem())) {
+            SignUpActivity activity = (SignUpActivity) getActivity();
+            switch (currentItem+1){
+                case 1:
+                    activity.setName(((Fragment1)mSignUpFragmentAdapter.getItem(currentItem)).getName());
+                    break;
+                case 2:
+                    activity.setGender(((Fragment2)mSignUpFragmentAdapter.getItem(currentItem)).getGender());
+                    activity.setYearsOld(((Fragment2)mSignUpFragmentAdapter.getItem(currentItem)).getYearsOld());
+                    break;
+                case 3:
+                    activity.setEmail(((Fragment3)mSignUpFragmentAdapter.getItem(currentItem)).getEmail());
+                    activity.setPassword(((Fragment3)mSignUpFragmentAdapter.getItem(currentItem)).getPassword());
+                    activity.setConfirmPassword(((Fragment3)mSignUpFragmentAdapter.getItem(currentItem)).getConfirmPassword());
+                    break;
+            }
             mViewPagerSignUp.setCurrentItem(currentItem + 1);
         }
 

@@ -25,9 +25,9 @@ import java.util.regex.Pattern;
 
 public class Fragment3 extends Fragment implements BaseContract.BaseView, SignUpView {
 
-    EditText mEditTextEmail;
-    EditText mEditTextPassword;
-    EditText mEditTextConfirmPassword;
+    private EditText mEditTextEmail;
+    private EditText mEditTextPassword;
+    private EditText mEditTextConfirmPassword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,8 +96,7 @@ public class Fragment3 extends Fragment implements BaseContract.BaseView, SignUp
         return isCorrect;
     }
 
-    public boolean isEmailValid(String email)
-    {
+    public boolean isEmailValid(String email) {
         String regExpn =
                 "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
                         +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
@@ -107,7 +106,6 @@ public class Fragment3 extends Fragment implements BaseContract.BaseView, SignUp
                         +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
         CharSequence inputStr = email;
-
         Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(inputStr);
 
@@ -115,5 +113,17 @@ public class Fragment3 extends Fragment implements BaseContract.BaseView, SignUp
             return true;
         else
             return false;
+    }
+
+    public String getEmail(){
+        return mEditTextEmail.getText().toString();
+    }
+
+    public String getPassword(){
+        return mEditTextPassword.getText().toString();
+    }
+
+    public String getConfirmPassword(){
+        return mEditTextConfirmPassword.getText().toString();
     }
 }

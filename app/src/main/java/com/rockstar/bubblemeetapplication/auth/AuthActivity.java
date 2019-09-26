@@ -1,10 +1,7 @@
 package com.rockstar.bubblemeetapplication.auth;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,12 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
-import com.rockstar.bubblemeetapplication.singup.Fragment1;
-import com.rockstar.bubblemeetapplication.singup.SingUpActivity;
+import com.rockstar.bubblemeetapplication.singup.SignUpActivity;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 
 
@@ -37,7 +32,6 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-
         initViews();
         mPresenter = new AuthPresenter(this);
     }
@@ -67,7 +61,7 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
         mTextViewDontHaveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AuthActivity.this, SingUpActivity.class);
+                Intent intent = new Intent(AuthActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
         });

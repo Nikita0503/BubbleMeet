@@ -21,8 +21,8 @@ import com.rockstar.bubblemeetapplication.R;
 
 public class Fragment2 extends Fragment implements BaseContract.BaseView, SignUpView {
 
-    EditText mEditTextGender;
-    EditText mEditTextAge;
+    private EditText mEditTextGender;
+    private EditText mEditTextAge;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,5 +102,13 @@ public class Fragment2 extends Fragment implements BaseContract.BaseView, SignUp
             isCorrect = false;
         }
         return isCorrect;
+    }
+
+    public String getGender(){
+        return mEditTextGender.getText().toString();
+    }
+
+    public String getYearsOld(){
+        return mEditTextAge.getText().toString();
     }
 }

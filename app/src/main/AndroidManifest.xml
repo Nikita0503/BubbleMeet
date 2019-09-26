@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
 
         android:theme="@style/AppTheme">
-        <activity android:name=".singup.SingUpActivity"></activity>
+        <activity android:name=".singup.SignUpActivity"></activity>
         <activity
             android:name=".my_profile.MyProfileActivity"
             android:screenOrientation="portrait" />

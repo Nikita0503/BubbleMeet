@@ -169,4 +169,8 @@ public class Fragment1 extends Fragment implements BaseContract.BaseView, SignUp
         }
         return isCorrect;
     }
+
+    public String getName(){
+        return mEditTextName.getText().toString();
+    }
 }
