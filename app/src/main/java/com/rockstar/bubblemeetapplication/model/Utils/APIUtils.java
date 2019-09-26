@@ -1,6 +1,10 @@
 package com.rockstar.bubblemeetapplication.model.Utils;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
+import com.rockstar.bubblemeetapplication.singup.SignUpActivity;
+
+import java.util.ArrayList;
 
 import io.reactivex.Single;
 import okhttp3.MediaType;
@@ -19,6 +23,39 @@ public class APIUtils {
         RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
         RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
         return apiService.authorization(requestBodyEmail, requestBodyPassword);
+    }
+
+    public Single<ResponseBody> singUp(SignUpUserData userData){
+        Retrofit retrofit = getClient(BASE_URL);
+        APIService apiService = retrofit.create(APIService.class);
+        RequestBody requestBodyName = RequestBody.create(MediaType.parse("text/plain"), userData.getName());
+        RequestBody requestBodyGender = RequestBody.create(MediaType.parse("text/plain"), userData.getGender());
+        RequestBody requestBodyYearsOld = RequestBody.create(MediaType.parse("text/plain"), userData.getYearsOld());
+        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), userData.getEmail());
+        RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), userData.getPassword());
+        ArrayList<RequestBody> requestPhotos = new ArrayList<RequestBody>();
+        if(userData.getMainPhoto() != null) {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
+            requestPhotos.add(requestFile);
+        }
+        if(userData.getAdditionalPhoto() != null) {
+            RequestBody requestFile1 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto());
+            requestPhotos.add(requestFile1);
+        }
+        if(userData.getAdditionalPhoto2() != null) {
+            RequestBody requestFile2 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto2());
+            requestPhotos.add(requestFile2);
+        }
+        if(userData.getAdditionalPhoto3() != null) {
+            RequestBody requestFile3 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto3());
+            requestPhotos.add(requestFile3);
+        }
+        return apiService.signUp(requestBodyName,
+                requestBodyGender,
+                requestBodyYearsOld,
+                requestBodyEmail,
+                requestBodyPassword,
+                requestPhotos);
     }
 
     public static Retrofit getClient(String baseUrl) {

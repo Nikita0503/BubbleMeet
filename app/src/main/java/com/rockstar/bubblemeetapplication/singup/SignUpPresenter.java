@@ -3,13 +3,19 @@ package com.rockstar.bubblemeetapplication.singup;
 import android.util.Log;
 import android.view.View;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
 import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
 
 import java.io.File;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 import com.rockstar.bubblemeetapplication.singup.Fragment1;
 
@@ -90,7 +96,7 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
     }
 
     public void setAdditionalPhoto3(File additionalPhoto3) {
-        mUserData.setAdditionalPhoto2(additionalPhoto3);
+        mUserData.setAdditionalPhoto3(additionalPhoto3);
     }
 
     public void setHeight(String height) {
@@ -132,6 +138,30 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
         Log.d("signUpData", mUserData.getEmail());
         Log.d("signUpData", mUserData.getPassword());
         Log.d("signUpData", mUserData.getConfirmPassword());
+        Disposable authDisposable = mAPIUtils.singUp(mUserData)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
+                    @Override
+                    public void onSuccess(ResponseBody value) {
+                        Log.d("Response", value.toString());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (e instanceof HttpException) {
+                            HttpException exception = (HttpException) e;
+                            ResponseBody responseBody = exception.response().errorBody();
+                            try {
+                                Log.d("Response", responseBody.string());
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+        mDisposable.add(authDisposable);
     }
 
     @Override

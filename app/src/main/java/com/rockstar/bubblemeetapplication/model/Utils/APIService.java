@@ -1,5 +1,7 @@
 package com.rockstar.bubblemeetapplication.model.Utils;
 
+import java.util.ArrayList;
+
 import io.reactivex.Single;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -15,4 +17,12 @@ public interface APIService {
     Single<ResponseBody> authorization(@Part("email") RequestBody email, @Part("password") RequestBody password);
     //@POST("login")
     //Single<ResponseBody> authorization(@Query("email") String email, @Query("password") String password);
+    @Multipart
+    @POST("user")
+    Single<ResponseBody> signUp(@Part("name") RequestBody name,
+                                @Part("gender") RequestBody gender,
+                                @Part("age") RequestBody age,
+                                @Part("email") RequestBody email,
+                                @Part("password") RequestBody password,
+                                @Part("file") ArrayList<RequestBody> file);
 }
