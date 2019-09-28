@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
     protected void onStart() {
         super.onStart();
         mPresenter.onStart();
-        mPresenter.fetchAllUsers();
     }
 
     @Override
@@ -122,14 +121,14 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
 
                 BubbleFragment2 bubbleFragment = new BubbleFragment2();
                 ArrayList<UserData> users = new ArrayList<UserData>();
-                for(int i = 0; i < 700; i++){
-                    if(i % 2 != 0) {
-                        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
-                    }else {
-                        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
-                    }
-                }
-                bubbleFragment.setUsers(users);
+                //for(int i = 0; i < 700; i++){
+                //    if(i % 2 != 0) {
+                //        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
+                //    }else {
+                //        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
+                //    }
+                //}
+                //bubbleFragment.setUsers(users);
                 transaction.replace(R.id.root_fragment, bubbleFragment);
 
                 //transaction.addToBackStack(null);
@@ -166,15 +165,15 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         });
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         BubbleFragment2 bubbleFragment = new BubbleFragment2();
-        ArrayList<UserData> users = new ArrayList<UserData>();
-        for(int i = 0; i < 700; i++){
-            if(i % 2 != 0) {
-                users.add(new UserData(i, "Vault Boy" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
-            }else {
-                users.add(new UserData(i, "Gaben" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
-            }
-        }
-        bubbleFragment.setUsers(users);
+        //ArrayList<UserData> users = new ArrayList<UserData>();
+        //for(int i = 0; i < 700; i++){
+        //    if(i % 2 != 0) {
+        //        users.add(new UserData(i, "Vault Boy" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
+        //    }else {
+        //        users.add(new UserData(i, "Gaben" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
+        //    }
+        //}
+        //bubbleFragment.setUsers(users);
         transaction.replace(R.id.root_fragment, bubbleFragment);
         transaction.addToBackStack(null);
         transaction.commit();

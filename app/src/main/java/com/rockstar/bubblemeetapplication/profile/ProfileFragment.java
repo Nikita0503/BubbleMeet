@@ -20,15 +20,16 @@ import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.auth.AuthActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 public class ProfileFragment extends Fragment implements BaseContract.BaseView  {
 
-    UserData mUser;
+    UserDataFull mUser;
     TextView mTextViewName;
     ViewPager mViewPagerProfile;
     TabLayout mTabLayoutProfile;
 
-    public void setUser(UserData user){
+    public void setUser(UserDataFull user){
         mUser = user;
     }
 
@@ -48,7 +49,7 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
 
     @Override
     public void initViews() {
-        mTextViewName.setText(mUser.getName());
+        mTextViewName.setText(mUser.name);
         mViewPagerProfile.setAdapter(new ProfilePagerAdapter(getContext(), mUser));
         mTabLayoutProfile.setupWithViewPager(mViewPagerProfile);
     }

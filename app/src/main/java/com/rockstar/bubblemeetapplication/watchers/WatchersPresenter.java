@@ -3,6 +3,7 @@ package com.rockstar.bubblemeetapplication.watchers;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import java.util.ArrayList;
 
@@ -24,8 +25,7 @@ public class WatchersPresenter implements BaseContract.BasePresenter {
     }
 
     public void fetchWatchers(){
-        ArrayList<UserData> users = new ArrayList<UserData>();
-        users.add(new UserData(1, "Gaben", "The International", "https://static.life.ru/posts/2016/11/925870/gr/north/174daf5b6fae9241709ac0bd3d8d7ada__980x.jpg"));
+        ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
         mFragment.addUsers(users);
     }
 

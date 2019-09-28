@@ -11,15 +11,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.squareup.picasso.Picasso;
 
 public class ProfilePagerAdapter extends PagerAdapter {
 
-    private UserData mUser;
+    private UserDataFull mUser;
     private Context mContext;
     private int[] mImages;
 
-    ProfilePagerAdapter(Context context, UserData user){
+    ProfilePagerAdapter(Context context, UserDataFull user){
         mContext=context;
         mUser = user;
         mImages = new int[] {
@@ -46,7 +47,7 @@ public class ProfilePagerAdapter extends PagerAdapter {
         if(position == 0) {
             imageView = new ImageView(mContext);
             Picasso.with(mContext)
-                    .load(mUser.getPhoto())
+                    .load(mUser.avatarFull)
                     .into(imageView);
         }else{
             imageView = new ImageView(mContext);

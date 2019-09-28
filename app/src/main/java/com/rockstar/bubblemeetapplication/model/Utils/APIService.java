@@ -1,6 +1,7 @@
 package com.rockstar.bubblemeetapplication.model.Utils;
 
 import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,6 @@ public interface APIService {
                                 @Part("hobbes") RequestBody hobbes);
 
     @GET("allUser")
-    Single<ArrayList<SignUpUserData>> getAllUsers();
+    Single<ArrayList<UserDataFull>> getAllUsers();
 
 }

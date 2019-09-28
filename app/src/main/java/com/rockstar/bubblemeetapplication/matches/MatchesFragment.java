@@ -14,6 +14,7 @@ import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.DataAdapter;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class MatchesFragment extends Fragment implements BaseContract.BaseView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mGridViewMatches = (GridView) view.findViewById(com.rockstar.bubblemeetapplication.R.id.gridViewList);
-        mAdapter = new DataAdapter((MainActivity) getActivity(), getFragmentManager(), new ArrayList<UserData>());
+        mAdapter = new DataAdapter((MainActivity) getActivity(), getFragmentManager(), new ArrayList<UserDataFull>());
         mGridViewMatches.setAdapter(mAdapter);
         initViews();
     }
@@ -52,7 +53,7 @@ public class MatchesFragment extends Fragment implements BaseContract.BaseView {
         ((MainActivity) getActivity()).hideButtonBack();
     }
 
-    public void addUsers(ArrayList<UserData> newUsers){
+    public void addUsers(ArrayList<UserDataFull> newUsers){
         mAdapter.addUsers(newUsers);
     }
 

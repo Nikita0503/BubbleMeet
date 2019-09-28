@@ -2,6 +2,7 @@ package com.rockstar.bubblemeetapplication.model.Utils;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.singup.SignUpActivity;
 
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class APIUtils {
                 requestBodyHobbies);
     }
 
-    public Single<ArrayList<SignUpUserData>> getAllUsers(){
+    public Single<ArrayList<UserDataFull>> getAllUsers(){
         Retrofit retrofit = getClient(BASE_URL);
         APIService apiService = retrofit.create(APIService.class);
         return apiService.getAllUsers();

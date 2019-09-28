@@ -25,6 +25,7 @@ import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.bubble.BubbleFragment2;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
@@ -35,20 +36,23 @@ import java.util.Calendar;
 public class ProfilePreviewFragment extends Fragment implements BaseContract.BaseView {
 
     boolean doubleTap;
-    UserData mUser;
-    TextView mTextViewName;
-    TextView mTextViewYearsOldAndCity;
-    ImageView mImageViewLike;
-    ImageView mImageViewMessages;
-    ImageView mImageViewBoom;
-    ImageView mImageViewBubbles;
-    CircleImageView mImageViewAvatar;
-    ShineButton mShineButton;
-    RecyclerView mRecyclerViewUsers;
+    private int mCurrentNumber;
+    private ArrayList<UserDataFull> mUsers;
+    private TextView mTextViewName;
+    private TextView mTextViewYearsOldAndCity;
+    private ImageView mImageViewLike;
+    private ImageView mImageViewMessages;
+    private ImageView mImageViewBoom;
+    private ImageView mImageViewBubbles;
+    private CircleImageView mImageViewAvatar;
+    private ShineButton mShineButton;
+    private RecyclerView mRecyclerViewUsers;
 
-    public void setName(UserData user){
-        mUser = user;
+    public void setUser(int number, ArrayList<UserDataFull> users){
+        mCurrentNumber = number;
+        mUsers = users;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,7 +82,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerViewUsers.setLayoutManager(layoutManager);
         mRecyclerViewUsers.setAdapter(new ProfilePreviewCustomAdapter(getContext()));
-        mTextViewName.setText(mUser.getName());
+        mTextViewName.setText(mUsers.get(mCurrentNumber).name);
         mImageViewLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +94,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         });
 
         Picasso.with(getContext())
-                .load(mUser.getPhoto())
+                .load(mUsers.get(mCurrentNumber).avatarSmall)
                 .into(mImageViewAvatar);
 
         mImageViewAvatar.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
@@ -100,15 +104,15 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 BubbleFragment2 bubbleFragment = new BubbleFragment2();
-                ArrayList<UserData> users = new ArrayList<UserData>();
-                for(int i = 0; i < 800; i++){
-                    if(i % 2 != 0) {
-                        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
-                    }else {
-                        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
-                    }
-                }
-                bubbleFragment.setUsers(users);
+                //ArrayList<UserData> users = new ArrayList<UserData>();
+                //for(int i = 0; i < 800; i++){
+                //    if(i % 2 != 0) {
+                //        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
+                //    }else {
+                //        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
+                //    }
+                //}
+                bubbleFragment.setUsers(mUsers);
                 transaction.replace(R.id.root_fragment, bubbleFragment);
                 //transaction.addToBackStack(null);
                 //transaction.addToBackStack(null);
@@ -210,7 +214,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 public void run() {
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     ProfileFragment profileFragment = new ProfileFragment();
-                    profileFragment.setUser(mUser);
+                    profileFragment.setUser(mUsers.get(mCurrentNumber));
                     transaction.replace(R.id.root_fragment, profileFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -223,7 +227,11 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 public void run() {
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
-                    profileFragment.setName(new UserData(0, "Elon Musk", "Mars", "https://24smi.org/public/media/celebrity/2017/10/10/ATIfxWH4rRO0_ilon-mask.jpg"));
+                    if(mCurrentNumber != mUsers.size()) {
+                        profileFragment.setUser(mCurrentNumber + 1, mUsers);
+                    }else{
+                        profileFragment.setUser(0, mUsers);
+                    }
                     transaction.replace(R.id.root_fragment, profileFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();

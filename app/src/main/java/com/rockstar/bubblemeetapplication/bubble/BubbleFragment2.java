@@ -25,6 +25,7 @@ import com.rockstar.bubblemeetapplication.R;
 import com.github.abdularis.civ.CircleImageView;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.profile_preview.ProfilePreviewFragment;
 import com.squareup.picasso.Picasso;
 
@@ -66,12 +67,18 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
     //private String[] mUsers;
-    private ArrayList<UserData> mUsers;
+    private BubblePresenter mPresenter;
+    private ArrayList<UserDataFull> mUsers;
     private AbsoluteLayout mLayout;
 
-    public void setUsers(ArrayList<UserData> users){
+    public void setUsers(ArrayList<UserDataFull> users){
         mUsers = users;
-
+        mDefaultYMinSize = new int[mUsers.size()];
+        mDefaultYMaxSize = new int[mUsers.size()];
+        mXPrevious = new int[mUsers.size()];
+        mYPrevious = new int[mUsers.size()];
+        mDiameterPrevious = new int[mUsers.size()];
+        initViews();
     }
 
     //public void setUsers(String[] users){
@@ -86,19 +93,18 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_bubble_grid_view2, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        mPresenter = new BubblePresenter(this);
+        mPresenter.onStart();
+        mPresenter.fetchAllUsers();
         mLayout = (AbsoluteLayout) view.findViewById(R.id.layout);
         Log.d("ViewCreated", "+");
-        mDefaultYMinSize = new int[mUsers.size()];
-        mDefaultYMaxSize = new int[mUsers.size()];
-        mXPrevious = new int[mUsers.size()];
-        mYPrevious = new int[mUsers.size()];
-        mDiameterPrevious = new int[mUsers.size()];
-        initViews();
+
     }
 
     @Override
@@ -131,7 +137,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             }
         }
         for(int i = 0; i < mLayout.getChildCount(); i++){
-            Picasso.with(getContext()).load(mUsers.get(i).getPhoto()).transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
+            Picasso.with(getContext()).load("https://memepedia.ru/wp-content/uploads/2018/06/unnamed-768x768.jpg").transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
         }
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubbleNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
@@ -236,7 +242,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 Log.d("sizeHeight", paramsBubble.height + "");
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
-                profileFragment.setName(mUsers.get(i));
+                profileFragment.setUser(i, mUsers);
                 transaction.replace(R.id.root_fragment, profileFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -742,5 +748,11 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     @Override
     public void showMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mPresenter.onStop();
     }
 }
