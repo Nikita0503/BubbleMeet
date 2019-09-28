@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 //transaction.replace(R.id.root_fragment, bubbleFragment);
 
                 BubbleFragment2 bubbleFragment = new BubbleFragment2();
-                ArrayList<UserData> users = new ArrayList<UserData>();
+                //ArrayList<UserData> users = new ArrayList<UserData>();
                 //for(int i = 0; i < 700; i++){
                 //    if(i % 2 != 0) {
                 //        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));

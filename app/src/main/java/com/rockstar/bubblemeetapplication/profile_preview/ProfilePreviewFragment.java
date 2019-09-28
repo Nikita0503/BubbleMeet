@@ -83,6 +83,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mRecyclerViewUsers.setLayoutManager(layoutManager);
         mRecyclerViewUsers.setAdapter(new ProfilePreviewCustomAdapter(getContext()));
         mTextViewName.setText(mUsers.get(mCurrentNumber).name);
+        mTextViewYearsOldAndCity.setText(mUsers.get(mCurrentNumber).age + ", " + mUsers.get(mCurrentNumber).city);
         mImageViewLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +95,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         });
 
         Picasso.with(getContext())
-                .load(mUsers.get(mCurrentNumber).avatarSmall)
+                .load("http://185.25.116.211:11000/image/" + mUsers.get(mCurrentNumber).avatarSmall)
                 .into(mImageViewAvatar);
 
         mImageViewAvatar.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
@@ -227,7 +228,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 public void run() {
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
-                    if(mCurrentNumber != mUsers.size()) {
+                    if(mCurrentNumber + 1!= mUsers.size()) {
                         profileFragment.setUser(mCurrentNumber + 1, mUsers);
                     }else{
                         profileFragment.setUser(0, mUsers);

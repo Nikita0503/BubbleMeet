@@ -10,6 +10,7 @@ import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -41,6 +42,11 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                 .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> userData) {
+                        Collections.shuffle(userData);
+                        for(int i = 0; i < userData.size(); i++) {
+                            Log.d("Response", userData.get(i).name);
+                            Log.d("Response", userData.get(i).avatarSmall);
+                        }
                         mFragment.setUsers(userData);
                     }
 

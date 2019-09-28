@@ -18,22 +18,20 @@ public class ProfilePagerAdapter extends PagerAdapter {
 
     private UserDataFull mUser;
     private Context mContext;
-    private int[] mImages;
 
     ProfilePagerAdapter(Context context, UserDataFull user){
         mContext=context;
         mUser = user;
-        mImages = new int[] {
-                R.drawable.bmw,
-                R.drawable.pudge
-        };
-
     }
 
 
     @Override
     public int getCount() {
-        return mImages.length+1;
+        if(mUser.photo == null){
+            return 1;
+        }else {
+            return mUser.photo.size() + 1;
+        }
     }
 
     @Override
@@ -47,11 +45,13 @@ public class ProfilePagerAdapter extends PagerAdapter {
         if(position == 0) {
             imageView = new ImageView(mContext);
             Picasso.with(mContext)
-                    .load(mUser.avatarFull)
+                    .load("http://185.25.116.211:11000/image/" + mUser.avatarFull)
                     .into(imageView);
         }else{
             imageView = new ImageView(mContext);
-            imageView.setImageResource(mImages[position-1]);
+            Picasso.with(mContext)
+                    .load("http://185.25.116.211:11000/image/" + mUser.photo.get(position-1))
+                    .into(imageView);
         }
         ((ViewPager) container).addView(imageView, 0);
 
