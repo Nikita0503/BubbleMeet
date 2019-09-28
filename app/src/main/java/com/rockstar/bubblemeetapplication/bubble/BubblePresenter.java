@@ -42,10 +42,11 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                 .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> userData) {
-                        Collections.shuffle(userData);
+                        //Collections.shuffle(userData);
                         for(int i = 0; i < userData.size(); i++) {
                             Log.d("Response", userData.get(i).name);
                             Log.d("Response", userData.get(i).avatarSmall);
+                            Log.d("Response", userData.get(i).);
                         }
                         mFragment.setUsers(userData);
                     }

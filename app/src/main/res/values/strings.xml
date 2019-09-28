@@ -110,4 +110,10 @@
 
     <string name="select_photo">Select at least one photo</string>
     <string name="passwords_not_same">Passwords are not the same</string>
+
+    <string name="not">not</string>
+    <string name="cookingInfo">cooking</string>
+    <string name="marriedInfo">married</string>
+    <string name="smokingInfo">smoking</string>
+    <string name="childrenInfo">children</string>
 </resources>

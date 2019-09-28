@@ -63,15 +63,32 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
         mTextViewHobbies.setText(mUser.hobbes);
         mViewPagerProfile.setAdapter(new ProfilePagerAdapter(getContext(), mUser));
         mTabLayoutProfile.setupWithViewPager(mViewPagerProfile);
-        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,  getResources().getDisplayMetrics());
+
         if(mUser.looking != null){
-            Button buttonLooking = new Button(getContext());
-            buttonLooking.setHeight(px);
-            buttonLooking.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-            buttonLooking.setBackgroundResource(R.drawable.background_button_login);
-            buttonLooking.setText(mUser.looking);
-            mFlowLayout.addView(buttonLooking);
+            addInfo(mUser.looking);
         }
+        if(mUser.gender != null){
+            addInfo(mUser.gender);
+        }
+        if(mUser.eyeColor != null && !mUser.eyeColor.equals("")){
+            addInfo(mUser.eyeColor);
+        }
+        if(mUser.loveCook == 1){
+            addInfo(getResources().getString(R.string.cookingInfo));
+        }else{
+            addInfo(getResources().getString(R.string.not)
+                    + " " + getResources().getString(R.string.cookingInfo));
+        }
+    }
+
+    private void addInfo(String info){
+        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,  getResources().getDisplayMetrics());
+        Button infoButton = new Button(getContext());
+        infoButton.setHeight(px);
+        infoButton.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        infoButton.setBackgroundResource(R.drawable.background_button_login);
+        infoButton.setText(info);
+        mFlowLayout.addView(infoButton);
     }
 
     @Override
