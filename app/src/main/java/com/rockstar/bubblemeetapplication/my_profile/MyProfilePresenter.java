@@ -1,12 +1,16 @@
-package com.rockstar.bubblemeetapplication.likes;
+package com.rockstar.bubblemeetapplication.my_profile;
 
+import android.content.Intent;
 import android.util.Log;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
-import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.auth.AuthActivity;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
-import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -17,31 +21,31 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
-public class LikesPresenter implements BaseContract.BasePresenter {
+public class MyProfilePresenter implements BaseContract.BasePresenter {
 
     private CompositeDisposable mDisposable;
     private APIUtils mAPIUtils;
-    private LikesFragment mFragment;
+    private MyProfileActivity mActivity;
 
-    public LikesPresenter(LikesFragment fragment) {
-        mFragment = fragment;
+    public MyProfilePresenter(MyProfileActivity activity) {
+        mActivity = activity;
         mAPIUtils = new APIUtils();
     }
 
     @Override
     public void onStart() {
         mDisposable = new CompositeDisposable();
-        fetchLikes();
+        fetchData();
     }
 
-    public void fetchLikes(){
-        Disposable disposableLikes = mAPIUtils.getFavourite()
+    public void fetchData(){
+        Disposable disposableMyProfile = mAPIUtils.getMyProfile()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
+                .subscribeWith(new DisposableSingleObserver<UserDataFull>() {
                     @Override
-                    public void onSuccess(ArrayList<UserDataFull> users) {
-                        mFragment.setUsers(users);
+                    public void onSuccess(UserDataFull data) {
+                        mActivity.setData(data);
                     }
 
                     @Override
@@ -49,7 +53,7 @@ public class LikesPresenter implements BaseContract.BasePresenter {
                         e.printStackTrace();
                     }
                 });
-        mDisposable.add(disposableLikes);
+        mDisposable.add(disposableMyProfile);
     }
 
     @Override

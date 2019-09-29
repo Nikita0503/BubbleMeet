@@ -96,6 +96,10 @@ public class SignUpActivity extends AppCompatActivity implements BaseContract.Ba
         mPresenter.setHobbies(hobbies);
     }
 
+    public void setLocation(String location) {
+        mPresenter.setLocation(location);
+    }
+
     public void setConfirmPassword(String confirmPassword){
         mPresenter.setConfirmPassword(confirmPassword);
     }

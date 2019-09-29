@@ -38,6 +38,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     boolean doubleTap;
     private int mCurrentNumber;
     private ArrayList<UserDataFull> mUsers;
+    private ProfilePreviewPresenter mPresenter;
     private TextView mTextViewName;
     private TextView mTextViewYearsOldAndCity;
     private ImageView mImageViewLike;
@@ -48,11 +49,14 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     private ShineButton mShineButton;
     private RecyclerView mRecyclerViewUsers;
 
+    public ProfilePreviewFragment(){
+        mPresenter = new ProfilePreviewPresenter(this);
+    }
+
     public void setUser(int number, ArrayList<UserDataFull> users){
         mCurrentNumber = number;
         mUsers = users;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +80,12 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        mPresenter.onStart();
+    }
+
+    @Override
     public void initViews() {
         doubleTap = false;
         LinearLayoutManager layoutManager
@@ -91,6 +101,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
                 mImageViewBoom.setVisibility(View.VISIBLE);
                 Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.scale_like);
                 mImageViewBoom.startAnimation(animation);
+                mPresenter.addFavourite(mUsers.get(mCurrentNumber).id);
             }
         });
 
@@ -244,5 +255,11 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     @Override
     public void showMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mPresenter.onStop();
     }
 }

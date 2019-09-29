@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.auth.AuthActivity;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 public class MyProfileActivity extends AppCompatActivity implements BaseContract.BaseView {
 
@@ -42,6 +43,10 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
                 finish();
             }
         });
+    }
+
+    public void setData(UserDataFull userData){
+
     }
 
     @Override

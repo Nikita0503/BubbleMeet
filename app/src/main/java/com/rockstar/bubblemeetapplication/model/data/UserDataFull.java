@@ -43,13 +43,13 @@ public class UserDataFull {
     @SerializedName("Email")
     @Expose
     public String email;
-    @SerializedName("EyeColor") //READY
+    @SerializedName("EyeColor")
     @Expose
     public String eyeColor;
     @SerializedName("Login")
     @Expose
     public String login;
-    @SerializedName("Gender") //READY
+    @SerializedName("Gender")
     @Expose
     public String gender;
     @SerializedName("Age")
@@ -64,7 +64,7 @@ public class UserDataFull {
     @SerializedName("Religion")
     @Expose
     public String religion;
-    @SerializedName("Looking") //READY
+    @SerializedName("Looking")
     @Expose
     public String looking;
     @SerializedName("Hobbes")

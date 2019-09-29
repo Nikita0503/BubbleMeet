@@ -5,6 +5,7 @@ import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import java.util.ArrayList;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -28,7 +29,10 @@ public interface APIService {
                                 @Part("age") RequestBody age,
                                 @Part("email") RequestBody email,
                                 @Part("password") RequestBody password,
-                                @Part("file") ArrayList<RequestBody> file);
+                                @Part("file") RequestBody file,
+                                @Part("login") RequestBody login,
+                                @Part("city") RequestBody city,
+                                @Part("location") RequestBody location);
 
     @Multipart
     @POST("user")
@@ -37,17 +41,35 @@ public interface APIService {
                                 @Part("age") RequestBody age,
                                 @Part("email") RequestBody email,
                                 @Part("password") RequestBody password,
-                                @Part("file") ArrayList<RequestBody> file,
+                                @Part("file") RequestBody file,
                                 @Part("height") RequestBody height,
                                 @Part("smoking") RequestBody smoking,
                                 @Part("marred") RequestBody married,
                                 @Part("children") RequestBody children,
                                 @Part("cook") RequestBody cook,
-                                @Part("last") RequestBody city,
+                                @Part("city") RequestBody city,
                                 @Part("looking") RequestBody looking,
-                                @Part("hobbes") RequestBody hobbes);
+                                @Part("hobbes") RequestBody hobbes,
+                                @Part("login") RequestBody login,
+                                @Part("location") RequestBody location);
 
     @GET("allUser")
     Single<ArrayList<UserDataFull>> getAllUsers();
+
+    @GET("userFavorite")
+    Single<ArrayList<UserDataFull>> getFavourite();
+
+    @GET("favorite")
+    Single<ArrayList<UserDataFull>> getFavouriteByMe();
+
+    @GET("history")
+    Single<ArrayList<UserDataFull>> getWatchers();
+
+    @GET("user")
+    Single<UserDataFull> getMyProfile();
+
+    @Multipart
+    @POST("favorite")
+    Single<ResponseBody> addFavourite(@Part("favorite") RequestBody favorite);
 
 }

@@ -53,8 +53,8 @@ public class WatchersFragment extends Fragment implements BaseContract.BaseView 
         ((MainActivity) getActivity()).hideButtonBack();
     }
 
-    public void addUsers(ArrayList<UserDataFull> newUsers){
-        mAdapter.addUsers(newUsers);
+    public void setUsers(ArrayList<UserDataFull> newUsers){
+        mAdapter.setUsers(newUsers);
     }
 
     @Override

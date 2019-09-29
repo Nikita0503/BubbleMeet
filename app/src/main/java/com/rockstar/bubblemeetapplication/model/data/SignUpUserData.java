@@ -22,6 +22,8 @@ public class SignUpUserData {
     private String mCity;
     private String mLookingFor;
     private String mHobbies;
+    private String mLocation;
+    private String mLogin;
 
     public String getEmail() {
         return mEmail;
@@ -165,5 +167,21 @@ public class SignUpUserData {
 
     public void setHobbies(String hobbies) {
         mHobbies = hobbies;
+    }
+
+    public String getLocation() {
+        return mLocation;
+    }
+
+    public void setLocation(String location) {
+        mLocation = location;
+    }
+
+    public String getLogin() {
+        return mLogin;
+    }
+
+    public void setLogin(String login) {
+        mLogin = login;
     }
 }

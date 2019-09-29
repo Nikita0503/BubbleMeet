@@ -1,32 +1,32 @@
-package com.rockstar.bubblemeetapplication.bubble;
+package com.rockstar.bubblemeetapplication.profile_preview;
 
 import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
-import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
+import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
-public class BubblePresenter implements BaseContract.BasePresenter {
+public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
 
-    private BubbleFragment2 mFragment;
     private CompositeDisposable mDisposable;
     private APIUtils mAPIUtils;
+    private ProfilePreviewFragment mFragment;
 
-    public BubblePresenter(BubbleFragment2 fragment2){
-        mFragment = fragment2;
+    public ProfilePreviewPresenter(ProfilePreviewFragment fragment){
+        mFragment = fragment;
         mAPIUtils = new APIUtils();
     }
 
@@ -35,40 +35,27 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         mDisposable = new CompositeDisposable();
     }
 
-    public void fetchAllUsers(){
-        Disposable usersDisposable = mAPIUtils.getAllUsers()
+    public void addFavourite(int idInteger){
+        final String id = String.valueOf(idInteger);
+        Log.d("addFavourite", id + " in process...");
+        Disposable disposableAddFavourite = mAPIUtils.addFavourite(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
-                    @Override
-                    public void onSuccess(ArrayList<UserDataFull> userData) {
-                        //Collections.shuffle(userData);
-                        for(int i = 0; i < userData.size(); i++) {
-                            if(userData.get(i).email.equals("valakas228@gmail.com")){
-                                userData.add(5, userData.get(i));
-                                break;
-                            }
-                            //Log.d("Response", userData.get(i).);
-                        }
-                        for(int i = 0; i < userData.size(); i++) {
+                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
 
-                            Log.d("Response", userData.get(i).name);
-                            Log.d("Response", userData.get(i).avatarSmall);
-                            Log.d("Response", userData.get(i).loveCook+"");
-                            //Log.d("Response", userData.get(i).);
-                        }
-                        mFragment.setUsers(userData);
+                    @Override
+                    public void onSuccess(ResponseBody value) {
+                        Log.d("addFavourite", value.toString());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
                         if (e instanceof HttpException) {
                             HttpException exception = (HttpException) e;
                             ResponseBody responseBody = exception.response().errorBody();
                             try {
                                 JSONObject responseError = new JSONObject(responseBody.string());
-                                Log.d("TAG", responseError.toString());
+                                Log.d("addFavourite", responseError.toString());
                                 mFragment.showMessage(responseError.getString("message"));
                             } catch (Exception e1) {
                                 e1.printStackTrace();
@@ -76,7 +63,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                         }
                     }
                 });
-        mDisposable.add(usersDisposable);
+        mDisposable.add(disposableAddFavourite);
     }
 
     @Override

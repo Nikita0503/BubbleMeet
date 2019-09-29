@@ -137,7 +137,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             }
         }
         for(int i = 0; i < mLayout.getChildCount(); i++){
-            Picasso.with(getContext()).load("http://185.25.116.211:11000/image/" + mUsers.get(i).avatarSmall).transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
+            if(mUsers.get(i).email.equals("valakas228@gmail.com")){
+                Picasso.with(getContext()).load("https://memepedia.ru/wp-content/uploads/2018/06/unnamed-768x768.jpg").transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
+            }else{
+                Picasso.with(getContext()).load("http://185.25.116.211:11000/image/" + mUsers.get(i).avatarSmall).transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
+            }
+
         }
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubbleNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();

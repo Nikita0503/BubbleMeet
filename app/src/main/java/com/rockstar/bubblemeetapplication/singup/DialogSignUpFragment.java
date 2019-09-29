@@ -1,7 +1,12 @@
 package com.rockstar.bubblemeetapplication.singup;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -20,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
+import com.rockstar.bubblemeetapplication.model.data.Coordinates;
 
 import java.io.File;
 
@@ -54,7 +61,6 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
     @Override
     public void initViews() {
         mSignUpFragmentAdapter = new SignUpFragmentPagerAdapter(getChildFragmentManager());
-        
         mViewPagerSignUp.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
@@ -83,9 +89,13 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
                             //getActivity().finish();
                             SignUpActivity activity = (SignUpActivity) getActivity();
                             if(position == 3) {
+                                Coordinates coordinates = getCoordinates();
+                                activity.setLocation(coordinates.latitude + "," + coordinates.longitude);
                                 activity.signUpNewUser();
                             }
                             if(position == 9){
+                                Coordinates coordinates = getCoordinates();
+                                activity.setLocation(coordinates.latitude + "," + coordinates.longitude);
                                 activity.signUpNewUserFull();
                             }
                         }
@@ -166,8 +176,28 @@ public class DialogSignUpFragment extends DialogFragment implements BaseContract
             }
             mViewPagerSignUp.setCurrentItem(currentItem + 1);
         }
-
     }
+
+    public Coordinates getCoordinates() {
+        Coordinates coord;
+        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if(location!=null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            coord = new Coordinates(latitude, longitude);
+            return coord;
+        }else{
+            return null;
+        }
+    }
+
 
     @Override
     public void showMessage(String message) {

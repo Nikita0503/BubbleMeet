@@ -48,6 +48,7 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
 
     public void setEmail(String email) {
         mUserData.setEmail(email);
+        setLogin(email);
     }
 
     public void setPassword(String password) {
@@ -135,13 +136,26 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
         mUserData.setHobbies(hobbies);
     }
 
+    private void setLogin(String email){
+        String login = email.split("@")[0];
+        mUserData.setLogin(login);
+    }
+
+    public void setLocation(String location){
+        mUserData.setLocation(location);
+    }
+
     public void sendNewUser(){
+        mUserData.setCity("");
         Log.d("signUpData", mUserData.getName());
         Log.d("signUpData", mUserData.getGender());
         Log.d("signUpData", mUserData.getYearsOld());
         Log.d("signUpData", mUserData.getEmail());
         Log.d("signUpData", mUserData.getPassword());
         Log.d("signUpData", mUserData.getConfirmPassword());
+        Log.d("signUpData", mUserData.getLogin());
+        Log.d("signUpData", mUserData.getCity());
+        Log.d("signUpData", mUserData.getLocation());
         Disposable authDisposable = mAPIUtils.singUp(mUserData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -185,9 +199,11 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
         Log.d("signUpData", mUserData.getMarried());
         Log.d("signUpData", mUserData.getChildren());
         Log.d("signUpData", mUserData.getCooking());
-        Log.d("signUpData", mUserData.getCity());
         Log.d("signUpData", mUserData.getLookingFor());
         Log.d("signUpData", mUserData.getHobbies());
+        Log.d("signUpData", mUserData.getLogin());
+        Log.d("signUpData", mUserData.getCity());
+        Log.d("signUpData", mUserData.getLocation());
 
         Disposable authDisposable = mAPIUtils.singUpFull(mUserData)
                 .subscribeOn(Schedulers.io())

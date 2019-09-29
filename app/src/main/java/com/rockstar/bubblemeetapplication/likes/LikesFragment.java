@@ -29,12 +29,6 @@ public class LikesFragment extends Fragment implements BaseContract.BaseView {
     }
 
     @Override
-    public void onStart(){
-        super.onStart();
-        mPresenter.onStart();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(com.rockstar.bubblemeetapplication.R.layout.fragment_grid_view, null);
@@ -49,12 +43,18 @@ public class LikesFragment extends Fragment implements BaseContract.BaseView {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        mPresenter.onStart();
+    }
+
+    @Override
     public void initViews() {
         ((MainActivity) getActivity()).hideButtonBack();
     }
 
-    public void addUsers(ArrayList<UserDataFull> newUsers){
-        mAdapter.addUsers(newUsers);
+    public void setUsers(ArrayList<UserDataFull> newUsers){
+        mAdapter.setUsers(newUsers);
     }
 
     @Override

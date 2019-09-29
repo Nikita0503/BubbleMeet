@@ -27,13 +27,18 @@ import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 public class ProfileFragment extends Fragment implements BaseContract.BaseView  {
 
-    UserDataFull mUser;
-    TextView mTextViewName;
-    TextView mTextViewYearsOldAndCity;
-    TextView mTextViewHobbies;
-    ViewPager mViewPagerProfile;
-    TabLayout mTabLayoutProfile;
-    FlowLayout mFlowLayout;
+    private UserDataFull mUser;
+    private ProfilePresenter mPresenter;
+    private TextView mTextViewName;
+    private TextView mTextViewYearsOldAndCity;
+    private TextView mTextViewHobbies;
+    private ViewPager mViewPagerProfile;
+    private TabLayout mTabLayoutProfile;
+    private FlowLayout mFlowLayout;
+
+    public ProfileFragment(){
+        mPresenter = new ProfilePresenter(this);
+    }
 
     public void setUser(UserDataFull user){
         mUser = user;
@@ -57,17 +62,26 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        mPresenter.onStart();
+    }
+
+    @Override
     public void initViews() {
         mTextViewName.setText(mUser.name);
-        mTextViewYearsOldAndCity.setText(mUser.age + ", " + mUser.city);
+        String yearsOldAndCity = "";
+        yearsOldAndCity += mUser.age + "";
+        yearsOldAndCity += ", " + mUser.city;
+        mTextViewYearsOldAndCity.setText(yearsOldAndCity);
         mTextViewHobbies.setText(mUser.hobbes);
         mViewPagerProfile.setAdapter(new ProfilePagerAdapter(getContext(), mUser));
         mTabLayoutProfile.setupWithViewPager(mViewPagerProfile);
 
-        if(mUser.looking != null){
+        if(mUser.looking != null && !mUser.looking.equals("")){
             addInfo(mUser.looking);
         }
-        if(mUser.gender != null){
+        if(mUser.gender != null && !mUser.gender.equals("")){
             addInfo(mUser.gender);
         }
         if(mUser.eyeColor != null && !mUser.eyeColor.equals("")){
@@ -79,13 +93,31 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
             addInfo(getResources().getString(R.string.not)
                     + " " + getResources().getString(R.string.cookingInfo));
         }
+        if(mUser.smoking == 1){
+            addInfo(getResources().getString(R.string.smokingInfo));
+        }else{
+            addInfo(getResources().getString(R.string.not)
+                    + " " + getResources().getString(R.string.smokingInfo));
+        }
+        if(mUser.marred == 1){
+            addInfo(getResources().getString(R.string.marriedInfo));
+        }else{
+            addInfo(getResources().getString(R.string.not)
+                    + " " + getResources().getString(R.string.marriedInfo));
+        }
+        if(mUser.children == 1){
+            addInfo(getResources().getString(R.string.childrenInfo));
+        }else{
+            addInfo(getResources().getString(R.string.no)
+                    + " " + getResources().getString(R.string.childrenInfo));
+        }
     }
 
     private void addInfo(String info){
         int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,  getResources().getDisplayMetrics());
         Button infoButton = new Button(getContext());
         infoButton.setHeight(px);
-        infoButton.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        infoButton.setWidth((int)(px*2.5));
         infoButton.setBackgroundResource(R.drawable.background_button_login);
         infoButton.setText(info);
         mFlowLayout.addView(infoButton);
@@ -94,5 +126,11 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
     @Override
     public void showMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mPresenter.onStop();
     }
 }

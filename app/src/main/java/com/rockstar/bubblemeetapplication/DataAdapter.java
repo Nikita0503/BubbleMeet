@@ -75,7 +75,7 @@ public class DataAdapter extends BaseAdapter {
             }
         });
         Picasso.with(mActivity.getApplicationContext())
-                .load(mUsers.get(position).avatarFull)
+                .load("http://185.25.116.211:11000/image/" + mUsers.get(position).avatarSmall)
                 .into(imageView);
 
         //imageView.setImageResource(com.rockstar.bubblemeetapplication.R.drawable.circle_for_photo_gray);
@@ -83,7 +83,8 @@ public class DataAdapter extends BaseAdapter {
         return grid;
     }
 
-    public void addUsers(ArrayList<UserDataFull> users){
+    public void setUsers(ArrayList<UserDataFull> users){
+        mUsers.clear();
         mUsers.addAll(users);
         notifyDataSetChanged();
     }
