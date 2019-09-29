@@ -1,6 +1,8 @@
 package com.rockstar.bubblemeetapplication.auth;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
@@ -38,7 +40,7 @@ public class AuthPresenter implements BaseContract.BasePresenter {
         mDisposable = new CompositeDisposable();
     }
 
-    public void authorization(String email, String password){
+    public void authorization(final String email, final String password){
         Log.d("authorization", email);
         Log.d("authorization", password);
         Disposable authDisposable = mAPIUtils.authorization(email, password)
@@ -48,6 +50,11 @@ public class AuthPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody value) {
                         Log.d("Response", value.toString());
+                        SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("email", email);
+                        editor.putString("password", password);
+                        editor.commit();
                         Intent intent = new Intent(mActivity, MainActivity.class);
                         mActivity.startActivity(intent);
                         mActivity.finish();

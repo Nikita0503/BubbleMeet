@@ -6,6 +6,7 @@
     android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="120dp"
@@ -78,7 +79,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <com.github.abdularis.civ.CircleImageView
                 android:id="@+id/imageViewAvatar"
                 android:layout_width="220dp"
                 android:layout_height="220dp"
@@ -101,7 +102,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textViewYearsOldAndCity3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -119,11 +120,11 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@+id/imageView10"
-                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/textViewYearsOldAndCity3"
                 app:srcCompat="@drawable/ic_about_me" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textViewHobbies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -135,17 +136,17 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView13"
                 app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
-            <ImageView
+            <com.github.abdularis.civ.CircleImageView
                 android:id="@+id/imageViewPhoto2"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView13"
+                app:layout_constraintTop_toBottomOf="@+id/textViewHobbies"
                 app:srcCompat="@drawable/circle_for_photo_pink" />
 
-            <ImageView
+            <com.github.abdularis.civ.CircleImageView
                 android:id="@+id/imageViewPhoto1"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -156,10 +157,10 @@
                 android:layout_marginRight="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewPhoto2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/textViewHobbies"
                 app:srcCompat="@drawable/circle_for_photo_pink" />
 
-            <ImageView
+            <com.github.abdularis.civ.CircleImageView
                 android:id="@+id/imageViewPhoto3"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -170,7 +171,7 @@
                 android:layout_marginRight="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPhoto2"
-                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/textViewHobbies"
                 app:srcCompat="@drawable/circle_for_photo_pink" />
 
             <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -190,82 +191,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageViewPhoto2"
                 tools:ignore="MissingConstraints">
 
-                <Button
-                    android:id="@+id/button1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/man" />
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/m180" />
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/blue" />
-
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="Dancing" />
-
-                <Button
-                    android:id="@+id/button5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/loveToCook" />
-
-                <Button
-                    android:id="@+id/button6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/man" />
-
-                <Button
-                    android:id="@+id/button7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/green" />
-
-                <Button
-                    android:id="@+id/button8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/enterEmail" />
-
-                <Button
-                    android:id="@+id/button9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/smoking" />
-
-                <Button
-                    android:id="@+id/button10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/married" />
-
-                <Button
-                    android:id="@+id/button11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/background_button_login"
-                    android:text="@string/gender" />
 
             </com.nex3z.flowlayout.FlowLayout>
 

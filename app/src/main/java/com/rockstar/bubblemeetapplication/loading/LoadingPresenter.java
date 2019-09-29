@@ -1,16 +1,17 @@
-package com.rockstar.bubblemeetapplication.bubble;
+package com.rockstar.bubblemeetapplication.loading;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
+import com.rockstar.bubblemeetapplication.auth.AuthActivity;
+import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
-import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -19,14 +20,14 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
-public class BubblePresenter implements BaseContract.BasePresenter {
+public class LoadingPresenter implements BaseContract.BasePresenter {
 
-    private BubbleFragment2 mFragment;
     private CompositeDisposable mDisposable;
     private APIUtils mAPIUtils;
+    private LoadingActivity mActivity;
 
-    public BubblePresenter(BubbleFragment2 fragment2){
-        mFragment = fragment2;
+    public LoadingPresenter(LoadingActivity activity) {
+        mActivity = activity;
         mAPIUtils = new APIUtils();
     }
 
@@ -35,29 +36,24 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         mDisposable = new CompositeDisposable();
     }
 
-    public void fetchAllUsers(){
-        Disposable usersDisposable = mAPIUtils.getAllUsers()
+    public void authorization(final String email, final String password){
+        Log.d("authorization", email);
+        Log.d("authorization", password);
+        Disposable authDisposable = mAPIUtils.authorization(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
+                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
                     @Override
-                    public void onSuccess(ArrayList<UserDataFull> userData) {
-                        //Collections.shuffle(userData);
-                        for(int i = 0; i < userData.size(); i++) {
-                            //if(userData.get(i).email.equals("valakas228@gmail.com")){
-                            //    userData.add(5, userData.get(i));
-                            //    break;
-                            //}
-                            //Log.d("Response", userData.get(i).);
-                        }
-                        for(int i = 0; i < userData.size(); i++) {
-
-                            Log.d("Response", userData.get(i).name);
-                            Log.d("Response", userData.get(i).avatarSmall);
-                            Log.d("Response", userData.get(i).loveCook+"");
-                            //Log.d("Response", userData.get(i).);
-                        }
-                        mFragment.setUsers(userData);
+                    public void onSuccess(ResponseBody value) {
+                        Log.d("Response", value.toString());
+                        SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("email", email);
+                        editor.putString("password", password);
+                        editor.commit();
+                        Intent intent = new Intent(mActivity, MainActivity.class);
+                        mActivity.startActivity(intent);
+                        mActivity.finish();
                     }
 
                     @Override
@@ -69,14 +65,14 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                             try {
                                 JSONObject responseError = new JSONObject(responseBody.string());
                                 Log.d("TAG", responseError.toString());
-                                mFragment.showMessage(responseError.getString("message"));
+                                mActivity.showMessage(responseError.getString("message"));
                             } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
                         }
                     }
                 });
-        mDisposable.add(usersDisposable);
+        mDisposable.add(authDisposable);
     }
 
     @Override
