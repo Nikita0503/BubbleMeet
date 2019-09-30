@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.rockstar.bubblemeetapplication.BaseContract;
+import com.rockstar.bubblemeetapplication.CircleTransform;
 import com.rockstar.bubblemeetapplication.Inbox.InboxFragment;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.bubble.BubbleFragment;
@@ -21,8 +22,10 @@ import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
 import com.rockstar.bubblemeetapplication.likes.LikesFragment;
 import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity;
 import com.rockstar.bubblemeetapplication.watchers.WatchersFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -202,6 +205,10 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         mImageViewLikes.setImageDrawable(getResources().getDrawable(R.drawable.ic_likes));
         mImageViewWatchers.setImageDrawable(getResources().getDrawable(R.drawable.ic_views));
         mImageViewInbox.setImageDrawable(getResources().getDrawable(R.drawable.ic_messages));
+    }
+
+    public void setData(UserDataFull userData){
+        Picasso.with(getApplicationContext()).load("http://185.25.116.211:11000/image/" + userData.avatarSmall).transform(new CircleTransform()).into(mImageViewProfile);
     }
 
     @Override

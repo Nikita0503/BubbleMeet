@@ -3,6 +3,7 @@ package com.rockstar.bubblemeetapplication.my_profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -88,7 +89,7 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
         Picasso.with(getApplicationContext())
                 .load("http://185.25.116.211:11000/image/" + userData.avatarSmall)
                 .into(mImageViewAvatar);
-        if(userData.photo != null) {
+        if(userData.photo.size() != 0) {
             if(userData.photo.get(0) != null){
                 Picasso.with(getApplicationContext())
                         .load("http://185.25.116.211:11000/image/" + userData.photo.get(0))
@@ -117,6 +118,39 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
         yearsOldAndCity += ", " + userData.city;
         mTextViewYearsOldAndCity.setText(yearsOldAndCity);
         mTextViewHobbies.setText(userData.hobbes);
+        if(userData.looking != null && !userData.looking.equals("")){
+            addInfo(userData.looking);
+        }
+        if(userData.gender != null && !userData.gender.equals("")){
+            addInfo(userData.gender);
+        }
+        if(userData.eyeColor != null && !userData.eyeColor.equals("")){
+            addInfo(userData.eyeColor);
+        }
+        if(userData.loveCook == 1){
+            addInfo(getResources().getString(R.string.cookingInfo));
+        }else{
+            addInfo(getResources().getString(R.string.not)
+                    + " " + getResources().getString(R.string.cookingInfo));
+        }
+        if(userData.smoking == 1){
+            addInfo(getResources().getString(R.string.smokingInfo));
+        }else{
+            addInfo(getResources().getString(R.string.not)
+                    + " " + getResources().getString(R.string.smokingInfo));
+        }
+        if(userData.marred == 1){
+            addInfo(getResources().getString(R.string.marriedInfo));
+        }else{
+            addInfo(getResources().getString(R.string.not)
+                    + " " + getResources().getString(R.string.marriedInfo));
+        }
+        if(userData.children == 1){
+            addInfo(getResources().getString(R.string.childrenInfo));
+        }else{
+            addInfo(getResources().getString(R.string.no)
+                    + " " + getResources().getString(R.string.childrenInfo));
+        }
     }
 
     private void addInfo(String info){
@@ -126,6 +160,7 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
         infoButton.setWidth((int)(px*2.5));
         infoButton.setBackgroundResource(R.drawable.background_button_login);
         infoButton.setText(info);
+        infoButton.setTextColor(Color.WHITE);
         mFlowLayout.addView(infoButton);
     }
 

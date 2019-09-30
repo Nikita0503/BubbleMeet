@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -156,12 +157,6 @@ public class APIUtils {
         Retrofit retrofit = getClient(BASE_URL);
         APIService apiService = retrofit.create(APIService.class);
         return apiService.getWatchers();
-    }
-
-    public Single<UserDataFull> getMyProfile(){
-        Retrofit retrofit = getClient(BASE_URL);
-        APIService apiService = retrofit.create(APIService.class);
-        return apiService.getMyProfile();
     }
 
     public Single<ResponseBody> addFavourite(String id){

@@ -92,18 +92,22 @@
         app:srcCompat="@drawable/ic_about_me" />
 
 
-    <TextView
-        android:id="@+id/textViewHobbies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="Hobbies"
-        android:textColor="@android:color/white"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-        app:layout_constraintStart_toEndOf="@+id/imageView13"
-        app:layout_constraintTop_toTopOf="@+id/imageView13" />
+        <TextView
+            android:id="@+id/textViewHobbies"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Hobbies"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:gravity="left"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView13"
+            app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
     <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/flowLayoutGender"

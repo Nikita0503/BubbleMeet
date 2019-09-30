@@ -65,9 +65,6 @@ public interface APIService {
     @GET("history")
     Single<ArrayList<UserDataFull>> getWatchers();
 
-    @GET("user")
-    Single<UserDataFull> getMyProfile();
-
     @Multipart
     @POST("favorite")
     Single<ResponseBody> addFavourite(@Part("favorite") RequestBody favorite);

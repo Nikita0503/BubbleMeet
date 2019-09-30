@@ -1,6 +1,7 @@
 package com.rockstar.bubblemeetapplication.my_profile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
@@ -21,6 +22,8 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MyProfilePresenter implements BaseContract.BasePresenter {
 
     private CompositeDisposable mDisposable;
@@ -39,13 +42,21 @@ public class MyProfilePresenter implements BaseContract.BasePresenter {
     }
 
     public void fetchData(){
-        Disposable disposableMyProfile = mAPIUtils.getMyProfile()
+        Disposable disposableMyProfile = mAPIUtils.getAllUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<UserDataFull>() {
+                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
                     @Override
-                    public void onSuccess(UserDataFull data) {
-                        mActivity.setData(data);
+                    public void onSuccess(ArrayList<UserDataFull> data) {
+                        SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+                        String email = pref.getString("email", "");
+                        for(int i = 0; i < data.size(); i++){
+                            if(data.get(i).email.equals(email)){
+                                mActivity.setData(data.get(i));
+                                break;
+                            }
+                        }
+
                     }
 
                     @Override
