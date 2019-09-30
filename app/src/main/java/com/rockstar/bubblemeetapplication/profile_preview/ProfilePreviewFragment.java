@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -113,22 +114,23 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             public void onSwipeTop() {
                 //Toast.makeText(getContext(), "top", Toast.LENGTH_SHORT).show();
                 //getActivity().onBackPressed();
-
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                BubbleFragment2 bubbleFragment = new BubbleFragment2();
-                //ArrayList<UserData> users = new ArrayList<UserData>();
-                //for(int i = 0; i < 800; i++){
-                //    if(i % 2 != 0) {
-                //        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
-                //    }else {
-                //        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
-                //    }
-                //}
-                bubbleFragment.setUsers(mUsers);
-                transaction.replace(R.id.root_fragment, bubbleFragment);
-                //transaction.addToBackStack(null);
-                //transaction.addToBackStack(null);
-                transaction.commit();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+                //FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                //BubbleFragment2 bubbleFragment = new BubbleFragment2();
+                ////ArrayList<UserData> users = new ArrayList<UserData>();
+                ////for(int i = 0; i < 800; i++){
+                ////    if(i % 2 != 0) {
+                ////        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
+                ////    }else {
+                ////        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
+                ////    }
+                ////}
+                //bubbleFragment.setUsers(mUsers);
+                //transaction.replace(R.id.root_fragment, bubbleFragment);
+                ////transaction.addToBackStack(null);
+                ////transaction.addToBackStack(null);
+                //transaction.commit();
             }
             public void onSwipeRight() {
                 boomAnimation(true);

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -29,7 +30,53 @@ public interface APIService {
                                 @Part("age") RequestBody age,
                                 @Part("email") RequestBody email,
                                 @Part("password") RequestBody password,
-                                @Part("file") RequestBody file,
+                                @Part MultipartBody.Part avatarSmall,
+                                @Part MultipartBody.Part avatarFull,
+                                @Part("login") RequestBody login,
+                                @Part("city") RequestBody city,
+                                @Part("location") RequestBody location);
+
+    @Multipart
+    @POST("user")
+    Single<ResponseBody> signUpWithAdditionPhotos1(@Part("name") RequestBody name,
+                                @Part("gender") RequestBody gender,
+                                @Part("age") RequestBody age,
+                                @Part("email") RequestBody email,
+                                @Part("password") RequestBody password,
+                                @Part MultipartBody.Part avatarSmall,
+                                @Part MultipartBody.Part avatarFull,
+                                @Part MultipartBody.Part additionPhoto1,
+                                @Part("login") RequestBody login,
+                                @Part("city") RequestBody city,
+                                @Part("location") RequestBody location);
+
+    @Multipart
+    @POST("user")
+    Single<ResponseBody> signUpWithAdditionPhotos2(@Part("name") RequestBody name,
+                                @Part("gender") RequestBody gender,
+                                @Part("age") RequestBody age,
+                                @Part("email") RequestBody email,
+                                @Part("password") RequestBody password,
+                                @Part MultipartBody.Part avatarSmall,
+                                @Part MultipartBody.Part avatarFull,
+                                @Part MultipartBody.Part additionPhoto1,
+                                @Part MultipartBody.Part additionPhoto2,
+                                @Part("login") RequestBody login,
+                                @Part("city") RequestBody city,
+                                @Part("location") RequestBody location);
+
+    @Multipart
+    @POST("user")
+    Single<ResponseBody> signUpWithAdditionPhotos3(@Part("name") RequestBody name,
+                                @Part("gender") RequestBody gender,
+                                @Part("age") RequestBody age,
+                                @Part("email") RequestBody email,
+                                @Part("password") RequestBody password,
+                                @Part MultipartBody.Part avatarSmall,
+                                @Part MultipartBody.Part avatarFull,
+                                @Part MultipartBody.Part additionPhoto1,
+                                @Part MultipartBody.Part additionPhoto2,
+                                @Part MultipartBody.Part additionPhoto3,
                                 @Part("login") RequestBody login,
                                 @Part("city") RequestBody city,
                                 @Part("location") RequestBody location);
@@ -41,7 +88,8 @@ public interface APIService {
                                 @Part("age") RequestBody age,
                                 @Part("email") RequestBody email,
                                 @Part("password") RequestBody password,
-                                @Part("file") RequestBody file,
+                                @Part MultipartBody.Part avatarSmall,
+                                @Part MultipartBody.Part avatarFull,
                                 @Part("height") RequestBody height,
                                 @Part("smoking") RequestBody smoking,
                                 @Part("marred") RequestBody married,

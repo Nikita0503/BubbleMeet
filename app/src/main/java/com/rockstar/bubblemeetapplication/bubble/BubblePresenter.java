@@ -62,6 +62,11 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                             users.add(userData.get(i));
                             //Log.d("Response", userData.get(i).);
                         }
+                        //for(int i = 0; i < userData.size(); i++){
+                        //    if(userData.get(i).id == 89){
+                        //        users.add(14, userData.get(i));
+                        //    }
+                        //}
                         mFragment.setUsers(users);
                     }
 

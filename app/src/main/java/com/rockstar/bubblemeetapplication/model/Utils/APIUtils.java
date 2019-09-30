@@ -17,12 +17,14 @@ import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.singup.SignUpActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -53,32 +55,44 @@ public class APIUtils {
         RequestBody requestBodyCity = RequestBody.create(MediaType.parse("text/plain"), userData.getCity());
         RequestBody requestBodyLocation = RequestBody.create(MediaType.parse("text/plain"), userData.getLocation());
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
-        //ArrayList<RequestBody> requestPhotos = new ArrayList<RequestBody>();
-        //if(userData.getMainPhoto() != null) {
-        //
-        //    requestPhotos.add(requestFile);
-        //}
-        //if(userData.getAdditionalPhoto() != null) {
-        //    RequestBody requestFile1 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto());
-        //    requestPhotos.add(requestFile1);
-        //}
-        //if(userData.getAdditionalPhoto2() != null) {
-        //    RequestBody requestFile2 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto2());
-        //    requestPhotos.add(requestFile2);
-        //}
-        //if(userData.getAdditionalPhoto3() != null) {
-        //    RequestBody requestFile3 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto3());
-        //    requestPhotos.add(requestFile3);
-        //}
-        return apiService.signUp(requestBodyName,
-                requestBodyGender,
-                requestBodyYearsOld,
-                requestBodyEmail,
-                requestBodyPassword,
-                requestFile,
-                requestBodyLogin,
-                requestBodyCity,
-                requestBodyLocation);
+        MultipartBody.Part avatarSmall = MultipartBody.Part.createFormData("avatarSmall", userData.getLogin(), requestFile);
+        MultipartBody.Part avatarFull = MultipartBody.Part.createFormData("avatarFull", userData.getLogin(), requestFile);
+        ArrayList<File> additionalPhotos = new ArrayList<File>();
+        if(userData.getAdditionalPhoto() != null){
+            additionalPhotos.add(userData.getAdditionalPhoto());
+        }
+        if(userData.getAdditionalPhoto() != null){
+            additionalPhotos.add(userData.getAdditionalPhoto());
+        }
+        if(userData.getAdditionalPhoto() != null){
+            additionalPhotos.add(userData.getAdditionalPhoto());
+        }
+        if(additionalPhotos.size() == 0) {
+            return apiService.signUp(requestBodyName,
+                    requestBodyGender,
+                    requestBodyYearsOld,
+                    requestBodyEmail,
+                    requestBodyPassword,
+                    avatarSmall,
+                    avatarFull,
+                    requestBodyLogin,
+                    requestBodyCity,
+                    requestBodyLocation);
+        }else {
+            RequestBody requestPhoto1 = RequestBody.create(MediaType.parse("multipart/form-data"), additionalPhotos.get(0));
+            MultipartBody.Part photo1 = MultipartBody.Part.createFormData("Photo", userData.getLogin(), requestPhoto1);
+            return apiService.signUpWithAdditionPhotos1(requestBodyName,
+                    requestBodyGender,
+                    requestBodyYearsOld,
+                    requestBodyEmail,
+                    requestBodyPassword,
+                    avatarSmall,
+                    avatarFull,
+                    photo1,
+                    requestBodyLogin,
+                    requestBodyCity,
+                    requestBodyLocation);
+        }
     }
 
     public Single<ResponseBody> singUpFull(SignUpUserData userData){
@@ -100,6 +114,8 @@ public class APIUtils {
         RequestBody requestBodyLogin = RequestBody.create(MediaType.parse("text/plain"), userData.getLogin());
         RequestBody requestBodyLocation = RequestBody.create(MediaType.parse("text/plain"), userData.getLocation());
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
+        MultipartBody.Part avatarSmall = MultipartBody.Part.createFormData("avatarSmall", userData.getLogin(), requestFile);
+        MultipartBody.Part avatarFull = MultipartBody.Part.createFormData("avatarFull", userData.getLogin(), requestFile);
         //ArrayList<RequestBody> requestPhotos = new ArrayList<RequestBody>();
         //if(userData.getMainPhoto() != null) {
         //    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
@@ -122,7 +138,8 @@ public class APIUtils {
                 requestBodyYearsOld,
                 requestBodyEmail,
                 requestBodyPassword,
-                requestFile,
+                avatarSmall,
+                avatarFull,
                 requestBodyHeight,
                 requestBodySmoking,
                 requestBodyMarried,

@@ -1,6 +1,8 @@
 package com.rockstar.bubblemeetapplication.singup;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 
@@ -163,6 +165,11 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody value) {
                         Log.d("Response", value.toString());
+                        SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("email", mUserData.getEmail());
+                        editor.putString("password", mUserData.getPassword());
+                        editor.commit();
                         Intent intent = new Intent(mActivity, MainActivity.class);
                         mActivity.startActivity(intent);
                         mActivity.finish();
@@ -212,6 +219,11 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody value) {
                         Log.d("Response", value.toString());
+                        SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("email", mUserData.getEmail());
+                        editor.putString("password", mUserData.getPassword());
+                        editor.commit();
                         Intent intent = new Intent(mActivity, MainActivity.class);
                         mActivity.startActivity(intent);
                         mActivity.finish();

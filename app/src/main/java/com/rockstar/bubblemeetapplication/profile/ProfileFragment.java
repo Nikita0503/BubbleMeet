@@ -1,6 +1,7 @@
 package com.rockstar.bubblemeetapplication.profile;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -114,12 +115,14 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
     }
 
     private void addInfo(String info){
-        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,  getResources().getDisplayMetrics());
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,  getResources().getDisplayMetrics());
         Button infoButton = new Button(getContext());
         infoButton.setHeight(px);
+        infoButton.setTextSize(11);
         infoButton.setWidth((int)(px*2.5));
         infoButton.setBackgroundResource(R.drawable.background_button_login);
         infoButton.setText(info);
+        infoButton.setTextColor(Color.WHITE);
         mFlowLayout.addView(infoButton);
     }
 

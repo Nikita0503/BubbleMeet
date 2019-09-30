@@ -48,7 +48,7 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
     public void onStart(){
         super.onStart();
         mPresenter.onStart();
-        mPresenter.fetchData();
+        //mPresenter.fetchData();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
 
     public void setData(UserDataFull userData){
         Picasso.with(getApplicationContext())
-                .load("http://185.25.116.211:11000/image/" + userData.avatarSmall)
+                .load("http://185.25.116.211:11000/image/" + userData.avatarFull)
                 .into(mImageViewAvatar);
         if(userData.photo.size() != 0) {
             if(userData.photo.get(0) != null){
@@ -154,9 +154,10 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
     }
 
     private void addInfo(String info){
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,  getResources().getDisplayMetrics());
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,  getResources().getDisplayMetrics());
         Button infoButton = new Button(getApplicationContext());
         infoButton.setHeight(px);
+        infoButton.setTextSize(11);
         infoButton.setWidth((int)(px*2.5));
         infoButton.setBackgroundResource(R.drawable.background_button_login);
         infoButton.setText(info);
