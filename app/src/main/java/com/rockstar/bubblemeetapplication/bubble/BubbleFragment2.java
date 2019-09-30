@@ -81,15 +81,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         initViews();
     }
 
-    //public void setUsers(String[] users){
-    //    mUsers = users;
-    //    mDefaultYMinSize = new int[mUsers.length];
-    //    mDefaultYMaxSize = new int[mUsers.length];
-    //    mXPrevious = new int[mUsers.length];
-    //    mYPrevious = new int[mUsers.length];
-    //    mDiameterPrevious = new int[mUsers.length];
-    //}
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -146,7 +137,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubbleNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
             paramsBubbleNew.x += mDefaultBubbleDiameter * (-mRows/2);
-            paramsBubbleNew.y += mDefaultBubbleDiameter * (-mRows/2);
+            paramsBubbleNew.y += mDefaultBubbleDiameter * (-mRows/4);
         }
 
         for(int i = 0; i < mLayout.getChildCount(); i++){
@@ -309,6 +300,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 ////BORDERING
 
                 //SCALING
+
                 float multiply = 0;
                 float pixelsToSideFromBubbleX = 0;
                 float toSideFromBubblePercentX = 0;
@@ -376,8 +368,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     }
                 }
 
+
+
                 if(multiply > 1) multiply = 1;
                 //SCALING
+
+
 
                 //MOVING
                 if(!isConnectBottom && !isConnectRight && !isConnectTop && !isConnectLeft){
@@ -404,7 +400,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         if (isTopSideMoving) {
                             paramsBubble.y += mDifferenceY;
                             mDefaultYMinSize[i] += mDifferenceY;
-                            mDefaultYMaxSize[i] += mDifferenceY;
+
                         }
                     }
                     if(isConnectRight) {
@@ -416,7 +412,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         if (!isTopSideMoving){
                             paramsBubble.y += mDifferenceY;
                             mDefaultYMinSize[i] += mDifferenceY;
-                            mDefaultYMaxSize[i] += mDifferenceY;
                         }
                     }
                     if(isConnectLeft) {
