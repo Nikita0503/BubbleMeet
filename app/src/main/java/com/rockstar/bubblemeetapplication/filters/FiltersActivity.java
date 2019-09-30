@@ -114,7 +114,7 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mImageViewFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Filter", mAge);
+                Log.d("Filter", mLookingFor);
             }
         });
         mButtonMan = (Button) findViewById(R.id.buttonMan);
@@ -174,59 +174,784 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         initGenderTags();
         initAgeTags();
         initLocationTags();
+        initEyeColorTags();
+        initHeightTags();
+        initSmokingTags();
+        initMarried();
+        initChildrenTags();
+        initLookingForTags();
+        initLoveToCookTags();
     }
 
-    private void initGenderTags(){
-        mButtonMan.setOnClickListener(new View.OnClickListener() {
+    private void initLoveToCookTags(){
+        mButtonLoveToCookYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mGender.equals("") || !mGender.equals("Man")) {
-                    mGender = "Man";
-                    mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
-                    mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                    mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                if(mLoveToCook.equals("") || !mLoveToCook.equals("Yes")){
+                    mLoveToCook = "Yes";
+                    mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else {
-                    if (mGender.equals("Man")) {
-                        mGender = "";
-                        mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                        mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                        mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    if (mLoveToCook.equals("Yes")) {
+                        mLoveToCook = "";
+                        mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     }
                 }
             }
         });
-        mButtonWoman.setOnClickListener(new View.OnClickListener() {
+        mButtonLoveToCookNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mGender.equals("") || !mGender.equals("Woman")) {
-                    mGender = "Woman";
-                    mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                    mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
-                    mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                }else{
-                    if(mGender.equals("Woman")) {
-                        mGender = "";
-                        mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                        mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                        mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                if(mLoveToCook.equals("") || !mLoveToCook.equals("No")){
+                    mLoveToCook = "No";
+                    mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else {
+                    if (mLoveToCook.equals("No")) {
+                        mLoveToCook = "";
+                        mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     }
                 }
             }
         });
-        mButtonLGBT.setOnClickListener(new View.OnClickListener() {
+        mButtonLoveToCookNoMatter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mGender.equals("") || !mGender.equals("LGBT")) {
-                    mGender = "LGBT";
-                    mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                    mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                    mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                if(mLoveToCook.equals("") || !mLoveToCook.equals("No matter")){
+                    mLoveToCook = "No matter";
+                    mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else {
+                    if (mLoveToCook.equals("No matter")) {
+                        mLoveToCook = "";
+                        mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initLookingForTags(){
+        mButtonLookingForDating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mLookingFor.equals("") || !mLookingFor.equals("Dating")){
+                    mLookingFor = "Dating";
+                    mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else{
-                    if(mGender.equals("LGBT")) {
-                        mGender = "";
-                        mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                        mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
-                        mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    if(mLookingFor.equals("Dating")){
+                        mLookingFor = "";
+                        mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonLookingForJustFriendship.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mLookingFor.equals("") || !mLookingFor.equals("Just friendship")){
+                    mLookingFor = "Just friendship";
+                    mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mLookingFor.equals("Just friendship")){
+                        mLookingFor = "";
+                        mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonLookingForLongTerm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mLookingFor.equals("") || !mLookingFor.equals("Long term")){
+                    mLookingFor = "Long term";
+                    mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mLookingFor.equals("Long term")){
+                        mLookingFor = "";
+                        mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonLookingForPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mLookingFor.equals("") || !mLookingFor.equals("For play")){
+                    mLookingFor = "For play";
+                    mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mLookingFor.equals("For play")){
+                        mLookingFor = "";
+                        mButtonLookingForDating.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForJustFriendship.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForLongTerm.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLookingForPlay.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initChildrenTags(){
+        mButtonChildrenYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mChildren.equals("") || !mChildren.equals("Yes")){
+                    mChildren = "Yes";
+                    mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mChildren.equals("Yes")){
+                        mChildren = "";
+                        mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonChildrenNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mChildren.equals("") || !mChildren.equals("No")){
+                    mChildren = "No";
+                    mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mChildren.equals("No")){
+                        mChildren = "";
+                        mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonChildrenNoMatter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mChildren.equals("") || !mChildren.equals("No matter")){
+                    mChildren = "No matter";
+                    mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mChildren.equals("No matter")){
+                        mChildren = "";
+                        mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initMarried(){
+        mButtonMarriedYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mMarried.equals("") || !mMarried.equals("Yes")){
+                    mMarried = "Yes";
+                    mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mMarried.equals("Yes")){
+                        mMarried = "";
+                        mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonMarriedNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mMarried.equals("") || !mMarried.equals("No")){
+                    mMarried = "No";
+                    mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mMarried.equals("No")){
+                        mMarried = "";
+                        mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonMarriedNoMatter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mMarried.equals("") || !mMarried.equals("No matter")){
+                    mMarried = "No matter";
+                    mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mMarried.equals("No matter")){
+                        mMarried = "";
+                        mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initSmokingTags(){
+        mButtonSmokingYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSmoking.equals("") || !mSmoking.equals("Yes")){
+                    mSmoking = "Yes";
+                    mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mSmoking.equals("Yes")){
+                        mSmoking = "";
+                        mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonSmokingNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSmoking.equals("") || !mSmoking.equals("No")){
+                    mSmoking = "No";
+                    mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mSmoking.equals("No")){
+                        mSmoking = "";
+                        mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonSmokingNoMatter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSmoking.equals("") || !mSmoking.equals("No matter")){
+                    mSmoking = "No matter";
+                    mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mSmoking.equals("No matter")){
+                        mSmoking = "";
+                        mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initHeightTags(){
+        mButtonHeight120.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mHeight.equals("") || !mHeight.equals("120")){
+                    mHeight = "120";
+                    mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mHeight.equals("120")){
+                        mHeight = "";
+                        mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonHeight150.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mHeight.equals("") || !mHeight.equals("150")){
+                    mHeight = "150";
+                    mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mHeight.equals("150")){
+                        mHeight = "";
+                        mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonHeight180.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mHeight.equals("") || !mHeight.equals("180")){
+                    mHeight = "180";
+                    mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mHeight.equals("180")){
+                        mHeight = "";
+                        mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonHeight210.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mHeight.equals("") || !mHeight.equals("210")){
+                    mHeight = "210";
+                    mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mHeight.equals("210")){
+                        mHeight = "";
+                        mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonHeightNoMatter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mHeight.equals("") || !mHeight.equals("300")){
+                    mHeight = "300";
+                    mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mHeight.equals("300")){
+                        mHeight = "";
+                        mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initEyeColorTags(){
+        mButtonEyeAmber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mEyeColor.equals("") || !mEyeColor.equals("Amber")){
+                        mEyeColor = "Amber";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }else{
+                        if(mEyeColor.equals("Amber")){
+                            mEyeColor = "";
+                            mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        }
+                    }
+
+            }
+        });
+        mButtonEyeBlue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mEyeColor.equals("") || !mEyeColor.equals("Blue")){
+
+                        mEyeColor = "Blue";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }else{
+                        if(mEyeColor.equals("Blue")){
+                            mEyeColor = "";
+                            mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        }
+                    }
+
+            }
+        });
+        mButtonEyeBrown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mEyeColor.equals("") || !mEyeColor.equals("Brown")){
+
+                        mEyeColor = "Brown";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }else{
+                        if(mEyeColor.equals("Brown")){
+                            mEyeColor = "";
+                            mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        }
+                    }
+
+            }
+        });
+        mButtonEyeGray.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    if(mEyeColor.equals("") || !mEyeColor.equals("Gray")){
+                        mEyeColor = "Gray";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }else{
+                        if(mEyeColor.equals("Gray")){
+                            mEyeColor = "";
+                            mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        }
+                    }
+
+            }
+        });
+        mButtonEyeGreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mEyeColor.equals("") || !mEyeColor.equals("Green")){
+
+                        mEyeColor = "Green";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }else{
+                        if(mEyeColor.equals("Green")){
+                            mEyeColor = "";
+                            mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        }
+                    }
+
+            }
+        });
+        mButtonEyeHazel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    if(mEyeColor.equals("") || !mEyeColor.equals("Hazel")){
+                        mEyeColor = "Hazel";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }else{
+                        if(mEyeColor.equals("Hazel")){
+                            mEyeColor = "";
+                            mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        }
+                    }
+
+            }
+        });
+        mButtonEyeRedAndViolet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    if(mEyeColor.equals("") || !mEyeColor.equals("Red and violet")){
+                        mEyeColor = "Red and violet";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }else{
+                        if(mEyeColor.equals("Red and violet")){
+                            mEyeColor = "";
+                            mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                            mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        }
+                    }
+            }
+        });
+        mButtonEyeSpectrumOfEyeColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mEyeColor.equals("") || !mEyeColor.equals("Spectrum of eye color")){
+                    mEyeColor = "Spectrum of eye color";
+                    mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mEyeColor.equals("Spectrum of eye color")){
+                        mEyeColor = "";
+                        mButtonEyeAmber.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBlue.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeBrown.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGray.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeGreen.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeHazel.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeRedAndViolet.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonEyeSpectrumOfEyeColor.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+    }
+
+    private void initLocationTags(){
+        mButton1km.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mDistance.equals("") || !mDistance.equals("1")){
+                    mDistance = "1";
+                    mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mDistance.equals("1")){
+                        mDistance= "";
+                        mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButton5km.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mDistance.equals("") || !mDistance.equals("5")){
+                    mDistance = "5";
+                    mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mDistance.equals("5")){
+                        mDistance= "";
+                        mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButton10km.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mDistance.equals("") || !mDistance.equals("10")){
+                    mDistance = "10";
+                    mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mDistance.equals("10")){
+                        mDistance= "";
+                        mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButton50km.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mDistance.equals("") || !mDistance.equals("50")){
+                    mDistance = "50";
+                    mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mDistance.equals("50")){
+                        mDistance= "";
+                        mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonAllArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mDistance.equals("") || !mDistance.equals("1000")){
+                    mDistance = "1000";
+                    mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mDistance.equals("1000")){
+                        mDistance= "";
+                        mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     }
                 }
             }
@@ -418,14 +1143,63 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         });
     }
 
-    private void initLocationTags(){
-        mButton1km.setOnClickListener(new View.OnClickListener() {
+    private void initGenderTags(){
+        mButtonMan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(mGender.equals("") || !mGender.equals("Man")) {
+                    mGender = "Man";
+                    mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else {
+                    if (mGender.equals("Man")) {
+                        mGender = "";
+                        mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonWoman.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mGender.equals("") || !mGender.equals("Woman")) {
+                    mGender = "Woman";
+                    mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                    mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                }else{
+                    if(mGender.equals("Woman")) {
+                        mGender = "";
+                        mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
+            }
+        });
+        mButtonLGBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mGender.equals("") || !mGender.equals("LGBT")) {
+                    mGender = "LGBT";
+                    mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
+                }else{
+                    if(mGender.equals("LGBT")) {
+                        mGender = "";
+                        mButtonMan.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonWoman.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                        mButtonLGBT.setBackground(getResources().getDrawable(R.drawable.background_button_login));
+                    }
+                }
             }
         });
     }
+
 
     @Override
     public void showMessage(String message) {
