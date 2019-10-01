@@ -114,7 +114,19 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mImageViewFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Filter", mLookingFor);
+                Intent intent = new Intent();
+                intent.putExtra("gender", mGender);
+                intent.putExtra("age", mAge);
+                intent.putExtra("distance", mDistance);
+                intent.putExtra("eyeColor", mEyeColor);
+                intent.putExtra("height", mHeight);
+                intent.putExtra("smoking", mSmoking);
+                intent.putExtra("married", mMarried);
+                intent.putExtra("children", mChildren);
+                intent.putExtra("lookingFor", mLookingFor);
+                intent.putExtra("loveToCook", mLoveToCook);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
         mButtonMan = (Button) findViewById(R.id.buttonMan);

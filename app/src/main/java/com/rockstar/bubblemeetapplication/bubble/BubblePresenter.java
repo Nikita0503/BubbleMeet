@@ -6,6 +6,7 @@ import android.util.Log;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
+import com.rockstar.bubblemeetapplication.model.data.Filter;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class BubblePresenter implements BaseContract.BasePresenter {
 
+    private Filter mFilter;
     private BubbleFragment2 mFragment;
     private CompositeDisposable mDisposable;
     private APIUtils mAPIUtils;
@@ -36,6 +38,10 @@ public class BubblePresenter implements BaseContract.BasePresenter {
     @Override
     public void onStart() {
         mDisposable = new CompositeDisposable();
+    }
+
+    public void setFilter(Filter filter){
+        mFilter = filter;
     }
 
     public void fetchAllUsers(){
@@ -60,13 +66,23 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                             Log.d("Response", userData.get(i).avatarSmall);
                             Log.d("Response", userData.get(i).loveCook+"");
                             users.add(userData.get(i));
-                            //Log.d("Response", userData.get(i).);
                         }
-                        //for(int i = 0; i < userData.size(); i++){
-                        //    if(userData.get(i).id == 89){
-                        //        users.add(14, userData.get(i));
-                        //    }
-                        //}
+
+                        if(mFilter != null){
+                            Log.d("Filter", mFilter.gender);
+                            Log.d("Filter", mFilter.age);
+                            Log.d("Filter", mFilter.distance);
+                            Log.d("Filter", mFilter.eyeColor);
+                            Log.d("Filter", mFilter.height);
+                            Log.d("Filter", mFilter.smoking);
+                            Log.d("Filter", mFilter.married);
+                            Log.d("Filter", mFilter.children);
+                            Log.d("Filter", mFilter.lookingFor);
+                            Log.d("Filter", mFilter.loveToCook);
+
+                        }else{
+                            Log.d("Filter", "null");
+                        }
                         mFragment.setUsers(users);
                     }
 

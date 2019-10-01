@@ -24,6 +24,7 @@ import com.rockstar.bubblemeetapplication.CircularTransformation;
 import com.rockstar.bubblemeetapplication.R;
 import com.github.abdularis.civ.CircleImageView;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
+import com.rockstar.bubblemeetapplication.model.data.Filter;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.profile_preview.ProfilePreviewFragment;
@@ -66,10 +67,14 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int[] mXPrevious;
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
-    //private String[] mUsers;
+    private Filter mFilter;
     private BubblePresenter mPresenter;
     private ArrayList<UserDataFull> mUsers;
     private AbsoluteLayout mLayout;
+
+    public void setFilter(Filter filter){
+        mFilter = filter;
+    }
 
     public void setUsers(ArrayList<UserDataFull> users){
         mUsers = users;
@@ -92,6 +97,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mPresenter = new BubblePresenter(this);
         mPresenter.onStart();
+        if(mFilter != null){
+            mPresenter.setFilter(mFilter);
+        }
         mPresenter.fetchAllUsers();
         mLayout = (AbsoluteLayout) view.findViewById(R.id.layout);
         Log.d("ViewCreated", "+");

@@ -21,6 +21,7 @@ import com.rockstar.bubblemeetapplication.bubble.*;
 import com.rockstar.bubblemeetapplication.filters.FiltersActivity;
 import com.rockstar.bubblemeetapplication.likes.LikesFragment;
 import com.rockstar.bubblemeetapplication.matches.MatchesFragment;
+import com.rockstar.bubblemeetapplication.model.data.Filter;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.my_profile.MyProfileActivity;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FiltersActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         mImageViewProfile = (ImageView) findViewById(R.id.imageViewProfile);
@@ -209,6 +210,32 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
 
     public void setData(UserDataFull userData){
         Picasso.with(getApplicationContext()).load("http://185.25.116.211:11000/image/" + userData.avatarSmall).transform(new CircleTransform()).into(mImageViewProfile);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        Log.d("Filter", "OK");
+        Filter filter = new Filter();
+        filter.gender = data.getStringExtra("gender");
+        filter.age = data.getStringExtra("age");
+        filter.distance = data.getStringExtra("distance");
+        filter.eyeColor = data.getStringExtra("eyeColor");
+        filter.height = data.getStringExtra("height");
+        filter.smoking = data.getStringExtra("smoking");
+        filter.married = data.getStringExtra("married");
+        filter.children = data.getStringExtra("children");
+        filter.lookingFor = data.getStringExtra("lookingFor");
+        filter.loveToCook = data.getStringExtra("loveToCook");
+        showButtonFilters();
+        resetMenuIcons();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        BubbleFragment2 bubbleFragment = new BubbleFragment2();
+        bubbleFragment.setFilter(filter);
+        transaction.replace(R.id.root_fragment, bubbleFragment);
+        transaction.commitAllowingStateLoss();
     }
 
     @Override
