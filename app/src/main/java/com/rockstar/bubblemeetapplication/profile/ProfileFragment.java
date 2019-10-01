@@ -85,6 +85,9 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
         if(mUser.gender != null && !mUser.gender.equals("")){
             addInfo(mUser.gender);
         }
+        if(mUser.height != null && !mUser.height.equals("")){
+            addInfo(mUser.height);
+        }
         if(mUser.eyeColor != null && !mUser.eyeColor.equals("")){
             addInfo(mUser.eyeColor);
         }

@@ -107,13 +107,71 @@ public class BubblePresenter implements BaseContract.BasePresenter {
     }
 
     private ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users){
-        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
         if(!mFilter.gender.equals("")) {
-            for (int i = 0; i < users.size(); i++) {
-                if(users.get(i).gender.equals(mFilter.gender)){
+            users = filterGender(users);
+        }
+        if(!mFilter.age.equals("")){
+            users = filterAge(users);
+        }
+        if(!mFilter.eyeColor.equals("")){
+            users = filterEyeColor(users);
+        }
+        if(!mFilter.height.equals("")){
+            users = filterHeight(users);
+        }
+        return users;
+    }
+
+    private ArrayList<UserDataFull> filterGender(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for (int i = 0; i < users.size(); i++) {
+            if(users.get(i).gender.equals(mFilter.gender)){
+                userList.add(users.get(i));
+            }
+        }
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterAge(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            int age = Integer.parseInt(users.get(i).age);
+            int from = Integer.parseInt(mFilter.age.split("-")[0]);
+            int to = Integer.parseInt(mFilter.age.split("-")[1]);
+            if(age > from && age < to){
+                userList.add(users.get(i));
+            }
+        }
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterDistance(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        //TODO: filter
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterEyeColor(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            if(mFilter.eyeColor.equals(users.get(i).eyeColor)){
+                userList.add(users.get(i));
+            }
+        }
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterHeight(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            try {
+                if(Integer.parseInt(mFilter.height) < Integer.parseInt(users.get(i).height)){
                     userList.add(users.get(i));
                 }
+            }catch (Exception c){
+                c.printStackTrace();
             }
+
         }
         return userList;
     }

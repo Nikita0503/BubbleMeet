@@ -29,9 +29,10 @@ public class CircleTransform implements Transformation {
 
         Canvas canvas = new Canvas(bitmap);
 
-        Paint paintBackground = new Paint();
-        paintBackground.setColor(Color.rgb(36, 86, 112));
-
+        Paint paintBackgroundBlue = new Paint();
+        paintBackgroundBlue.setColor(Color.rgb(36, 86, 112));
+        Paint paintBackgroundPurple = new Paint();
+        paintBackgroundPurple.setColor(Color.rgb(41, 20, 63));
 
         Paint paint = new Paint();
         BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
@@ -39,8 +40,9 @@ public class CircleTransform implements Transformation {
         paint.setAntiAlias(true);
 
         float r = size/2f;
-        canvas.drawCircle(r, r, r, paintBackground);
-        canvas.drawCircle(r, r, r-r/20, paint);
+        canvas.drawCircle(r, r, r, paintBackgroundBlue);
+        canvas.drawCircle(r, r, r-r/20, paintBackgroundPurple);
+        canvas.drawCircle(r, r, r-r/12, paint);
 
         squaredBitmap.recycle();
         return bitmap;

@@ -124,6 +124,9 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
         if(userData.gender != null && !userData.gender.equals("")){
             addInfo(userData.gender);
         }
+        if(userData.height != null && !userData.height.equals("")){
+            addInfo(userData.height);
+        }
         if(userData.eyeColor != null && !userData.eyeColor.equals("")){
             addInfo(userData.eyeColor);
         }

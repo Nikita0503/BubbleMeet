@@ -598,15 +598,15 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonHeightNoMatter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mHeight.equals("") || !mHeight.equals("300")){
-                    mHeight = "300";
+                if(mHeight.equals("") || !mHeight.equals("0")){
+                    mHeight = "0";
                     mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonHeight180.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonHeight210.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonHeightNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                 }else{
-                    if(mHeight.equals("300")){
+                    if(mHeight.equals("0")){
                         mHeight = "";
                         mButtonHeight120.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonHeight150.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -949,15 +949,15 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonAllArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mDistance.equals("") || !mDistance.equals("1000")){
-                    mDistance = "1000";
+                if(mDistance.equals("") || !mDistance.equals("1000000")){
+                    mDistance = "1000000";
                     mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButton10km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButton50km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonAllArea.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                 }else{
-                    if(mDistance.equals("1000")){
+                    if(mDistance.equals("1000000")){
                         mDistance= "";
                         mButton1km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButton5km.setBackground(getResources().getDrawable(R.drawable.background_button_login));
