@@ -4,6 +4,7 @@ import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -11,6 +12,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -18,9 +21,15 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface APIService {
-    @Multipart
+
     @POST("login")
-    Single<ResponseBody> authorization(@Part("email") RequestBody email, @Part("password") RequestBody password);
+    @FormUrlEncoded
+    Single<ResponseBody> authorization(@FieldMap Map<String,String> params);
+
+    @POST("forgot")
+    @FormUrlEncoded
+    Single<ResponseBody> forgotPassword(@FieldMap Map<String,String> params);
+
     //@POST("login")
     //Single<ResponseBody> authorization(@Query("email") String email, @Query("password") String password);
     @Multipart
@@ -124,4 +133,7 @@ public interface APIService {
     @POST("favorite")
     Single<ResponseBody> addFavourite(@Part("favorite") RequestBody favorite);
 
+    @Multipart
+    @POST("history")
+    Single<ResponseBody> addWatcher(@Part("id") RequestBody favorite);
 }

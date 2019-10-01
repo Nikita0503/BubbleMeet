@@ -49,7 +49,7 @@ public class AuthPresenter implements BaseContract.BasePresenter {
                 .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
                     @Override
                     public void onSuccess(ResponseBody value) {
-                        Log.d("Response", value.toString());
+                        Log.d("Auth", value.toString());
                         SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("email", email);
@@ -78,6 +78,38 @@ public class AuthPresenter implements BaseContract.BasePresenter {
                 });
         mDisposable.add(authDisposable);
     }
+
+    public void forgotPassword(final String email){
+        Log.d("forgotPassword", email);
+        Disposable forgotDisposable = mAPIUtils.forgotPassword(email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
+                    @Override
+                    public void onSuccess(ResponseBody value) {
+                        Log.d("forgotPassword", value.toString());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (e instanceof HttpException) {
+                            HttpException exception = (HttpException) e;
+                            ResponseBody responseBody = exception.response().errorBody();
+                            try {
+                                JSONObject responseError = new JSONObject(responseBody.string());
+                                Log.d("TAG", responseError.toString());
+                                mActivity.showMessage(responseError.getString("message"));
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+        mDisposable.add(forgotDisposable);
+    }
+
+
 
     @Override
     public void onStop() {

@@ -87,6 +87,13 @@ public class AuthActivity extends AppCompatActivity implements BaseContract.Base
                 mPresenter.authorization(email, password);
             }
         });
+        mTextViewForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = mEditTextEmail.getText().toString();
+                mPresenter.forgotPassword(email);
+            }
+        });
     }
 
     @Override

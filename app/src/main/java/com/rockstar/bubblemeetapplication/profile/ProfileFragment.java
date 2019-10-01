@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
     public void onStart(){
         super.onStart();
         mPresenter.onStart();
+        mPresenter.addWatchers(mUser.id);
     }
 
     @Override

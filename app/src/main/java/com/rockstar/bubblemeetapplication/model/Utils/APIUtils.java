@@ -19,10 +19,13 @@ import com.rockstar.bubblemeetapplication.singup.SignUpActivity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -38,9 +41,12 @@ public class APIUtils {
     public Single<ResponseBody> authorization(String email, String password){
         Retrofit retrofit = getClient(BASE_URL);
         APIService apiService = retrofit.create(APIService.class);
-        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
-        RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
-        return apiService.authorization(requestBodyEmail, requestBodyPassword);
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("email", email);
+        params.put("password", password);
+        //RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
+        //RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
+        return apiService.authorization(params);
     }
 
     public Single<ResponseBody> singUp(SignUpUserData userData){
@@ -185,6 +191,8 @@ public class APIUtils {
     public Single<ResponseBody> addFavourite(String id){
         Retrofit retrofit = getClient(BASE_URL);
         APIService apiService = retrofit.create(APIService.class);
+        //Map<String,String> params = new HashMap<String, String>();
+        //params.put("favorite", id);
         RequestBody requestBodyId = RequestBody.create(MediaType.parse("text/plain"), id);
         return apiService.addFavourite(requestBodyId);
     }
@@ -194,6 +202,23 @@ public class APIUtils {
         APIService apiService = retrofit.create(APIService.class);
         RequestBody requestBodyId = RequestBody.create(MediaType.parse("text/plain"), id);
         return apiService.addTemporaryFavourite(requestBodyId);
+    }
+
+    public Single<ResponseBody> addWatcher(String id){
+        Retrofit retrofit = getClient(BASE_URL);
+        APIService apiService = retrofit.create(APIService.class);
+        RequestBody requestBodyId = RequestBody.create(MediaType.parse("text/plain"), id);
+        return apiService.addWatcher(requestBodyId);
+    }
+
+    public Single<ResponseBody> forgotPassword(String email){
+        Retrofit retrofit = getClient(BASE_URL);
+        APIService apiService = retrofit.create(APIService.class);
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("email", email);
+        //RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
+        //RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
+        return apiService.forgotPassword(params);
     }
 
     public static Retrofit getClient(String baseUrl) {

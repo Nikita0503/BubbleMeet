@@ -2,11 +2,14 @@ package com.rockstar.bubblemeetapplication.likes;
 
 import android.util.Log;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -46,7 +49,17 @@ public class LikesPresenter implements BaseContract.BasePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        if (e instanceof HttpException) {
+                            HttpException exception = (HttpException) e;
+                            ResponseBody responseBody = exception.response().errorBody();
+                            try {
+                                JSONObject responseError = new JSONObject(responseBody.string());
+                                Log.d("userFavorite", responseError.toString());
+                                mFragment.showMessage(responseError.getString("message"));
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
                     }
                 });
         mDisposable.add(disposableLikes);
