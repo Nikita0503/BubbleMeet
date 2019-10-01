@@ -142,10 +142,12 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             //}
 
         }
-        for(int i = 0; i < mLayout.getChildCount(); i++){
-            AbsoluteLayout.LayoutParams paramsBubbleNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
-            paramsBubbleNew.x += mDefaultBubbleDiameter * (-mRows/2);
-            paramsBubbleNew.y += mDefaultBubbleDiameter * (-mRows/4);
+        if(mFilter == null) {
+            for (int i = 0; i < mLayout.getChildCount(); i++) {
+                AbsoluteLayout.LayoutParams paramsBubbleNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
+                paramsBubbleNew.x += mDefaultBubbleDiameter * (-mRows / 2);
+                paramsBubbleNew.y += mDefaultBubbleDiameter * (-mRows / 4);
+            }
         }
 
         for(int i = 0; i < mLayout.getChildCount(); i++){

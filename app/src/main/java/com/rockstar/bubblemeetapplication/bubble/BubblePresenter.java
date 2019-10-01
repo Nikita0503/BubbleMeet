@@ -7,6 +7,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
 import com.rockstar.bubblemeetapplication.model.data.Filter;
+import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 
 import org.json.JSONObject;
@@ -79,7 +80,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                             Log.d("Filter", mFilter.children);
                             Log.d("Filter", mFilter.lookingFor);
                             Log.d("Filter", mFilter.loveToCook);
-
+                            users = filter(users);
                         }else{
                             Log.d("Filter", "null");
                         }
@@ -103,6 +104,18 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                     }
                 });
         mDisposable.add(usersDisposable);
+    }
+
+    private ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        if(!mFilter.gender.equals("")) {
+            for (int i = 0; i < users.size(); i++) {
+                if(users.get(i).gender.equals(mFilter.gender)){
+                    userList.add(users.get(i));
+                }
+            }
+        }
+        return userList;
     }
 
     @Override
