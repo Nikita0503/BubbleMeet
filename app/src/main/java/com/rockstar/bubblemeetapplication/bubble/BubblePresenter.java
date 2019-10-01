@@ -69,13 +69,13 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                                 break;
                             }
                         }
-                        //ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
-                        //for(int i = 0; i < 49; i++) {
-                        //    Log.d("Response", userData.get(i).name);
-                        //    Log.d("Response", userData.get(i).avatarSmall);
-                        //    Log.d("Response", userData.get(i).loveCook+"");
-                        //    users.add(userData.get(i));
-                        //}
+                        ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
+                        for(int i = 0; i < 49; i++) {
+                            Log.d("Response", userData.get(i).name);
+                            Log.d("Response", userData.get(i).avatarSmall);
+                            Log.d("Response", userData.get(i).loveCook+"");
+                            users.add(userData.get(i));
+                        }
 
                         if(mFilter != null){
                             Log.d("Filter", mFilter.gender);
@@ -88,11 +88,11 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                             Log.d("Filter", mFilter.children);
                             Log.d("Filter", mFilter.lookingFor);
                             Log.d("Filter", mFilter.loveToCook);
-                            userData = filter(userData);
+                            users = filter(users);
                         }else{
                             Log.d("Filter", "null");
                         }
-                        mFragment.setUsers(userData);
+                        mFragment.setUsers(users);
                     }
 
                     @Override

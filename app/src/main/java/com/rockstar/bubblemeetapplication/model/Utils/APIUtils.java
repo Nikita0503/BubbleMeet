@@ -158,6 +158,12 @@ public class APIUtils {
         return apiService.getAllUsers();
     }
 
+    public Single<ArrayList<UserDataFull>> getTemporaryFavourite(){
+        Retrofit retrofit = getClient(BASE_URL);
+        APIService apiService = retrofit.create(APIService.class);
+        return apiService.getTemporaryFavourite();
+    }
+
     public Single<ArrayList<UserDataFull>> getFavourite(){
         Retrofit retrofit = getClient(BASE_URL);
         APIService apiService = retrofit.create(APIService.class);
@@ -183,6 +189,12 @@ public class APIUtils {
         return apiService.addFavourite(requestBodyId);
     }
 
+    public Single<ResponseBody> addTemporaryFavourite(String id){
+        Retrofit retrofit = getClient(BASE_URL);
+        APIService apiService = retrofit.create(APIService.class);
+        RequestBody requestBodyId = RequestBody.create(MediaType.parse("text/plain"), id);
+        return apiService.addTemporaryFavourite(requestBodyId);
+    }
 
     public static Retrofit getClient(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()

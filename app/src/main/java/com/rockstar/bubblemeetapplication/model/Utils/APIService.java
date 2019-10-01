@@ -104,6 +104,9 @@ public interface APIService {
     @GET("allUser")
     Single<ArrayList<UserDataFull>> getAllUsers();
 
+    @GET("temporary")
+    Single<ArrayList<UserDataFull>> getTemporaryFavourite();
+
     @GET("userFavorite")
     Single<ArrayList<UserDataFull>> getFavourite();
 
@@ -112,6 +115,10 @@ public interface APIService {
 
     @GET("history")
     Single<ArrayList<UserDataFull>> getWatchers();
+
+    @Multipart
+    @POST("temporary")
+    Single<ResponseBody> addTemporaryFavourite(@Part("favorite") RequestBody favorite);
 
     @Multipart
     @POST("favorite")

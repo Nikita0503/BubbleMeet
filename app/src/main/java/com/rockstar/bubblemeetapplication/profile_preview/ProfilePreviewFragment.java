@@ -38,6 +38,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
     boolean doubleTap;
     private int mCurrentNumber;
+    private ProfilePreviewCustomAdapter mAdapter;
     private ArrayList<UserDataFull> mUsers;
     private ProfilePreviewPresenter mPresenter;
     private TextView mTextViewName;
@@ -84,6 +85,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
     public void onStart(){
         super.onStart();
         mPresenter.onStart();
+        mPresenter.fetchTemporaryFavourite();
     }
 
     @Override
@@ -91,8 +93,9 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         doubleTap = false;
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        mAdapter = new ProfilePreviewCustomAdapter(getContext());
         mRecyclerViewUsers.setLayoutManager(layoutManager);
-        mRecyclerViewUsers.setAdapter(new ProfilePreviewCustomAdapter(getContext()));
+        mRecyclerViewUsers.setAdapter(mAdapter);
         mTextViewName.setText(mUsers.get(mCurrentNumber).name);
         mTextViewYearsOldAndCity.setText(mUsers.get(mCurrentNumber).age + ", " + mUsers.get(mCurrentNumber).city);
         mImageViewLike.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +146,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             public void onSwipeBottom() {
                 //Toast.makeText(getContext(), "bottom", Toast.LENGTH_SHORT).show();
                 Animation animationSwipeDown = AnimationUtils.loadAnimation(getContext(), R.anim.for_swipe_down);
-
+                mPresenter.addTemporaryFavourite(mUsers.get(mCurrentNumber).id);
                 mImageViewAvatar.startAnimation(animationSwipeDown);
                 animationSwipeDown.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -216,6 +219,10 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             }
         });
         mImageViewBubbles.setAnimation(animationAlphaBubbles);
+    }
+
+    public void setTemporaryFavourite(ArrayList<UserDataFull> users){
+        mAdapter.setTemporaryFavourite(users);
     }
 
     private void boomAnimation(boolean isRight){

@@ -10,15 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rockstar.bubblemeetapplication.CircleTransform;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class ProfilePreviewCustomAdapter extends RecyclerView.Adapter<ProfilePreviewCustomAdapter.ViewHolder> {
 
-    String[] mNames;
+    ArrayList<UserDataFull> mUsers;
     Context mContext;
 
     public ProfilePreviewCustomAdapter(Context context){
-        mNames = new String[]{"Some", "Names", "Contains", "This", "List"};
+        mUsers = new ArrayList<UserDataFull>();
         mContext = context;
     }
 
@@ -33,12 +38,20 @@ public class ProfilePreviewCustomAdapter extends RecyclerView.Adapter<ProfilePre
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageViewAvatar.setImageDrawable(mContext.getResources().getDrawable(R.drawable.circle_for_photo_gray));
+        Picasso.with(mContext)
+                .load("http://185.25.116.211:11000/image/" + mUsers.get(position).avatarSmall)
+                .transform(new CircleTransform())
+                .into(holder.imageViewAvatar);
     }
 
     @Override
     public int getItemCount() {
-        return mNames.length;
+        return mUsers.size();
+    }
+
+    public void setTemporaryFavourite(ArrayList<UserDataFull> users){
+        mUsers = users;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

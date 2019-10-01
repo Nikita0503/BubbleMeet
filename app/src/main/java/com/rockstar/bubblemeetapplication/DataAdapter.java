@@ -84,8 +84,7 @@ public class DataAdapter extends BaseAdapter {
     }
 
     public void setUsers(ArrayList<UserDataFull> users){
-        mUsers.clear();
-        mUsers.addAll(users);
+        mUsers = users;
         notifyDataSetChanged();
     }
 }
