@@ -19,6 +19,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 public class LoadingPresenter implements BaseContract.BasePresenter {
 
@@ -42,14 +43,15 @@ public class LoadingPresenter implements BaseContract.BasePresenter {
         Disposable authDisposable = mAPIUtils.authorization(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
+                .subscribeWith(new DisposableSingleObserver<Response<ResponseBody>>() {
                     @Override
-                    public void onSuccess(ResponseBody value) {
-                        Log.d("Response", value.toString());
+                    public void onSuccess(Response<ResponseBody> value) {
+                        Log.d("Auth", value.headers().get("Set-Cookie"));
                         SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("email", email);
                         editor.putString("password", password);
+                        editor.putString("session", value.headers().get("Set-Cookie"));
                         editor.commit();
                         Intent intent = new Intent(mActivity, MainActivity.class);
                         mActivity.startActivity(intent);

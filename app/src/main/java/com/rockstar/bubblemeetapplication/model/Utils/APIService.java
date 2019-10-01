@@ -10,11 +10,12 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -24,7 +25,7 @@ public interface APIService {
 
     @POST("login")
     @FormUrlEncoded
-    Single<ResponseBody> authorization(@FieldMap Map<String,String> params);
+    Single<Response<ResponseBody>> authorization(@FieldMap Map<String,String> params);
 
     @POST("forgot")
     @FormUrlEncoded
@@ -117,7 +118,7 @@ public interface APIService {
     Single<ArrayList<UserDataFull>> getTemporaryFavourite();
 
     @GET("userFavorite")
-    Single<ArrayList<UserDataFull>> getFavourite();
+    Single<ArrayList<UserDataFull>> getFavourite(@Header("Cookie") String sessionIdAndToken);
 
     @GET("favorite")
     Single<ArrayList<UserDataFull>> getFavouriteByMe();

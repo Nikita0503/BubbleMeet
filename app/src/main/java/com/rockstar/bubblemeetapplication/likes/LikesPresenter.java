@@ -1,10 +1,13 @@
 package com.rockstar.bubblemeetapplication.likes;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.R;
+import com.rockstar.bubblemeetapplication.auth.AuthActivity;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
@@ -29,6 +32,7 @@ public class LikesPresenter implements BaseContract.BasePresenter {
     public LikesPresenter(LikesFragment fragment) {
         mFragment = fragment;
         mAPIUtils = new APIUtils();
+
     }
 
     @Override
@@ -38,6 +42,7 @@ public class LikesPresenter implements BaseContract.BasePresenter {
     }
 
     public void fetchLikes(){
+        mAPIUtils.context = mFragment.getContext();
         Disposable disposableLikes = mAPIUtils.getFavourite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
