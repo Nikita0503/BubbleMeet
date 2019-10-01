@@ -1,11 +1,19 @@
 package com.rockstar.bubblemeetapplication.bubble;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
+import com.rockstar.bubblemeetapplication.model.data.Coordinates;
 import com.rockstar.bubblemeetapplication.model.data.Filter;
 import com.rockstar.bubblemeetapplication.model.data.UserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
@@ -61,13 +69,13 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                                 break;
                             }
                         }
-                        ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
-                        for(int i = 0; i < 49; i++) {
-                            Log.d("Response", userData.get(i).name);
-                            Log.d("Response", userData.get(i).avatarSmall);
-                            Log.d("Response", userData.get(i).loveCook+"");
-                            users.add(userData.get(i));
-                        }
+                        //ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
+                        //for(int i = 0; i < 49; i++) {
+                        //    Log.d("Response", userData.get(i).name);
+                        //    Log.d("Response", userData.get(i).avatarSmall);
+                        //    Log.d("Response", userData.get(i).loveCook+"");
+                        //    users.add(userData.get(i));
+                        //}
 
                         if(mFilter != null){
                             Log.d("Filter", mFilter.gender);
@@ -80,11 +88,11 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                             Log.d("Filter", mFilter.children);
                             Log.d("Filter", mFilter.lookingFor);
                             Log.d("Filter", mFilter.loveToCook);
-                            users = filter(users);
+                            userData = filter(userData);
                         }else{
                             Log.d("Filter", "null");
                         }
-                        mFragment.setUsers(users);
+                        mFragment.setUsers(userData);
                     }
 
                     @Override
@@ -113,11 +121,29 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         if(!mFilter.age.equals("")){
             users = filterAge(users);
         }
+        if(!mFilter.distance.equals("")){
+            users = filterDistance(users);
+        }
         if(!mFilter.eyeColor.equals("")){
             users = filterEyeColor(users);
         }
         if(!mFilter.height.equals("")){
             users = filterHeight(users);
+        }
+        if(!mFilter.smoking.equals("")){
+            users = filterSmoking(users);
+        }
+        if(!mFilter.married.equals("")){
+            users = filterMarried(users);
+        }
+        if(!mFilter.children.equals("")){
+            users = filterChildren(users);
+        }
+        if(!mFilter.lookingFor.equals("")){
+            users = filterLookingFor(users);
+        }
+        if(!mFilter.loveToCook.equals("")){
+            users = filterLoveToCook(users);
         }
         return users;
     }
@@ -146,9 +172,75 @@ public class BubblePresenter implements BaseContract.BasePresenter {
     }
 
     private ArrayList<UserDataFull> filterDistance(ArrayList<UserDataFull> users){
+        Coordinates currentCoordinates = getCoordinates();
         ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
-        //TODO: filter
+        for(int i = 0; i < users.size(); i++){
+            try {
+                String coordinates = users.get(i).location;
+                double lat = Double.parseDouble(coordinates.split(",")[0]);
+                double lon = Double.parseDouble(coordinates.split(",")[1]);
+                Coordinates userCoordinates = new Coordinates(lat, lon);
+                double difference = differenceBetween(currentCoordinates.latitude, currentCoordinates.longitude,
+                        userCoordinates.latitude, userCoordinates.longitude, 'K');
+                Log.d("distance", users.get(i).name + " " + difference + "");
+                Log.d("distance", currentCoordinates.latitude + " " + currentCoordinates.longitude);
+                Log.d("distance", userCoordinates.latitude + " " + userCoordinates.longitude);
+                if(difference < Double.parseDouble(mFilter.distance)){
+                    userList.add(users.get(i));
+                }
+            }catch (Exception c){
+                c.printStackTrace();
+            }
+        }
         return userList;
+    }
+
+    public Coordinates getCoordinates() {
+        Coordinates coord;
+        LocationManager lm = (LocationManager) mFragment.getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(mFragment.getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(mFragment.getContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if(location!=null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            coord = new Coordinates(latitude, longitude);
+            return coord;
+        }else{
+            return null;
+        }
+    }
+
+    private double differenceBetween(double lat1, double lon1, double lat2, double lon2, char unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts decimal degrees to radians             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts radians to decimal degrees             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 
     private ArrayList<UserDataFull> filterEyeColor(ArrayList<UserDataFull> users){
@@ -175,6 +267,73 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         }
         return userList;
     }
+
+    private ArrayList<UserDataFull> filterSmoking(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            if(mFilter.smoking.equals("No matter")){
+                userList.add(users.get(i));
+            }else {
+                if (mFilter.smoking.equals(String.valueOf(users.get(i).smoking))) {
+                    userList.add(users.get(i));
+                }
+            }
+        }
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterMarried(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            if(mFilter.married.equals("No matter")){
+                userList.add(users.get(i));
+            }else {
+                if (mFilter.married.equals(String.valueOf(users.get(i).marred))) {
+                    userList.add(users.get(i));
+                }
+            }
+        }
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterChildren(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            if(mFilter.children.equals("No matter")){
+                userList.add(users.get(i));
+            }else {
+                if (mFilter.children.equals(String.valueOf(users.get(i).children))) {
+                    userList.add(users.get(i));
+                }
+            }
+        }
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterLookingFor(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            if (mFilter.lookingFor.equals(String.valueOf(users.get(i).looking))) {
+                userList.add(users.get(i));
+            }
+        }
+        return userList;
+    }
+
+    private ArrayList<UserDataFull> filterLoveToCook(ArrayList<UserDataFull> users){
+        ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
+        for(int i = 0; i < users.size(); i++){
+            if(mFilter.loveToCook.equals("No matter")){
+                userList.add(users.get(i));
+            }else {
+                if (mFilter.loveToCook.equals(String.valueOf(users.get(i).loveCook))) {
+                    userList.add(users.get(i));
+                }
+            }
+        }
+        return userList;
+    }
+
 
     @Override
     public void onStop() {

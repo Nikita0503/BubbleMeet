@@ -199,13 +199,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonLoveToCookYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mLoveToCook.equals("") || !mLoveToCook.equals("Yes")){
-                    mLoveToCook = "Yes";
+                if(mLoveToCook.equals("") || !mLoveToCook.equals("1")){
+                    mLoveToCook = "1";
                     mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else {
-                    if (mLoveToCook.equals("Yes")) {
+                    if (mLoveToCook.equals("1")) {
                         mLoveToCook = "";
                         mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -217,13 +217,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonLoveToCookNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mLoveToCook.equals("") || !mLoveToCook.equals("No")){
-                    mLoveToCook = "No";
+                if(mLoveToCook.equals("") || !mLoveToCook.equals("0")){
+                    mLoveToCook = "0";
                     mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonLoveToCookNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else {
-                    if (mLoveToCook.equals("No")) {
+                    if (mLoveToCook.equals("0")) {
                         mLoveToCook = "";
                         mButtonLoveToCookYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonLoveToCookNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -339,13 +339,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonChildrenYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mChildren.equals("") || !mChildren.equals("Yes")){
-                    mChildren = "Yes";
+                if(mChildren.equals("") || !mChildren.equals("1")){
+                    mChildren = "1";
                     mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else{
-                    if(mChildren.equals("Yes")){
+                    if(mChildren.equals("1")){
                         mChildren = "";
                         mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -357,13 +357,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonChildrenNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mChildren.equals("") || !mChildren.equals("No")){
-                    mChildren = "No";
+                if(mChildren.equals("") || !mChildren.equals("0")){
+                    mChildren = "0";
                     mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonChildrenNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else{
-                    if(mChildren.equals("No")){
+                    if(mChildren.equals("0")){
                         mChildren = "";
                         mButtonChildrenYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonChildrenNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -396,13 +396,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonMarriedYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mMarried.equals("") || !mMarried.equals("Yes")){
-                    mMarried = "Yes";
+                if(mMarried.equals("") || !mMarried.equals("1")){
+                    mMarried = "1";
                     mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else{
-                    if(mMarried.equals("Yes")){
+                    if(mMarried.equals("1")){
                         mMarried = "";
                         mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -414,13 +414,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonMarriedNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mMarried.equals("") || !mMarried.equals("No")){
-                    mMarried = "No";
+                if(mMarried.equals("") || !mMarried.equals("0")){
+                    mMarried = "0";
                     mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonMarriedNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else{
-                    if(mMarried.equals("No")){
+                    if(mMarried.equals("0")){
                         mMarried = "";
                         mButtonMarriedYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonMarriedNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -453,13 +453,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonSmokingYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSmoking.equals("") || !mSmoking.equals("Yes")){
-                    mSmoking = "Yes";
+                if(mSmoking.equals("") || !mSmoking.equals("1")){
+                    mSmoking = "1";
                     mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else{
-                    if(mSmoking.equals("Yes")){
+                    if(mSmoking.equals("1")){
                         mSmoking = "";
                         mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
@@ -471,13 +471,13 @@ public class FiltersActivity extends AppCompatActivity implements BaseContract.B
         mButtonSmokingNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSmoking.equals("") || !mSmoking.equals("No")){
-                    mSmoking = "No";
+                if(mSmoking.equals("") || !mSmoking.equals("0")){
+                    mSmoking = "0";
                     mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                     mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login_selected));
                     mButtonSmokingNoMatter.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                 }else{
-                    if(mSmoking.equals("No")){
+                    if(mSmoking.equals("0")){
                         mSmoking = "";
                         mButtonSmokingYes.setBackground(getResources().getDrawable(R.drawable.background_button_login));
                         mButtonSmokingNo.setBackground(getResources().getDrawable(R.drawable.background_button_login));
