@@ -61,7 +61,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                 .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> userData) {
-                        Collections.shuffle(userData);
+                        //Collections.shuffle(userData);
                         for(int i = 0; i < userData.size(); i++) {
                             SharedPreferences pref = mFragment.getContext().getSharedPreferences("BubbleMeet", MODE_PRIVATE);
                             String email = pref.getString("email", "");
@@ -93,7 +93,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                         }else{
                             Log.d("Filter", "null");
                         }
-                        mFragment.setUsers(userData); //TODO:
+                        mFragment.setUsers(users); //TODO:
                     }
 
                     @Override

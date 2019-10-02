@@ -61,7 +61,7 @@ public class WatchersPresenter implements BaseContract.BasePresenter {
                             try {
                                 JSONObject responseError = new JSONObject(responseBody.string());
                                 Log.d("userWatchers", responseError.toString());
-                                mFragment.showMessage(responseError.getString("message"));
+                                //mFragment.showMessage(responseError.getString("message"));
                             } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
