@@ -42,6 +42,7 @@ public class MyProfilePresenter implements BaseContract.BasePresenter {
     }
 
     public void fetchData(){
+        mAPIUtils.setContext(mActivity.getApplicationContext());
         Disposable disposableMyProfile = mAPIUtils.getAllUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

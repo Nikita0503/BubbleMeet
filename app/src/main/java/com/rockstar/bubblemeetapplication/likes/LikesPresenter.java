@@ -32,7 +32,6 @@ public class LikesPresenter implements BaseContract.BasePresenter {
     public LikesPresenter(LikesFragment fragment) {
         mFragment = fragment;
         mAPIUtils = new APIUtils();
-
     }
 
     @Override
@@ -42,13 +41,16 @@ public class LikesPresenter implements BaseContract.BasePresenter {
     }
 
     public void fetchLikes(){
-        mAPIUtils.context = mFragment.getContext();
+        mAPIUtils.setContext(mFragment.getContext());
         Disposable disposableLikes = mAPIUtils.getFavourite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> users) {
+                        if(users.size() != 0){
+                            users = removeDuplicates(users);
+                        }
                         mFragment.setUsers(users);
                     }
 
@@ -68,6 +70,23 @@ public class LikesPresenter implements BaseContract.BasePresenter {
                     }
                 });
         mDisposable.add(disposableLikes);
+    }
+
+    public ArrayList<UserDataFull> removeDuplicates(ArrayList<UserDataFull> users) {
+        ArrayList<UserDataFull> unique = new ArrayList<UserDataFull>();
+        unique.add(users.get(0));
+        for(int i = 1; i < users.size(); i++){
+            boolean isUnique = true;
+            for(int j = 0; j < unique.size(); j++){
+                if(users.get(i).id == unique.get(j).id){
+                    isUnique = false;
+                }
+            }
+            if(isUnique){
+                unique.add(users.get(i));
+            }
+        }
+        return unique;
     }
 
     @Override

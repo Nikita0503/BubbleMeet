@@ -38,6 +38,7 @@ public class LoadingPresenter implements BaseContract.BasePresenter {
     }
 
     public void authorization(final String email, final String password){
+        mAPIUtils.setContext(mActivity.getApplicationContext());
         Log.d("authorization", email);
         Log.d("authorization", password);
         Disposable authDisposable = mAPIUtils.authorization(email, password)

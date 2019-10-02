@@ -41,21 +41,24 @@ import static android.content.Context.MODE_PRIVATE;
 public class APIUtils {
     public static final String BASE_URL = "http://185.25.116.211:11000/";
     private Retrofit mRetrofit;
-    public Context context;
+    private Context mContext;
+
+    public void setContext(Context context){
+        mContext = context;
+    }
+
     public Single<Response<ResponseBody>> authorization(String email, String password){
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
         APIService apiService = mRetrofit.create(APIService.class);
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("email", email);
-        params.put("password", password);
-        //RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
-        //RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
-        return apiService.authorization(params);
+
+        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
+        RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
+        return apiService.authorization(requestBodyEmail, requestBodyPassword);
     }
 
-    public Single<ResponseBody> singUp(SignUpUserData userData){
+    public Single<Response<ResponseBody>> singUp(SignUpUserData userData){
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
@@ -71,18 +74,7 @@ public class APIUtils {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
         MultipartBody.Part avatarSmall = MultipartBody.Part.createFormData("avatarSmall", userData.getLogin(), requestFile);
         MultipartBody.Part avatarFull = MultipartBody.Part.createFormData("avatarFull", userData.getLogin(), requestFile);
-        ArrayList<File> additionalPhotos = new ArrayList<File>();
-        if(userData.getAdditionalPhoto() != null){
-            additionalPhotos.add(userData.getAdditionalPhoto());
-        }
-        if(userData.getAdditionalPhoto() != null){
-            additionalPhotos.add(userData.getAdditionalPhoto());
-        }
-        if(userData.getAdditionalPhoto() != null){
-            additionalPhotos.add(userData.getAdditionalPhoto());
-        }
-        if(additionalPhotos.size() == 0) {
-            return apiService.signUp(requestBodyName,
+        return apiService.signUp(requestBodyName,
                     requestBodyGender,
                     requestBodyYearsOld,
                     requestBodyEmail,
@@ -92,24 +84,10 @@ public class APIUtils {
                     requestBodyLogin,
                     requestBodyCity,
                     requestBodyLocation);
-        }else {
-            RequestBody requestPhoto1 = RequestBody.create(MediaType.parse("multipart/form-data"), additionalPhotos.get(0));
-            MultipartBody.Part photo1 = MultipartBody.Part.createFormData("Photo", userData.getLogin(), requestPhoto1);
-            return apiService.signUpWithAdditionPhotos1(requestBodyName,
-                    requestBodyGender,
-                    requestBodyYearsOld,
-                    requestBodyEmail,
-                    requestBodyPassword,
-                    avatarSmall,
-                    avatarFull,
-                    photo1,
-                    requestBodyLogin,
-                    requestBodyCity,
-                    requestBodyLocation);
-        }
+
     }
 
-    public Single<ResponseBody> singUpFull(SignUpUserData userData){
+    public Single<Response<ResponseBody>> singUpFull(SignUpUserData userData){
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
@@ -132,23 +110,6 @@ public class APIUtils {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
         MultipartBody.Part avatarSmall = MultipartBody.Part.createFormData("avatarSmall", userData.getLogin(), requestFile);
         MultipartBody.Part avatarFull = MultipartBody.Part.createFormData("avatarFull", userData.getLogin(), requestFile);
-        //ArrayList<RequestBody> requestPhotos = new ArrayList<RequestBody>();
-        //if(userData.getMainPhoto() != null) {
-        //    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getMainPhoto());
-        //    requestPhotos.add(requestFile);
-        //}
-        //if(userData.getAdditionalPhoto() != null) {
-        //    RequestBody requestFile1 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto());
-        //    requestPhotos.add(requestFile1);
-        //}
-        //if(userData.getAdditionalPhoto2() != null) {
-        //    RequestBody requestFile2 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto2());
-        //    requestPhotos.add(requestFile2);
-        //}
-        //if(userData.getAdditionalPhoto3() != null) {
-        //    RequestBody requestFile3 = RequestBody.create(MediaType.parse("multipart/form-data"), userData.getAdditionalPhoto3());
-        //    requestPhotos.add(requestFile3);
-        //}
         return apiService.signUpFull(requestBodyName,
                 requestBodyGender,
                 requestBodyYearsOld,
@@ -177,18 +138,17 @@ public class APIUtils {
     }
 
     public Single<ArrayList<UserDataFull>> getTemporaryFavourite(){
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+        String session = pref.getString("session", "");
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
         APIService apiService = mRetrofit.create(APIService.class);
-        return apiService.getTemporaryFavourite();
+        return apiService.getTemporaryFavourite(session);
     }
 
     public Single<ArrayList<UserDataFull>> getFavourite(){
-        SharedPreferences pref = context.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
-
-        String email = pref.getString("email", "");
-        String password = pref.getString("password", "");
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
         String session = pref.getString("session", "");
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
@@ -198,22 +158,28 @@ public class APIUtils {
     }
 
     public Single<ArrayList<UserDataFull>> getFavouriteByMe(){
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+        String session = pref.getString("session", "");
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
         APIService apiService = mRetrofit.create(APIService.class);
-        return apiService.getFavouriteByMe();
+        return apiService.getFavouriteByMe(session);
     }
 
     public Single<ArrayList<UserDataFull>> getWatchers(){
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+        String session = pref.getString("session", "");
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
         APIService apiService = mRetrofit.create(APIService.class);
-        return apiService.getWatchers();
+        return apiService.getWatchers(session);
     }
 
     public Single<ResponseBody> addFavourite(String id){
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+        String session = pref.getString("session", "");
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
@@ -221,25 +187,42 @@ public class APIUtils {
         //Map<String,String> params = new HashMap<String, String>();
         //params.put("favorite", id);
         RequestBody requestBodyId = RequestBody.create(MediaType.parse("text/plain"), id);
-        return apiService.addFavourite(requestBodyId);
+        return apiService.addFavourite(session, requestBodyId);
     }
 
     public Single<ResponseBody> addTemporaryFavourite(String id){
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+        String session = pref.getString("session", "");
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
         APIService apiService = mRetrofit.create(APIService.class);
         RequestBody requestBodyId = RequestBody.create(MediaType.parse("text/plain"), id);
-        return apiService.addTemporaryFavourite(requestBodyId);
+        return apiService.addTemporaryFavourite(session, requestBodyId);
     }
 
     public Single<ResponseBody> addWatcher(String id){
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+        String session = pref.getString("session", "");
         if(mRetrofit == null) {
             mRetrofit = getClient(BASE_URL);
         }
         APIService apiService = mRetrofit.create(APIService.class);
         RequestBody requestBodyId = RequestBody.create(MediaType.parse("text/plain"), id);
-        return apiService.addWatcher(requestBodyId);
+        return apiService.addWatcher(session, requestBodyId);
+    }
+
+    public Single<ResponseBody> addPhoto(String login, File photo){
+        Log.d("additionPhotos", photo.getAbsolutePath());
+        SharedPreferences pref = mContext.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+        String session = pref.getString("session", "");
+        if(mRetrofit == null) {
+            mRetrofit = getClient(BASE_URL);
+        }
+        APIService apiService = mRetrofit.create(APIService.class);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), photo);
+        MultipartBody.Part photoFile = MultipartBody.Part.createFormData("file", login, requestFile);
+        return apiService.addPhoto(session, photoFile);
     }
 
     public Single<ResponseBody> forgotPassword(String email){
@@ -249,10 +232,12 @@ public class APIUtils {
         APIService apiService = mRetrofit.create(APIService.class);
         Map<String,String> params = new HashMap<String, String>();
         params.put("email", email);
-        //RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
+        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
         //RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
-        return apiService.forgotPassword(params);
+        return apiService.forgotPassword(requestBodyEmail);
     }
+
+
 
     public static Retrofit getClient(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()

@@ -11,6 +11,9 @@ import com.rockstar.bubblemeetapplication.profile.ProfileFragment;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -39,6 +42,7 @@ public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
     }
 
     public void addFavourite(int idInteger){
+        mAPIUtils.setContext(mFragment.getContext());
         final String id = String.valueOf(idInteger);
         Log.d("addFavourite", id + " in process...");
         Disposable disposableAddFavourite = mAPIUtils.addFavourite(id)
@@ -70,6 +74,7 @@ public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
     }
 
     public void addTemporaryFavourite(int idInteger){
+        mAPIUtils.setContext(mFragment.getContext());
         final String id = String.valueOf(idInteger);
         Log.d("addTemporaryFavourite", id + " in process...");
         Disposable disposableAddFavourite = mAPIUtils.addTemporaryFavourite(id)
@@ -80,6 +85,7 @@ public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody value) {
                         Log.d("addFavourite", value.toString());
+                        fetchTemporaryFavourite();
                     }
 
                     @Override
@@ -102,6 +108,7 @@ public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
 
 
     public void fetchTemporaryFavourite(){
+        mAPIUtils.setContext(mFragment.getContext());
         Disposable disposableTemporaryFavourite = mAPIUtils.getTemporaryFavourite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -109,6 +116,10 @@ public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
 
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> users) {
+                        if(users.size() != 0){
+                            users = removeDuplicates(users);
+                        }
+                        Collections.reverse(users);
                         mFragment.setTemporaryFavourite(users);
                     }
 
@@ -128,6 +139,23 @@ public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
                     }
                 });
         mDisposable.add(disposableTemporaryFavourite);
+    }
+
+    public ArrayList<UserDataFull> removeDuplicates(ArrayList<UserDataFull> users) {
+        ArrayList<UserDataFull> unique = new ArrayList<UserDataFull>();
+        unique.add(users.get(0));
+        for(int i = 1; i < users.size(); i++){
+            boolean isUnique = true;
+            for(int j = 0; j < unique.size(); j++){
+                if(users.get(i).id == unique.get(j).id){
+                    isUnique = false;
+                }
+            }
+            if(isUnique){
+                unique.add(users.get(i));
+            }
+        }
+        return unique;
     }
 
     @Override

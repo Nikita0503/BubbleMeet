@@ -75,6 +75,7 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("email", "");
                 editor.putString("password", "");
+                editor.putString("session", "");
                 editor.commit();
                 Intent intent = new Intent(MyProfileActivity.this, AuthActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -91,26 +92,37 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
                 .into(mImageViewAvatar);
         if(userData.photo.size() != 0) {
             if(userData.photo.get(0) != null){
+                mImageViewAdditionPhoto1.setVisibility(View.VISIBLE);
                 Picasso.with(getApplicationContext())
                         .load("http://185.25.116.211:11000/image/" + userData.photo.get(0))
                         .into(mImageViewAdditionPhoto1);
             }else {
                 mImageViewAdditionPhoto1.setVisibility(View.INVISIBLE);
             }
-            if(userData.photo.get(1) != null) {
-                Picasso.with(getApplicationContext())
-                        .load("http://185.25.116.211:11000/image/" + userData.photo.get(1))
-                        .into(mImageViewAdditionPhoto2);
-            }else {
-                mImageViewAdditionPhoto2.setVisibility(View.INVISIBLE);
+            if(userData.photo.size() >= 2) {
+                if (userData.photo.get(1) != null) {
+                    mImageViewAdditionPhoto2.setVisibility(View.VISIBLE);
+                    Picasso.with(getApplicationContext())
+                            .load("http://185.25.116.211:11000/image/" + userData.photo.get(1))
+                            .into(mImageViewAdditionPhoto2);
+                } else {
+                    mImageViewAdditionPhoto2.setVisibility(View.INVISIBLE);
+                }
             }
-            if(userData.photo.get(2) != null) {
-                Picasso.with(getApplicationContext())
-                        .load("http://185.25.116.211:11000/image/" + userData.photo.get(2))
-                        .into(mImageViewAdditionPhoto3);
-            }else {
-                mImageViewAdditionPhoto3.setVisibility(View.INVISIBLE);
+            if(userData.photo.size() >= 3) {
+                if (userData.photo.get(2) != null) {
+                    mImageViewAdditionPhoto3.setVisibility(View.VISIBLE);
+                    Picasso.with(getApplicationContext())
+                            .load("http://185.25.116.211:11000/image/" + userData.photo.get(2))
+                            .into(mImageViewAdditionPhoto3);
+                } else {
+                    mImageViewAdditionPhoto3.setVisibility(View.INVISIBLE);
+                }
             }
+        }else{
+            mImageViewAdditionPhoto1.setVisibility(View.INVISIBLE);
+            mImageViewAdditionPhoto2.setVisibility(View.INVISIBLE);
+            mImageViewAdditionPhoto3.setVisibility(View.INVISIBLE);
         }
         mTextViewName.setText(userData.name);
         String yearsOldAndCity = "";

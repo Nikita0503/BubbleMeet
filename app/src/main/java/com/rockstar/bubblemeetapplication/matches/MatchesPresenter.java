@@ -40,6 +40,7 @@ public class MatchesPresenter implements BaseContract.BasePresenter {
     }
 
     public void fetchMatches(){
+        mAPIUtils.setContext(mFragment.getContext());
         Disposable disposableMatches = mAPIUtils.getFavourite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -47,6 +48,9 @@ public class MatchesPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> users) {
                         //mFragment.setUsers(users);
+                        if(users.size() != 0){
+                            users = removeDuplicates(users);
+                        }
                         mUsersWhoLikeMe = users;
                         fetchFavoriteByMe();
                     }
@@ -76,6 +80,9 @@ public class MatchesPresenter implements BaseContract.BasePresenter {
                 .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> users) {
+                        if(users.size() != 0){
+                            users = removeDuplicates(users);
+                        }
                         mUsersWhoILike = users;
                         findCoincidences();
                     }
@@ -109,6 +116,23 @@ public class MatchesPresenter implements BaseContract.BasePresenter {
             }
         }
         mFragment.setUsers(users);
+    }
+
+    public ArrayList<UserDataFull> removeDuplicates(ArrayList<UserDataFull> users) {
+        ArrayList<UserDataFull> unique = new ArrayList<UserDataFull>();
+        unique.add(users.get(0));
+        for(int i = 1; i < users.size(); i++){
+            boolean isUnique = true;
+            for(int j = 0; j < unique.size(); j++){
+                if(users.get(i).id == unique.get(j).id){
+                    isUnique = false;
+                }
+            }
+            if(isUnique){
+                unique.add(users.get(i));
+            }
+        }
+        return unique;
     }
 
     @Override

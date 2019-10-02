@@ -36,6 +36,7 @@ public class ProfilePresenter implements BaseContract.BasePresenter {
     }
 
     public void addWatchers(int idInteger){
+        mAPIUtils.setContext(mFragment.getContext());
         final String id = String.valueOf(idInteger);
         Log.d("Watchers", id+"...");
         Disposable disposableMatches = mAPIUtils.addWatcher(id)
@@ -45,6 +46,7 @@ public class ProfilePresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody users) {
                         //mFragment.setUsers(users);
+
                         Log.d("Watchers", users.toString());
                     }
 

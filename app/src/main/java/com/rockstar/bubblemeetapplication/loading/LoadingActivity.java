@@ -35,7 +35,6 @@ public class LoadingActivity extends AppCompatActivity implements BaseContract.B
         super.onStart();
         mPresenter.onStart();
         SharedPreferences pref = getSharedPreferences("BubbleMeet", MODE_PRIVATE);
-
         String email = pref.getString("email", "");
         String password = pref.getString("password", "");
         if(email.equals("") || password.equals("")){

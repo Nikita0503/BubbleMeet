@@ -23,19 +23,19 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
+    @Multipart
     @POST("login")
-    @FormUrlEncoded
-    Single<Response<ResponseBody>> authorization(@FieldMap Map<String,String> params);
+    Single<Response<ResponseBody>> authorization(@Part("email") RequestBody email, @Part("password") RequestBody password);
 
+    @Multipart
     @POST("forgot")
-    @FormUrlEncoded
-    Single<ResponseBody> forgotPassword(@FieldMap Map<String,String> params);
+    Single<ResponseBody> forgotPassword(@Part("email") RequestBody forgot);
 
     //@POST("login")
     //Single<ResponseBody> authorization(@Query("email") String email, @Query("password") String password);
     @Multipart
     @POST("user")
-    Single<ResponseBody> signUp(@Part("name") RequestBody name,
+    Single<Response<ResponseBody>> signUp(@Part("name") RequestBody name,
                                 @Part("gender") RequestBody gender,
                                 @Part("age") RequestBody age,
                                 @Part("email") RequestBody email,
@@ -48,52 +48,7 @@ public interface APIService {
 
     @Multipart
     @POST("user")
-    Single<ResponseBody> signUpWithAdditionPhotos1(@Part("name") RequestBody name,
-                                @Part("gender") RequestBody gender,
-                                @Part("age") RequestBody age,
-                                @Part("email") RequestBody email,
-                                @Part("password") RequestBody password,
-                                @Part MultipartBody.Part avatarSmall,
-                                @Part MultipartBody.Part avatarFull,
-                                @Part MultipartBody.Part additionPhoto1,
-                                @Part("login") RequestBody login,
-                                @Part("city") RequestBody city,
-                                @Part("location") RequestBody location);
-
-    @Multipart
-    @POST("user")
-    Single<ResponseBody> signUpWithAdditionPhotos2(@Part("name") RequestBody name,
-                                @Part("gender") RequestBody gender,
-                                @Part("age") RequestBody age,
-                                @Part("email") RequestBody email,
-                                @Part("password") RequestBody password,
-                                @Part MultipartBody.Part avatarSmall,
-                                @Part MultipartBody.Part avatarFull,
-                                @Part MultipartBody.Part additionPhoto1,
-                                @Part MultipartBody.Part additionPhoto2,
-                                @Part("login") RequestBody login,
-                                @Part("city") RequestBody city,
-                                @Part("location") RequestBody location);
-
-    @Multipart
-    @POST("user")
-    Single<ResponseBody> signUpWithAdditionPhotos3(@Part("name") RequestBody name,
-                                @Part("gender") RequestBody gender,
-                                @Part("age") RequestBody age,
-                                @Part("email") RequestBody email,
-                                @Part("password") RequestBody password,
-                                @Part MultipartBody.Part avatarSmall,
-                                @Part MultipartBody.Part avatarFull,
-                                @Part MultipartBody.Part additionPhoto1,
-                                @Part MultipartBody.Part additionPhoto2,
-                                @Part MultipartBody.Part additionPhoto3,
-                                @Part("login") RequestBody login,
-                                @Part("city") RequestBody city,
-                                @Part("location") RequestBody location);
-
-    @Multipart
-    @POST("user")
-    Single<ResponseBody> signUpFull(@Part("name") RequestBody name,
+    Single<Response<ResponseBody>> signUpFull(@Part("name") RequestBody name,
                                 @Part("gender") RequestBody gender,
                                 @Part("age") RequestBody age,
                                 @Part("email") RequestBody email,
@@ -115,26 +70,30 @@ public interface APIService {
     Single<ArrayList<UserDataFull>> getAllUsers();
 
     @GET("temporary")
-    Single<ArrayList<UserDataFull>> getTemporaryFavourite();
+    Single<ArrayList<UserDataFull>> getTemporaryFavourite(@Header("Cookie") String sessionIdAndToken);
 
     @GET("userFavorite")
     Single<ArrayList<UserDataFull>> getFavourite(@Header("Cookie") String sessionIdAndToken);
 
     @GET("favorite")
-    Single<ArrayList<UserDataFull>> getFavouriteByMe();
+    Single<ArrayList<UserDataFull>> getFavouriteByMe(@Header("Cookie") String sessionIdAndToken);
 
     @GET("history")
-    Single<ArrayList<UserDataFull>> getWatchers();
+    Single<ArrayList<UserDataFull>> getWatchers(@Header("Cookie") String sessionIdAndToken);
 
     @Multipart
     @POST("temporary")
-    Single<ResponseBody> addTemporaryFavourite(@Part("favorite") RequestBody favorite);
+    Single<ResponseBody> addTemporaryFavourite(@Header("Cookie") String sessionIdAndToken, @Part("favorite") RequestBody favorite);
 
     @Multipart
     @POST("favorite")
-    Single<ResponseBody> addFavourite(@Part("favorite") RequestBody favorite);
+    Single<ResponseBody> addFavourite(@Header("Cookie") String sessionIdAndToken, @Part("favorite") RequestBody favorite);
 
     @Multipart
     @POST("history")
-    Single<ResponseBody> addWatcher(@Part("id") RequestBody favorite);
+    Single<ResponseBody> addWatcher(@Header("Cookie") String sessionIdAndToken, @Part("id") RequestBody favorite);
+
+    @Multipart
+    @POST("addImage")
+    Single<ResponseBody> addPhoto(@Header("Cookie") String sessionIdAndToken, @Part MultipartBody.Part file);
 }

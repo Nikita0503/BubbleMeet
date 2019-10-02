@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
+import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.main.MainActivity;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
 import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
@@ -20,6 +21,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 import com.rockstar.bubblemeetapplication.singup.Fragment1;
 
@@ -148,6 +150,7 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
     }
 
     public void sendNewUser(){
+        mAPIUtils.setContext(mActivity.getApplicationContext());
         mUserData.setCity("");
         Log.d("signUpData", mUserData.getName());
         Log.d("signUpData", mUserData.getGender());
@@ -161,18 +164,12 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
         Disposable authDisposable = mAPIUtils.singUp(mUserData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
+                .subscribeWith(new DisposableSingleObserver<Response<ResponseBody>>() {
                     @Override
-                    public void onSuccess(ResponseBody value) {
+                    public void onSuccess(Response<ResponseBody> value) {
+                        Log.d("SingUp", value.headers().get("Set-Cookie"));
                         Log.d("Response", value.toString());
-                        SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("email", mUserData.getEmail());
-                        editor.putString("password", mUserData.getPassword());
-                        editor.commit();
-                        Intent intent = new Intent(mActivity, MainActivity.class);
-                        mActivity.startActivity(intent);
-                        mActivity.finish();
+                        authorization(mUserData.getEmail(), mUserData.getPassword());
                     }
 
                     @Override
@@ -195,6 +192,7 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
     }
 
     public void sendNewUserFull(){
+        mAPIUtils.setContext(mActivity.getApplicationContext());
         Log.d("signUpData", mUserData.getName());
         Log.d("signUpData", mUserData.getGender());
         Log.d("signUpData", mUserData.getYearsOld());
@@ -215,18 +213,12 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
         Disposable authDisposable = mAPIUtils.singUpFull(mUserData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
+                .subscribeWith(new DisposableSingleObserver<Response<ResponseBody>>() {
                     @Override
-                    public void onSuccess(ResponseBody value) {
+                    public void onSuccess(Response<ResponseBody> value) {
+                        Log.d("SingUp", value.headers().get("Set-Cookie"));
                         Log.d("Response", value.toString());
-                        SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("email", mUserData.getEmail());
-                        editor.putString("password", mUserData.getPassword());
-                        editor.commit();
-                        Intent intent = new Intent(mActivity, MainActivity.class);
-                        mActivity.startActivity(intent);
-                        mActivity.finish();
+                        authorization(mUserData.getEmail(), mUserData.getPassword());
                     }
 
                     @Override
@@ -246,6 +238,90 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                     }
                 });
         mDisposable.add(authDisposable);
+    }
+
+    public void authorization(final String email, final String password){
+        mAPIUtils.setContext(mActivity.getApplicationContext());
+        Log.d("authorization", email);
+        Log.d("authorization", password);
+        Disposable authDisposable = mAPIUtils.authorization(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Response<ResponseBody>>() {
+                    @Override
+                    public void onSuccess(Response<ResponseBody> response) {
+                        if(response.body()!=null) {
+                            Log.d("Auth", response.headers().get("Set-Cookie"));
+                            SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("email", email);
+                            editor.putString("password", password);
+                            editor.putString("session", response.headers().get("Set-Cookie"));
+                            editor.commit();
+                            if(mUserData.getAdditionalPhoto()!=null){
+                                addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto());
+                            }
+                            if(mUserData.getAdditionalPhoto2()!=null){
+                                addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto2());
+                            }
+                            if(mUserData.getAdditionalPhoto3()!=null){
+                                addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto3());
+                            }
+
+
+                        }else{
+                            mActivity.showMessage(mActivity.getResources().getString(R.string.userNot));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (e instanceof HttpException) {
+                            HttpException exception = (HttpException) e;
+                            ResponseBody responseBody = exception.response().errorBody();
+                            try {
+                                JSONObject responseError = new JSONObject(responseBody.string());
+                                Log.d("TAG", responseError.toString());
+                                mActivity.showMessage(responseError.getString("message"));
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+        mDisposable.add(authDisposable);
+    }
+
+    private void addPhoto(String login, File photo){
+        Disposable addPhotoDisposable = mAPIUtils.addPhoto(login, photo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ResponseBody>() {
+                    @Override
+                    public void onSuccess(ResponseBody response) {
+                        Log.d("additionPhotos", response.toString());
+                        Intent intent = new Intent(mActivity, MainActivity.class);
+                        mActivity.startActivity(intent);
+                        mActivity.finish();
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (e instanceof HttpException) {
+                            HttpException exception = (HttpException) e;
+                            ResponseBody responseBody = exception.response().errorBody();
+                            try {
+                                JSONObject responseError = new JSONObject(responseBody.string());
+                                Log.d("TAG", responseError.toString());
+                                mActivity.showMessage(responseError.getString("message"));
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+        mDisposable.add(addPhotoDisposable);
     }
 
     @Override

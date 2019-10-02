@@ -38,6 +38,7 @@ public class WatchersPresenter implements BaseContract.BasePresenter {
     }
 
     public void fetchWatchers(){
+        mAPIUtils.setContext(mFragment.getContext());
         Log.d("userWatchers", "user watchers...");
         Disposable disposableWatchers = mAPIUtils.getWatchers()
                 .subscribeOn(Schedulers.io())
@@ -45,6 +46,9 @@ public class WatchersPresenter implements BaseContract.BasePresenter {
                 .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
                     @Override
                     public void onSuccess(ArrayList<UserDataFull> users) {
+                        if(users.size() != 0){
+                            users = removeDuplicates(users);
+                        }
                         mFragment.setUsers(users);
                         Log.d("userWatchers", users.size()+"");
                     }
@@ -65,6 +69,23 @@ public class WatchersPresenter implements BaseContract.BasePresenter {
                     }
                 });
         mDisposable.add(disposableWatchers);
+    }
+
+    public ArrayList<UserDataFull> removeDuplicates(ArrayList<UserDataFull> users) {
+        ArrayList<UserDataFull> unique = new ArrayList<UserDataFull>();
+        unique.add(users.get(0));
+        for(int i = 1; i < users.size(); i++){
+            boolean isUnique = true;
+            for(int j = 0; j < unique.size(); j++){
+                if(users.get(i).id == unique.get(j).id){
+                    isUnique = false;
+                }
+            }
+            if(isUnique){
+                unique.add(users.get(i));
+            }
+        }
+        return unique;
     }
 
     @Override
