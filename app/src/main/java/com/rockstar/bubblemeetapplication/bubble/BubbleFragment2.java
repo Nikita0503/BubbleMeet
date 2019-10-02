@@ -42,7 +42,7 @@ import retrofit2.http.PATCH;
 
 public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
-    private static final int MAX_CLICK_DURATION = 75;
+    private static final int MAX_CLICK_DURATION = 100;
     private static final int MAX_MOVEMENT_DIFFERENCE = 20;
     private boolean isSlowed;
     private boolean isConnectTop;
@@ -67,6 +67,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int[] mXPrevious;
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
+    private double[] mMultiplies;
     private Filter mFilter;
     private BubblePresenter mPresenter;
     private ArrayList<UserDataFull> mUsers;
@@ -83,6 +84,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         mXPrevious = new int[mUsers.size()];
         mYPrevious = new int[mUsers.size()];
         mDiameterPrevious = new int[mUsers.size()];
+        mMultiplies = new double[mUsers.size()];
         initViews();
     }
 
@@ -242,9 +244,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private void isBubble(MotionEvent event){
         for(int i = 0; i < mLayout.getChildCount(); i++){
             AbsoluteLayout.LayoutParams paramsBubble = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
-            if(event.getX() > paramsBubble.x
+            if(event.getX() > paramsBubble.x + (mDefaultBubbleDiameter * (1 - mMultiplies[i])/2)
                     && event.getY() > paramsBubble.y
-                    && event.getX() < (paramsBubble.x + (paramsBubble.height))
+                    && event.getX() < (paramsBubble.x + (paramsBubble.height) + (mDefaultBubbleDiameter * (1 - mMultiplies[i])/2))
                     && event.getY() < (paramsBubble.y + (paramsBubble.height))){
                 Log.d("sizeWidth", paramsBubble.width + "");
                 Log.d("sizeHeight", paramsBubble.height + "");
@@ -385,7 +387,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
                 if(multiply > 1) multiply = 1;
                 //SCALING
-
+                mMultiplies[i] = multiply;
 
 
                 //MOVING
@@ -546,7 +548,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
             if(multiply > 1) multiply = 1;
             //SCALING
-
+            mMultiplies[i] = multiply;
             //MOVING
             if(!isConnectBottom && !isConnectRight && !isConnectTop && !isConnectLeft){
                 paramsBubble.x += mDifferenceX;

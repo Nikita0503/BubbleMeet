@@ -93,7 +93,7 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         doubleTap = false;
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        mAdapter = new ProfilePreviewCustomAdapter(getContext());
+        mAdapter = new ProfilePreviewCustomAdapter(getFragmentManager(), getContext(), mUsers);
         mRecyclerViewUsers.setLayoutManager(layoutManager);
         mRecyclerViewUsers.setAdapter(mAdapter);
         mTextViewName.setText(mUsers.get(mCurrentNumber).name);
@@ -115,25 +115,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
 
         mImageViewAvatar.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeTop() {
-                //Toast.makeText(getContext(), "top", Toast.LENGTH_SHORT).show();
-                //getActivity().onBackPressed();
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();
-                //FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                //BubbleFragment2 bubbleFragment = new BubbleFragment2();
-                ////ArrayList<UserData> users = new ArrayList<UserData>();
-                ////for(int i = 0; i < 800; i++){
-                ////    if(i % 2 != 0) {
-                ////        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
-                ////    }else {
-                ////        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
-                ////    }
-                ////}
-                //bubbleFragment.setUsers(mUsers);
-                //transaction.replace(R.id.root_fragment, bubbleFragment);
-                ////transaction.addToBackStack(null);
-                ////transaction.addToBackStack(null);
-                //transaction.commit();
             }
             public void onSwipeRight() {
                 boomAnimation(true);
