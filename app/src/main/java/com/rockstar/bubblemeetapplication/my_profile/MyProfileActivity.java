@@ -120,9 +120,9 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
                 }
             }
         }else{
-            mImageViewAdditionPhoto1.setVisibility(View.INVISIBLE);
-            mImageViewAdditionPhoto2.setVisibility(View.INVISIBLE);
-            mImageViewAdditionPhoto3.setVisibility(View.INVISIBLE);
+            mImageViewAdditionPhoto1.setVisibility(View.GONE);
+            mImageViewAdditionPhoto2.setVisibility(View.GONE);
+            mImageViewAdditionPhoto3.setVisibility(View.GONE);
         }
         mTextViewName.setText(userData.name);
         String yearsOldAndCity = "";

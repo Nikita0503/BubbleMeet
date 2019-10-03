@@ -258,16 +258,21 @@ public class SignUpPresenter implements BaseContract.BasePresenter {
                             editor.putString("password", password);
                             editor.putString("session", response.headers().get("Set-Cookie"));
                             editor.commit();
-                            if(mUserData.getAdditionalPhoto()!=null){
-                                addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto());
+                            if(mUserData.getAdditionalPhoto() == null && mUserData.getAdditionalPhoto2() == null && mUserData.getAdditionalPhoto3() == null){
+                                Intent intent = new Intent(mActivity, MainActivity.class);
+                                mActivity.startActivity(intent);
+                                mActivity.finish();
+                            }else {
+                                if (mUserData.getAdditionalPhoto() != null) {
+                                    addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto());
+                                }
+                                if (mUserData.getAdditionalPhoto2() != null) {
+                                    addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto2());
+                                }
+                                if (mUserData.getAdditionalPhoto3() != null) {
+                                    addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto3());
+                                }
                             }
-                            if(mUserData.getAdditionalPhoto2()!=null){
-                                addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto2());
-                            }
-                            if(mUserData.getAdditionalPhoto3()!=null){
-                                addPhoto(mUserData.getLogin(), mUserData.getAdditionalPhoto3());
-                            }
-
 
                         }else{
                             mActivity.showMessage(mActivity.getResources().getString(R.string.userNot));
