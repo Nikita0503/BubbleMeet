@@ -52,90 +52,18 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         mDisposable = new CompositeDisposable();
     }
 
-    public void setFilter(Filter filter){
+    public ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users, Filter filter){
         mFilter = filter;
-    }
-
-    public void fetchAllUsers(){
-        mAPIUtils.setContext(mFragment.getContext());
-        Disposable usersDisposable = mAPIUtils.getAllUsers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
-                    @Override
-                    public void onSuccess(ArrayList<UserDataFull> userData) {
-                        //Collections.shuffle(userData);
-                        for(int i = 0; i < userData.size(); i++) {
-                            SharedPreferences pref = mFragment.getActivity().getSharedPreferences("BubbleMeet", MODE_PRIVATE);
-                            String email = pref.getString("email", "");
-                            if(userData.get(i).email.equals(email)){
-                                userData.remove(i);
-                                break;
-                            }
-                        }
-
-                        ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
-                        for(int i = 0; i < 49; i++){
-                            users.add(userData.get(i));
-                        }
-
-                        if(mFilter != null){
-                            Log.d("Filter", mFilter.gender);
-                            Log.d("Filter", mFilter.age);
-                            Log.d("Filter", mFilter.distance);
-                            Log.d("Filter", mFilter.eyeColor);
-                            Log.d("Filter", mFilter.height);
-                            Log.d("Filter", mFilter.smoking);
-                            Log.d("Filter", mFilter.married);
-                            Log.d("Filter", mFilter.children);
-                            Log.d("Filter", mFilter.lookingFor);
-                            Log.d("Filter", mFilter.loveToCook);
-                            users = filter(users);
-                        }else{
-                            Log.d("Filter", "null");
-                        }
-                        downloadPhotos(users);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        if (e instanceof HttpException) {
-                            HttpException exception = (HttpException) e;
-                            ResponseBody responseBody = exception.response().errorBody();
-                            try {
-                                JSONObject responseError = new JSONObject(responseBody.string());
-                                Log.d("TAG", responseError.toString());
-                                mFragment.showMessage(responseError.getString("message"));
-                            } catch (Exception e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-                });
-        mDisposable.add(usersDisposable);
-    }
-
-    public void downloadPhotos(final ArrayList<UserDataFull> users){
-        Disposable data = mAPIUtils.fetchPhotos(users)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
-                    @Override
-                    public void onSuccess(ArrayList<UserDataFull> value) {
-                        mFragment.setUsers(users);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                });
-        mDisposable.add(data);
-    }
-
-    public ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users){
+        Log.d("Filter", mFilter.gender);
+        Log.d("Filter", mFilter.age);
+        Log.d("Filter", mFilter.distance);
+        Log.d("Filter", mFilter.eyeColor);
+        Log.d("Filter", mFilter.height);
+        Log.d("Filter", mFilter.smoking);
+        Log.d("Filter", mFilter.married);
+        Log.d("Filter", mFilter.children);
+        Log.d("Filter", mFilter.lookingFor);
+        Log.d("Filter", mFilter.loveToCook);
         if(!mFilter.gender.equals("")) {
             users = filterGender(users);
         }
@@ -354,29 +282,6 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         }
         return userList;
     }
-    //public void fetchAllUsers(ArrayList<UserDataFull> users){
-    //    mAPIUtils.setContext(mFragment.getContext());
-    //    if(mFilter != null){
-    //        Log.d("Filter", mFilter.gender);
-    //        Log.d("Filter", mFilter.age);
-    //        Log.d("Filter", mFilter.distance);
-    //        Log.d("Filter", mFilter.eyeColor);
-    //        Log.d("Filter", mFilter.height);
-    //        Log.d("Filter", mFilter.smoking);
-    //        Log.d("Filter", mFilter.married);
-    //        Log.d("Filter", mFilter.children);
-    //        Log.d("Filter", mFilter.lookingFor);
-    //        Log.d("Filter", mFilter.loveToCook);
-    //        users = filter(users);
-    //    }else{
-    //        Log.d("Filter", "null");
-    //    }
-    //    mFragment.setUsers(users);
-    //}
-
-
-
-
     @Override
     public void onStop() {
         mDisposable.clear();

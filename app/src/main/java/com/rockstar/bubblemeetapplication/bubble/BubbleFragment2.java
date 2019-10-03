@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.Size;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -42,7 +43,7 @@ import retrofit2.http.PATCH;
 
 public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
-    private static final int MAX_CLICK_DURATION = 100;
+    private static final int MAX_CLICK_DURATION = 75;
     private static final int MAX_MOVEMENT_DIFFERENCE = 20;
     private boolean isSlowed;
     private boolean isConnectTop;
@@ -68,6 +69,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     private int[] mYPrevious;
     private int[] mDiameterPrevious;
     private double[] mMultiplies;
+    private Point mSize;
     private Filter mFilter;
     private BubblePresenter mPresenter;
     private ArrayList<UserDataFull> mUsers;
@@ -78,14 +80,18 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
     }
 
     public void setUsers(ArrayList<UserDataFull> users){
+        mPresenter = new BubblePresenter(this);
+        mPresenter.onStart();
         mUsers = users;
+        if(mFilter != null){
+            mUsers = mPresenter.filter(mUsers, mFilter);
+        }
         mDefaultYMinSize = new int[mUsers.size()];
         mDefaultYMaxSize = new int[mUsers.size()];
         mXPrevious = new int[mUsers.size()];
         mYPrevious = new int[mUsers.size()];
         mDiameterPrevious = new int[mUsers.size()];
         mMultiplies = new double[mUsers.size()];
-        initViews();
     }
 
     @Override
@@ -97,14 +103,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mPresenter = new BubblePresenter(this);
-        mPresenter.onStart();
-        if(mFilter != null){
-            mPresenter.setFilter(mFilter);
-        }
-        mPresenter.fetchAllUsers();
         mLayout = (AbsoluteLayout) view.findViewById(R.id.layout);
         Log.d("ViewCreated", "+");
+        initViews();
     }
 
     @Override
@@ -116,6 +117,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+        mSize = size;
         mDefaultBubbleDiameter = (int) (size.x / 2.15);
         mDisplayCenterX = (size.x / 2);
         mDisplayCenterX -= mDisplayCenterX/21;
@@ -413,6 +415,16 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     }
                     if (multiply == 0) {
                         paramsBubble.y = mDefaultYMinSize[i];
+                        if(i == 0){
+                            AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
+                            AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(mRows).getLayoutParams();
+                            params.y = mDefaultYMinSize[1];
+                            params.x = params2.x - (int) (mSize.x / 2.45) / 2;
+                            if(params.height != 0) {
+                                params.y += (mDiameterPrevious[0] - params.height) / 2;
+                            }
+                            mLayout.getChildAt(0).setLayoutParams(params);
+                        }
 
                     }
                     if( multiply == 1){
@@ -572,7 +584,16 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 }
                 if (multiply == 0) {
                     paramsBubble.y = mDefaultYMinSize[i];
-
+                    if(i == 0){
+                        AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
+                        AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(mRows).getLayoutParams();
+                        params.y = mDefaultYMinSize[1];
+                        params.x = params2.x - (int) (mSize.x / 2.45) / 2;
+                        if(params.height != 0) {
+                            params.y += (mDiameterPrevious[0] - params.height) / 2;
+                        }
+                        mLayout.getChildAt(0).setLayoutParams(params);
+                    }
                 }
                 if( multiply == 1){
                     paramsBubble.y = mDefaultYMaxSize[i];
@@ -582,7 +603,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     if (isTopSideMoving) {
                         paramsBubble.y += mDifferenceY;
                         mDefaultYMinSize[i] += mDifferenceY;
-                        mDefaultYMaxSize[i] += mDifferenceY;
                     }
                 }
                 if(isConnectRight) {
@@ -594,7 +614,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     if (!isTopSideMoving){
                         paramsBubble.y += mDifferenceY;
                         mDefaultYMinSize[i] += mDifferenceY;
-                        mDefaultYMaxSize[i] += mDifferenceY;
                     }
                 }
                 if(isConnectLeft) {

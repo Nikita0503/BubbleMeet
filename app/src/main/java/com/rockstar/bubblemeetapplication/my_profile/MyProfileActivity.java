@@ -89,12 +89,14 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
     public void setData(UserDataFull userData){
         Picasso.with(getApplicationContext())
                 .load("http://185.25.116.211:11000/image/" + userData.avatarFull)
+                .placeholder(R.drawable.background_loading)
                 .into(mImageViewAvatar);
         if(userData.photo.size() != 0) {
             if(userData.photo.get(0) != null){
                 mImageViewAdditionPhoto1.setVisibility(View.VISIBLE);
                 Picasso.with(getApplicationContext())
                         .load("http://185.25.116.211:11000/image/" + userData.photo.get(0))
+                        .placeholder(R.drawable.background_loading)
                         .into(mImageViewAdditionPhoto1);
             }else {
                 mImageViewAdditionPhoto1.setVisibility(View.INVISIBLE);
@@ -104,6 +106,7 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
                     mImageViewAdditionPhoto2.setVisibility(View.VISIBLE);
                     Picasso.with(getApplicationContext())
                             .load("http://185.25.116.211:11000/image/" + userData.photo.get(1))
+                            .placeholder(R.drawable.background_loading)
                             .into(mImageViewAdditionPhoto2);
                 } else {
                     mImageViewAdditionPhoto2.setVisibility(View.INVISIBLE);
@@ -114,6 +117,7 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
                     mImageViewAdditionPhoto3.setVisibility(View.VISIBLE);
                     Picasso.with(getApplicationContext())
                             .load("http://185.25.116.211:11000/image/" + userData.photo.get(2))
+                            .placeholder(R.drawable.background_loading)
                             .into(mImageViewAdditionPhoto3);
                 } else {
                     mImageViewAdditionPhoto3.setVisibility(View.INVISIBLE);
@@ -144,25 +148,25 @@ public class MyProfileActivity extends AppCompatActivity implements BaseContract
         }
         if(userData.loveCook == 1){
             addInfo(getResources().getString(R.string.cookingInfo));
-        }else{
+        }else if(userData.loveCook == 0){
             addInfo(getResources().getString(R.string.not)
                     + " " + getResources().getString(R.string.cookingInfo));
         }
         if(userData.smoking == 1){
             addInfo(getResources().getString(R.string.smokingInfo));
-        }else{
+        }else if(userData.smoking == 0){
             addInfo(getResources().getString(R.string.not)
                     + " " + getResources().getString(R.string.smokingInfo));
         }
         if(userData.marred == 1){
             addInfo(getResources().getString(R.string.marriedInfo));
-        }else{
+        }else if(userData.marred == 0){
             addInfo(getResources().getString(R.string.not)
                     + " " + getResources().getString(R.string.marriedInfo));
         }
         if(userData.children == 1){
             addInfo(getResources().getString(R.string.childrenInfo));
-        }else{
+        }else if(userData.children == 0){
             addInfo(getResources().getString(R.string.no)
                     + " " + getResources().getString(R.string.childrenInfo));
         }

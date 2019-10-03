@@ -77,4 +77,11 @@ public class UserDataFull {
     @Expose
     public String timeOnline;
     public Bitmap bitmap;
+
+    public UserDataFull(){
+        loveCook = -1;
+        smoking = -1;
+        marred = -1;
+        children = -1;
+    }
 }

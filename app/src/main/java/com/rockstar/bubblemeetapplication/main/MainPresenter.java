@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -37,7 +38,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MainPresenter implements BaseContract.BasePresenter {
 
-    private Filter mFilter;
     private ArrayList<UserDataFull> mUsers;
     private CompositeDisposable mDisposable;
     private APIUtils mAPIUtils;
@@ -46,13 +46,15 @@ public class MainPresenter implements BaseContract.BasePresenter {
     public MainPresenter(MainActivity activity){
         mActivity = activity;
         mAPIUtils = new APIUtils();
-        mUsers = new ArrayList<UserDataFull>();
     }
 
     @Override
     public void onStart() {
         mDisposable = new CompositeDisposable();
-        fetchData();
+        if(mUsers == null) {
+            fetchData();
+            fetchAllUsers();
+        }
     }
 
     public ArrayList<UserDataFull> getUsers(){
@@ -85,7 +87,72 @@ public class MainPresenter implements BaseContract.BasePresenter {
         mDisposable.add(disposableMyProfile);
     }
 
+    public void fetchAllUsers(){
+        mAPIUtils.setContext(mActivity.getApplicationContext());
+        Disposable usersDisposable = mAPIUtils.getAllUsers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
+                    @Override
+                    public void onSuccess(ArrayList<UserDataFull> userData) {
+                        //Collections.shuffle(userData);
+                        for(int i = 0; i < userData.size(); i++) {
+                            SharedPreferences pref = mActivity.getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+                            String email = pref.getString("email", "");
+                            if(userData.get(i).email.equals(email)){
+                                userData.remove(i);
+                                break;
+                            }
+                        }
 
+                        //ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
+                        //for(int i = 0; i < 49; i++){
+                        //    users.add(userData.get(i));
+                        //}
+
+
+                        downloadPhotos(userData);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (e instanceof HttpException) {
+                            HttpException exception = (HttpException) e;
+                            ResponseBody responseBody = exception.response().errorBody();
+                            try {
+                                JSONObject responseError = new JSONObject(responseBody.string());
+                                Log.d("TAG", responseError.toString());
+                                mActivity.showMessage(responseError.getString("message"));
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+        mDisposable.add(usersDisposable);
+    }
+
+    public void downloadPhotos(final ArrayList<UserDataFull> users){
+        Disposable data = mAPIUtils.fetchPhotos(users)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
+                    @Override
+                    public void onSuccess(ArrayList<UserDataFull> value) {
+                        Collections.shuffle(value);
+                        mUsers = value;
+                        mActivity.setUsers(value);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                });
+        mDisposable.add(data);
+    }
 
     @Override
     public void onStop() {

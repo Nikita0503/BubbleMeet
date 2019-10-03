@@ -94,25 +94,25 @@ public class ProfileFragment extends Fragment implements BaseContract.BaseView  
         }
         if(mUser.loveCook == 1){
             addInfo(getResources().getString(R.string.cookingInfo));
-        }else{
+        }else if(mUser.loveCook == 0){
             addInfo(getResources().getString(R.string.not)
                     + " " + getResources().getString(R.string.cookingInfo));
         }
         if(mUser.smoking == 1){
             addInfo(getResources().getString(R.string.smokingInfo));
-        }else{
+        }else if(mUser.smoking == 0){
             addInfo(getResources().getString(R.string.not)
                     + " " + getResources().getString(R.string.smokingInfo));
         }
         if(mUser.marred == 1){
             addInfo(getResources().getString(R.string.marriedInfo));
-        }else{
+        }else if(mUser.marred == 0){
             addInfo(getResources().getString(R.string.not)
                     + " " + getResources().getString(R.string.marriedInfo));
         }
         if(mUser.children == 1){
             addInfo(getResources().getString(R.string.childrenInfo));
-        }else{
+        }else if(mUser.children == 0){
             addInfo(getResources().getString(R.string.no)
                     + " " + getResources().getString(R.string.childrenInfo));
         }

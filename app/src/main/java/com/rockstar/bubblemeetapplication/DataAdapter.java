@@ -76,11 +76,17 @@ public class DataAdapter extends BaseAdapter {
         });
         Picasso.with(mActivity.getApplicationContext())
                 .load("http://185.25.116.211:11000/image/" + mUsers.get(position).avatarSmall)
+                .placeholder(R.drawable.background_loading)
                 .into(imageView);
 
         //imageView.setImageResource(com.rockstar.bubblemeetapplication.R.drawable.circle_for_photo_gray);
 
         return grid;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public void setUsers(ArrayList<UserDataFull> users){

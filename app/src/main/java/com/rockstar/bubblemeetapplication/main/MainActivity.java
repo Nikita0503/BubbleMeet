@@ -120,22 +120,10 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 showButtonFilters();
                 resetMenuIcons();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                //BubbleFragment bubbleFragment = new BubbleFragment();
-                //transaction.replace(R.id.root_fragment, bubbleFragment);
-
-
-                //ArrayList<UserData> users = new ArrayList<UserData>();
-                //for(int i = 0; i < 700; i++){
-                //    if(i % 2 != 0) {
-                //        users.add(new UserData(i, "Name" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
-                //    }else {
-                //        users.add(new UserData(i, "Name" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
-                //    }
-                //}
-                //bubbleFragment.setUsers(users);
                 BubbleFragment2 fragmentBubbles = new BubbleFragment2();
+                fragmentBubbles.setFilter(null);
+                fragmentBubbles.setUsers(mPresenter.getUsers());
                 transaction.replace(R.id.root_fragment, fragmentBubbles);
-
                 //transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -168,12 +156,12 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 transaction.commit();
             }
         });
-        showButtonFilters();
-        resetMenuIcons();
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        BubbleFragment2 fragmentBubbles = new BubbleFragment2();
-        transaction.replace(R.id.root_fragment, fragmentBubbles);
-        transaction.commit();
+        mImageViewMatches.setEnabled(false);
+        mImageViewLikes.setEnabled(false);
+        mImageViewBubble.setEnabled(false);
+        mImageViewWatchers.setEnabled(false);
+        mImageViewInbox.setEnabled(false);
+        mImageViewProfile.setEnabled(false);
     }
 
     public void showButtonBack(){
@@ -202,13 +190,42 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
     }
 
     public void setData(UserDataFull userData){
-        Picasso.with(getApplicationContext()).load("http://185.25.116.211:11000/image/" + userData.avatarSmall).transform(new CircleTransform(0)).into(mImageViewProfile);
+        Picasso.with(getApplicationContext())
+                .load("http://185.25.116.211:11000/image/" + userData.avatarSmall)
+                .placeholder(R.drawable.background_loading)
+                .transform(new CircleTransform(0))
+                .into(mImageViewProfile);
     }
 
+    public void setUsers(ArrayList<UserDataFull> users){
+        mImageViewMatches.setEnabled(true);
+        mImageViewLikes.setEnabled(true);
+        mImageViewBubble.setEnabled(true);
+        mImageViewWatchers.setEnabled(true);
+        mImageViewInbox.setEnabled(true);
+        mImageViewProfile.setEnabled(true);
+        mImageViewFilters.setVisibility(View.VISIBLE);
+        showButtonFilters();
+        resetMenuIcons();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        BubbleFragment2 fragmentBubbles = new BubbleFragment2();
+        fragmentBubbles.setFilter(null);
+        fragmentBubbles.setUsers(users);
+        transaction.replace(R.id.root_fragment, fragmentBubbles);
+        //transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {
+            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+            BubbleFragment2 fragmentBubbles = new BubbleFragment2();
+            fragmentBubbles.setFilter(null);
+            fragmentBubbles.setUsers(mPresenter.getUsers());
+            transaction.replace(R.id.root_fragment, fragmentBubbles);
+            //transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss();
             return;
         }
         Log.d("Filter", "OK");
@@ -226,9 +243,11 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
         showButtonFilters();
         resetMenuIcons();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        BubbleFragment2 bubbleFragment = new BubbleFragment2();
-        bubbleFragment.setFilter(filter);
-        transaction.replace(R.id.root_fragment, bubbleFragment);
+        BubbleFragment2 fragmentBubbles = new BubbleFragment2();
+        fragmentBubbles.setFilter(filter);
+        fragmentBubbles.setUsers(mPresenter.getUsers());
+        transaction.replace(R.id.root_fragment, fragmentBubbles);
+        //transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
     }
 
