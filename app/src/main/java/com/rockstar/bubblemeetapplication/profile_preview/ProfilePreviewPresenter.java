@@ -53,6 +53,7 @@ public class ProfilePreviewPresenter implements BaseContract.BasePresenter {
                     @Override
                     public void onSuccess(ResponseBody value) {
                         Log.d("addFavourite", value.toString());
+                        mFragment.imageVIewLikeInvisible();
                     }
 
                     @Override

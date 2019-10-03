@@ -101,11 +101,11 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
         mImageViewLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mImageViewLike.setVisibility(View.INVISIBLE);
                 mImageViewBoom.setVisibility(View.VISIBLE);
                 Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.scale_like);
                 mImageViewBoom.startAnimation(animation);
                 mPresenter.addFavourite(mUsers.get(mCurrentNumber).id);
+                mImageViewLike.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -202,6 +202,10 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             }
         });
         mImageViewBubbles.setAnimation(animationAlphaBubbles);
+    }
+
+    public void imageVIewLikeInvisible(){
+        mImageViewLike.setVisibility(View.INVISIBLE);
     }
 
     public void setTemporaryFavourite(ArrayList<UserDataFull> users){

@@ -1,11 +1,20 @@
 package com.rockstar.bubblemeetapplication.main;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
 import com.rockstar.bubblemeetapplication.model.Utils.APIUtils;
+import com.rockstar.bubblemeetapplication.model.data.Coordinates;
+import com.rockstar.bubblemeetapplication.model.data.Filter;
 import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.singup.SignUpActivity;
@@ -28,6 +37,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MainPresenter implements BaseContract.BasePresenter {
 
+    private Filter mFilter;
+    private ArrayList<UserDataFull> mUsers;
     private CompositeDisposable mDisposable;
     private APIUtils mAPIUtils;
     private MainActivity mActivity;
@@ -35,12 +46,17 @@ public class MainPresenter implements BaseContract.BasePresenter {
     public MainPresenter(MainActivity activity){
         mActivity = activity;
         mAPIUtils = new APIUtils();
+        mUsers = new ArrayList<UserDataFull>();
     }
 
     @Override
     public void onStart() {
         mDisposable = new CompositeDisposable();
         fetchData();
+    }
+
+    public ArrayList<UserDataFull> getUsers(){
+        return mUsers;
     }
 
     public void fetchData(){
@@ -68,6 +84,8 @@ public class MainPresenter implements BaseContract.BasePresenter {
                 });
         mDisposable.add(disposableMyProfile);
     }
+
+
 
     @Override
     public void onStop() {

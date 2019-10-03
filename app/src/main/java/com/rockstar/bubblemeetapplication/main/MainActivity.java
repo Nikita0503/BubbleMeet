@@ -32,17 +32,17 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements BaseContract.BaseView {
 
-    FragmentManager mFragmentManager;
-    MainPresenter mPresenter;
+    private FragmentManager mFragmentManager;
+    private MainPresenter mPresenter;
 
-    ImageView mImageViewBack;
-    ImageView mImageViewFilters;
-    ImageView mImageViewProfile;
-    ImageView mImageViewMatches;
-    ImageView mImageViewLikes;
-    ImageView mImageViewBubble;
-    ImageView mImageViewWatchers;
-    ImageView mImageViewInbox;
+    private ImageView mImageViewBack;
+    private ImageView mImageViewFilters;
+    private ImageView mImageViewProfile;
+    private ImageView mImageViewMatches;
+    private ImageView mImageViewLikes;
+    private ImageView mImageViewBubble;
+    private ImageView mImageViewWatchers;
+    private ImageView mImageViewInbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 //BubbleFragment bubbleFragment = new BubbleFragment();
                 //transaction.replace(R.id.root_fragment, bubbleFragment);
 
-                BubbleFragment2 bubbleFragment = new BubbleFragment2();
+
                 //ArrayList<UserData> users = new ArrayList<UserData>();
                 //for(int i = 0; i < 700; i++){
                 //    if(i % 2 != 0) {
@@ -133,7 +133,8 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 //    }
                 //}
                 //bubbleFragment.setUsers(users);
-                transaction.replace(R.id.root_fragment, bubbleFragment);
+                BubbleFragment2 fragmentBubbles = new BubbleFragment2();
+                transaction.replace(R.id.root_fragment, fragmentBubbles);
 
                 //transaction.addToBackStack(null);
                 transaction.commit();
@@ -167,19 +168,11 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
                 transaction.commit();
             }
         });
+        showButtonFilters();
+        resetMenuIcons();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        BubbleFragment2 bubbleFragment = new BubbleFragment2();
-        //ArrayList<UserData> users = new ArrayList<UserData>();
-        //for(int i = 0; i < 700; i++){
-        //    if(i % 2 != 0) {
-        //        users.add(new UserData(i, "Vault Boy" + i, "one's city", "https://i.citrus.ua/uploads/content/product-photos/fedenicheva/April/image.jpg"));
-        //    }else {
-        //        users.add(new UserData(i, "Gaben" + i, "one's city", "https://cdn.wccftech.com/wp-content/uploads/2017/10/WCCFgabenewell-740x429.jpg"));
-        //    }
-        //}
-        //bubbleFragment.setUsers(users);
-        transaction.replace(R.id.root_fragment, bubbleFragment);
-        transaction.addToBackStack(null);
+        BubbleFragment2 fragmentBubbles = new BubbleFragment2();
+        transaction.replace(R.id.root_fragment, fragmentBubbles);
         transaction.commit();
     }
 
@@ -209,8 +202,9 @@ public class MainActivity extends AppCompatActivity implements BaseContract.Base
     }
 
     public void setData(UserDataFull userData){
-        Picasso.with(getApplicationContext()).load("http://185.25.116.211:11000/image/" + userData.avatarSmall).transform(new CircleTransform()).into(mImageViewProfile);
+        Picasso.with(getApplicationContext()).load("http://185.25.116.211:11000/image/" + userData.avatarSmall).transform(new CircleTransform(0)).into(mImageViewProfile);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

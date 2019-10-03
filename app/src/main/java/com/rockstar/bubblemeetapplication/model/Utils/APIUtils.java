@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
@@ -11,21 +12,30 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.rockstar.bubblemeetapplication.CircleTransform;
 import com.rockstar.bubblemeetapplication.R;
 import com.rockstar.bubblemeetapplication.model.data.Coordinates;
 import com.rockstar.bubblemeetapplication.model.data.SignUpUserData;
 import com.rockstar.bubblemeetapplication.model.data.UserDataFull;
 import com.rockstar.bubblemeetapplication.singup.SignUpActivity;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -237,7 +247,21 @@ public class APIUtils {
         return apiService.forgotPassword(requestBodyEmail);
     }
 
-
+    public Single<ArrayList<UserDataFull>> fetchPhotos(final ArrayList<UserDataFull> users){
+        return Single.create(new SingleOnSubscribe<ArrayList<UserDataFull>>() {
+            @Override
+            public void subscribe(SingleEmitter<ArrayList<UserDataFull>> e) throws Exception {
+                for(int i = 0; i < users.size(); i++){
+                    Bitmap image = Picasso.with(mContext)
+                            .load("http://185.25.116.211:11000/image/" + users.get(i).avatarSmall)
+                            .transform(new CircleTransform(0))
+                            .get();
+                    users.get(i).bitmap = image;
+                }
+                e.onSuccess(users);
+            }
+        });
+    }
 
     public static Retrofit getClient(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()

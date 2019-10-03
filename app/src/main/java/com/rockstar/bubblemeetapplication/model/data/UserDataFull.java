@@ -1,6 +1,9 @@
 
 package com.rockstar.bubblemeetapplication.model.data;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -73,5 +76,5 @@ public class UserDataFull {
     @SerializedName("timeOnline")
     @Expose
     public String timeOnline;
-
+    public Bitmap bitmap;
 }

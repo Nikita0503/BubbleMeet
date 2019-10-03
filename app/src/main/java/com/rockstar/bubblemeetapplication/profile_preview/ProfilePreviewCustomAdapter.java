@@ -47,7 +47,7 @@ public class ProfilePreviewCustomAdapter extends RecyclerView.Adapter<ProfilePre
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Picasso.with(mContext)
                 .load("http://185.25.116.211:11000/image/" + mUsers.get(position).avatarSmall)
-                .transform(new CircleTransform())
+                .transform(new CircleTransform(0))
                 .into(holder.imageViewAvatar);
         holder.itemView.setOnTouchListener(new View.OnTouchListener() {
             @Override

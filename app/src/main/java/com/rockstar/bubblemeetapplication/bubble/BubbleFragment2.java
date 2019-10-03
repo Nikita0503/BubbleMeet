@@ -113,7 +113,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         activity.hideButtonBack();
         activity.showButtonFilters();
         activity.resetMenuIcons();
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         mDefaultBubbleDiameter = (int) (size.x / 2.15);
@@ -140,7 +140,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             //if(mUsers.get(i).email.equals("valakas228@gmail.com")){
             //    Picasso.with(getContext()).load("https://memepedia.ru/wp-content/uploads/2018/06/unnamed-768x768.jpg").transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
             //}else{
-                Picasso.with(getContext()).load("http://185.25.116.211:11000/image/" + mUsers.get(i).avatarSmall).transform(new CircleTransform()).into((ImageView) mLayout.getChildAt(i));
+            ((ImageView) mLayout.getChildAt(i)).setImageBitmap(mUsers.get(i).bitmap);
+
             //}
 
         }
@@ -152,6 +153,13 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 paramsBubbleNew.y += mDefaultBubbleDiameter * (-mRows / 4);
             }
         }else{
+            if(mLayout.getChildCount()==1) {
+                for (int i = 0; i < mLayout.getChildCount(); i++) {
+                    AbsoluteLayout.LayoutParams paramsBubbleNew = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(i).getLayoutParams();
+                    paramsBubbleNew.x += mDisplayCenterX - mDefaultBubbleDiameter/2;
+                    paramsBubbleNew.y += mDisplayCenterY;
+                }
+            }
             Log.d("bubbles", "mFilter-");
         }
 
@@ -415,8 +423,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         if (isTopSideMoving) {
                             paramsBubble.y += mDifferenceY;
                             mDefaultYMinSize[i] += mDifferenceY;
-
                         }
+
                     }
                     if(isConnectRight) {
                         if (!isRightSideMoving) {

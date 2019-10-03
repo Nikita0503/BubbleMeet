@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
@@ -22,10 +23,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
@@ -63,18 +66,16 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                     public void onSuccess(ArrayList<UserDataFull> userData) {
                         //Collections.shuffle(userData);
                         for(int i = 0; i < userData.size(); i++) {
-                            SharedPreferences pref = mFragment.getContext().getSharedPreferences("BubbleMeet", MODE_PRIVATE);
+                            SharedPreferences pref = mFragment.getActivity().getSharedPreferences("BubbleMeet", MODE_PRIVATE);
                             String email = pref.getString("email", "");
                             if(userData.get(i).email.equals(email)){
                                 userData.remove(i);
                                 break;
                             }
                         }
+
                         ArrayList<UserDataFull> users = new ArrayList<UserDataFull>();
-                        for(int i = 0; i < 49; i++) {
-                            Log.d("Response", userData.get(i).name);
-                            Log.d("Response", userData.get(i).avatarSmall);
-                            Log.d("Response", userData.get(i).loveCook+"");
+                        for(int i = 0; i < 49; i++){
                             users.add(userData.get(i));
                         }
 
@@ -93,7 +94,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
                         }else{
                             Log.d("Filter", "null");
                         }
-                        mFragment.setUsers(users); //TODO:
+                        downloadPhotos(users);
                     }
 
                     @Override
@@ -115,7 +116,26 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         mDisposable.add(usersDisposable);
     }
 
-    private ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users){
+    public void downloadPhotos(final ArrayList<UserDataFull> users){
+        Disposable data = mAPIUtils.fetchPhotos(users)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ArrayList<UserDataFull>>() {
+                    @Override
+                    public void onSuccess(ArrayList<UserDataFull> value) {
+                        mFragment.setUsers(users);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                });
+        mDisposable.add(data);
+    }
+
+    public ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users){
         if(!mFilter.gender.equals("")) {
             users = filterGender(users);
         }
@@ -334,6 +354,27 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         }
         return userList;
     }
+    //public void fetchAllUsers(ArrayList<UserDataFull> users){
+    //    mAPIUtils.setContext(mFragment.getContext());
+    //    if(mFilter != null){
+    //        Log.d("Filter", mFilter.gender);
+    //        Log.d("Filter", mFilter.age);
+    //        Log.d("Filter", mFilter.distance);
+    //        Log.d("Filter", mFilter.eyeColor);
+    //        Log.d("Filter", mFilter.height);
+    //        Log.d("Filter", mFilter.smoking);
+    //        Log.d("Filter", mFilter.married);
+    //        Log.d("Filter", mFilter.children);
+    //        Log.d("Filter", mFilter.lookingFor);
+    //        Log.d("Filter", mFilter.loveToCook);
+    //        users = filter(users);
+    //    }else{
+    //        Log.d("Filter", "null");
+    //    }
+    //    mFragment.setUsers(users);
+    //}
+
+
 
 
     @Override

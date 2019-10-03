@@ -12,6 +12,11 @@ import com.squareup.picasso.Transformation;
 public class CircleTransform implements Transformation {
 
     private static final int STROKE_WIDTH = 6;
+    private int mRadius;
+
+    public CircleTransform(int radius){
+        mRadius = radius;
+    }
 
     @Override
     public Bitmap transform(Bitmap source) {
@@ -38,8 +43,12 @@ public class CircleTransform implements Transformation {
         BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
         paint.setShader(shader);
         paint.setAntiAlias(true);
-
-        float r = size/2f;
+        float r = 0;
+        if(mRadius == 0) {
+            r = size / 2f;
+        }else{
+            r = mRadius/2f;
+        }
         canvas.drawCircle(r, r, r, paintBackgroundBlue);
         canvas.drawCircle(r, r, r-r/20, paintBackgroundPurple);
         canvas.drawCircle(r, r, r-r/12, paint);
