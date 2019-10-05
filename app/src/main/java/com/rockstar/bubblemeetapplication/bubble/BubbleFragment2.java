@@ -83,9 +83,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
         mPresenter = new BubblePresenter(this);
         mPresenter.onStart();
         mUsers = users;
-        if(mFilter != null){
-            mUsers = mPresenter.filter(mUsers, mFilter);
-        }
+
         mDefaultYMinSize = new int[mUsers.size()];
         mDefaultYMaxSize = new int[mUsers.size()];
         mXPrevious = new int[mUsers.size()];
@@ -110,6 +108,9 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
 
     @Override
     public void initViews() {
+        if(mFilter != null){
+            mUsers = mPresenter.filter(mUsers, mFilter, getActivity());
+        }
         MainActivity activity = (MainActivity) getActivity();
         activity.hideButtonBack();
         activity.showButtonFilters();
@@ -171,7 +172,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
             mDefaultYMinSize[i] = paramsBubble.y ;
 
         }
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 10; i++) {
             start();
         }
 

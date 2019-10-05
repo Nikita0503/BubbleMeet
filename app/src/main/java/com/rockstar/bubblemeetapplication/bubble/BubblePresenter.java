@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.rockstar.bubblemeetapplication.BaseContract;
@@ -52,7 +53,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         mDisposable = new CompositeDisposable();
     }
 
-    public ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users, Filter filter){
+    public ArrayList<UserDataFull> filter(ArrayList<UserDataFull> users, Filter filter, FragmentActivity activity){
         mFilter = filter;
         Log.d("Filter", mFilter.gender);
         Log.d("Filter", mFilter.age);
@@ -71,7 +72,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
             users = filterAge(users);
         }
         if(!mFilter.distance.equals("")){
-            users = filterDistance(users);
+            users = filterDistance(users, activity);
         }
         if(!mFilter.eyeColor.equals("")){
             users = filterEyeColor(users);
@@ -120,8 +121,8 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         return userList;
     }
 
-    private ArrayList<UserDataFull> filterDistance(ArrayList<UserDataFull> users){
-        Coordinates currentCoordinates = getCoordinates();
+    private ArrayList<UserDataFull> filterDistance(ArrayList<UserDataFull> users, FragmentActivity activity){
+        Coordinates currentCoordinates = getCoordinates(activity);
         ArrayList<UserDataFull> userList = new ArrayList<UserDataFull>();
         for(int i = 0; i < users.size(); i++){
             try {
@@ -144,13 +145,12 @@ public class BubblePresenter implements BaseContract.BasePresenter {
         return userList;
     }
 
-    public Coordinates getCoordinates() {
-        try {
+    public Coordinates getCoordinates(FragmentActivity activity) {
             Coordinates coord;
-            LocationManager lm = (LocationManager) mFragment.getActivity().getSystemService(Context.LOCATION_SERVICE);
-            if (ActivityCompat.checkSelfPermission(mFragment.getContext(),
+            LocationManager lm = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+            if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(mFragment.getContext(),
+                    && ActivityCompat.checkSelfPermission(activity.getApplicationContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return null;
             }
@@ -163,9 +163,7 @@ public class BubblePresenter implements BaseContract.BasePresenter {
             } else {
                 return null;
             }
-        }catch (Exception c){
-            return null;
-        }
+
     }
 
     private double differenceBetween(double lat1, double lon1, double lat2, double lon2, char unit) {
