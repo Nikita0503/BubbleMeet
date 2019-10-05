@@ -109,9 +109,10 @@ public class MainPresenter implements BaseContract.BasePresenter {
                         //for(int i = 0; i < 49; i++){
                         //    users.add(userData.get(i));
                         //}
-
-
-                        downloadPhotos(userData);
+                        Collections.shuffle(userData);
+                        mUsers = userData;
+                        mActivity.setUsers(mUsers);
+                        //downloadPhotos(userData);
                     }
 
                     @Override
@@ -142,7 +143,7 @@ public class MainPresenter implements BaseContract.BasePresenter {
                     public void onSuccess(ArrayList<UserDataFull> value) {
                         Collections.shuffle(value);
                         mUsers = value;
-                        mActivity.setUsers(value);
+                        mActivity.setUsers(mUsers);
                     }
 
                     @Override

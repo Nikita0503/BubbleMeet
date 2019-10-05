@@ -145,21 +145,25 @@ public class BubblePresenter implements BaseContract.BasePresenter {
     }
 
     public Coordinates getCoordinates() {
-        Coordinates coord;
-        LocationManager lm = (LocationManager) mFragment.getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(mFragment.getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(mFragment.getContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
-        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if(location!=null) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            coord = new Coordinates(latitude, longitude);
-            return coord;
-        }else{
+        try {
+            Coordinates coord;
+            LocationManager lm = (LocationManager) mFragment.getActivity().getSystemService(Context.LOCATION_SERVICE);
+            if (ActivityCompat.checkSelfPermission(mFragment.getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(mFragment.getContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return null;
+            }
+            Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                coord = new Coordinates(latitude, longitude);
+                return coord;
+            } else {
+                return null;
+            }
+        }catch (Exception c){
             return null;
         }
     }
