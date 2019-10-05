@@ -406,24 +406,26 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                     mDefaultYMinSize[i] += mDifferenceY;
                     mDefaultYMaxSize[i] += mDifferenceY;
                     if(multiply > 0 && multiply < 1) {
-                        paramsBubble.y += (mDiameterPrevious[i]-paramsBubble.height)/2;
+                        paramsBubble.y =  (int) (mDefaultYMinSize[i] - mDefaultBubbleDiameter * multiply / 2);
+                        //paramsBubble.y += (mDiameterPrevious[i]-paramsBubble.height)/2;
                         //paramsBubble.y = (int) (defaultYMax[i] + (mDefaultBubbleDiameter * round(multiply, 2) / 2));
                         if(i==6) {
                             Log.d("multiply", multiply + "");
                         }
                     }
                     if (multiply == 0) {
-                        paramsBubble.y = mDefaultYMinSize[i];
                         if(i == 0 && mLayout.getChildCount() > 1){
                             AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
                             AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(mRows).getLayoutParams();
                             params.y = mDefaultYMinSize[1];
+                            mDefaultYMinSize[0] = mDefaultYMinSize[1];
                             params.x = params2.x - (int) (mSize.x / 2.45) / 2;
                             if(params.height != 0) {
                                 params.y += (mDiameterPrevious[0] - params.height) / 2;
                             }
                             mLayout.getChildAt(0).setLayoutParams(params);
                         }
+                        paramsBubble.y = mDefaultYMinSize[i];
                     }
                     if( multiply == 1){
                         paramsBubble.y = mDefaultYMaxSize[i];
@@ -441,7 +443,6 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         }
                     }
                     if(isConnectTop) {
-
                         if (!isTopSideMoving){
                             paramsBubble.y += mDifferenceY;
                             mDefaultYMinSize[i] += mDifferenceY;
@@ -576,7 +577,8 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                 mDefaultYMinSize[i] += mDifferenceY;
                 mDefaultYMaxSize[i] += mDifferenceY;
                 if(multiply > 0 && multiply < 1) {
-                    paramsBubble.y += (mDiameterPrevious[i]-paramsBubble.height)/2;
+                    paramsBubble.y =  (int) (mDefaultYMinSize[i] - mDefaultBubbleDiameter * multiply / 2);
+                    //paramsBubble.y += (mDiameterPrevious[i]-paramsBubble.height)/2;
                     //paramsBubble.y = (int) (defaultYMax[i] + (mDefaultBubbleDiameter * round(multiply, 2) / 2));
                     if(i==6) {
                         Log.d("multiply", multiply + "");
@@ -588,6 +590,7 @@ public class BubbleFragment2 extends Fragment implements BaseContract.BaseView {
                         AbsoluteLayout.LayoutParams params = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(0).getLayoutParams();
                         AbsoluteLayout.LayoutParams params2 = (AbsoluteLayout.LayoutParams) mLayout.getChildAt(mRows).getLayoutParams();
                         params.y = mDefaultYMinSize[1];
+                        mDefaultYMinSize[0] = mDefaultYMinSize[1];
                         params.x = params2.x - (int) (mSize.x / 2.45) / 2;
                         if(params.height != 0) {
                             params.y += (mDiameterPrevious[0] - params.height) / 2;
