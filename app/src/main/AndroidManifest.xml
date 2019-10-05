@@ -14,7 +14,7 @@
         android:icon="@drawable/logo_bbm"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_bbm"
-
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
 
