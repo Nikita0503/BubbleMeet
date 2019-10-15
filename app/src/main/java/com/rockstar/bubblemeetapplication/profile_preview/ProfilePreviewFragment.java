@@ -233,6 +233,8 @@ public class ProfilePreviewFragment extends Fragment implements BaseContract.Bas
             myHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.popBackStack();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     ProfilePreviewFragment profileFragment = new ProfilePreviewFragment();
                     if(mCurrentNumber + 1!= mUsers.size()) {
